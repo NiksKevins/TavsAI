@@ -20,6 +20,7 @@ import {
   ProductShowcaseRow,
 } from "@/components/marketing/product-visuals";
 import { Button } from "@/components/ui/button";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
 
 const LiveDemoChat = dynamic(
@@ -197,13 +198,13 @@ function HomeHow({ dict }: { dict: MarketingDict }) {
             <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
               {dict.how.title}
             </h2>
-            <Link
+            <LocaleLink
               href="/how"
               className="link-premium-primary mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
             >
               {dict.bridge.linkLabel}
               <ArrowUpRight className="size-4" aria-hidden />
-            </Link>
+            </LocaleLink>
           </div>
 
           <HowStepsEditorial steps={dict.how.steps} />

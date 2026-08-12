@@ -2,8 +2,14 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { EditorialDivider, FeatureIndex } from "@/components/marketing/marketing-visuals";
+import { Link as LocaleLink } from "@/i18n/navigation";
 
 type HowStep = { title: string; body: string };
+type LocaleHref = "/how" | "/pricing" | "/demo" | "/faq" | "/industries" | "/";
+
+function isLocaleHref(href: string): href is LocaleHref {
+  return ["/", "/how", "/pricing", "/demo", "/faq", "/industries"].includes(href);
+}
 
 export function HowStepsEditorial({
   steps,
@@ -29,13 +35,23 @@ export function HowStepsEditorial({
                 {step.body}
               </p>
               {index === steps.length - 1 && linkHref && linkLabel ? (
-                <Link
-                  href={linkHref}
-                  className="link-premium-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
-                >
-                  {linkLabel}
-                  <ArrowUpRight className="size-4" aria-hidden />
-                </Link>
+                isLocaleHref(linkHref) ? (
+                  <LocaleLink
+                    href={linkHref}
+                    className="link-premium-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
+                  >
+                    {linkLabel}
+                    <ArrowUpRight className="size-4" aria-hidden />
+                  </LocaleLink>
+                ) : (
+                  <Link
+                    href={linkHref}
+                    className="link-premium-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
+                  >
+                    {linkLabel}
+                    <ArrowUpRight className="size-4" aria-hidden />
+                  </Link>
+                )
               ) : null}
             </div>
           </article>

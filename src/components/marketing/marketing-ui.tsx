@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export function MarketingContainer({
@@ -139,14 +140,14 @@ export function MarketingBridgeCard({
   linkLabel,
   index,
 }: {
-  href: string;
+  href: "/how" | "/pricing" | "/demo" | "/faq" | "/industries" | "/";
   title: string;
   body: string;
   linkLabel: string;
   index: number;
 }) {
   return (
-    <Link
+    <LocaleLink
       href={href}
       className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-card p-5 transition-all duration-300 hover:border-primary/30 hover:shadow-[0_12px_40px_-20px_rgba(18,31,27,0.15)] sm:p-6"
     >
@@ -166,7 +167,7 @@ export function MarketingBridgeCard({
           aria-hidden
         />
       </span>
-    </Link>
+    </LocaleLink>
   );
 }
 

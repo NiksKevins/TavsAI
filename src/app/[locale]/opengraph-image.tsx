@@ -1,13 +1,43 @@
 import { ImageResponse } from "next/og";
 
 import { loadOgFonts } from "@/lib/brand/og-fonts";
+import { isAppLocale } from "@/i18n/config";
 
-export const alt =
-  "TavsWebs Bot — Nezaudē klientus pēc darba laika. Atbildes, leadi un pieteikumi 24/7.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const alt = "TavsWebs Bot";
 
-export default async function OpenGraphImage() {
+const COPY = {
+  lv: {
+    headline: "Beidz zaudēt klientus pēc darba laika.",
+    sub: "Sistēma, kas atbild, apkopo leadus un palīdz pieteikties — dienu un nakti.",
+    chips: ["Vienmēr online", "Bez zaudētiem leadiem", "Tavā mājaslapā"],
+    siteLabel: "Auto serviss & riepu maiņa",
+    assistant: "AI asistents",
+    online: "TIEŠSAISTĒ",
+    userMsg: "Cik maksā eļļas maiņa?",
+    botMsg: "No 45 € ar filtru. Vai pierakstīties?",
+  },
+  en: {
+    headline: "Stop losing customers after hours.",
+    sub: "A system that answers, captures leads, and helps people book — day and night.",
+    chips: ["Always on", "No lost leads", "On your website"],
+    siteLabel: "Auto service & tyre fitting",
+    assistant: "AI assistant",
+    online: "LIVE",
+    userMsg: "How much is an oil change?",
+    botMsg: "From €45 incl. filter. Want to book a time?",
+  },
+} as const;
+
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = await params;
+  const locale = isAppLocale(raw) ? raw : "lv";
+  const copy = COPY[locale];
   const fonts = await loadOgFonts();
 
   return new ImageResponse(
@@ -133,7 +163,7 @@ export default async function OpenGraphImage() {
                   maxWidth: 580,
                 }}
               >
-                Beidz zaudēt klientus pēc darba laika.
+                {copy.headline}
               </div>
 
               <div
@@ -146,8 +176,7 @@ export default async function OpenGraphImage() {
                   maxWidth: 520,
                 }}
               >
-                Sistēma, kas atbild, apkopo leadus un palīdz pieteikties — dienu
-                un nakti.
+                {copy.sub}
               </div>
             </div>
 
@@ -165,7 +194,7 @@ export default async function OpenGraphImage() {
                   gap: 10,
                 }}
               >
-                {["Vienmēr online", "Bez zaudētiem leadiem", "Tavā mājaslapā"].map(
+                {copy.chips.map(
                   (label) => (
                     <div
                       key={label}
@@ -276,7 +305,7 @@ export default async function OpenGraphImage() {
                     maxWidth: 220,
                   }}
                 >
-                  Auto serviss & riepu maiņa
+                  {copy.siteLabel}
                 </div>
                 <div
                   style={{
@@ -322,7 +351,7 @@ export default async function OpenGraphImage() {
                           color: "#0f172a",
                         }}
                       >
-                        AI asistents
+                        {copy.assistant}
                       </div>
                       <div
                         style={{
@@ -345,7 +374,7 @@ export default async function OpenGraphImage() {
                         borderRadius: 999,
                       }}
                     >
-                      TIEŠSAISTĒ
+                      {copy.online}
                     </div>
                   </div>
                   <div
@@ -369,7 +398,7 @@ export default async function OpenGraphImage() {
                         maxWidth: 170,
                       }}
                     >
-                      Cik maksā eļļas maiņa?
+                      {copy.userMsg}
                     </div>
                     <div
                       style={{
@@ -384,7 +413,7 @@ export default async function OpenGraphImage() {
                         border: "1px solid #e2e8f0",
                       }}
                     >
-                      No 45 € ar filtru. Vai pierakstīties?
+                      {copy.botMsg}
                     </div>
                   </div>
                 </div>

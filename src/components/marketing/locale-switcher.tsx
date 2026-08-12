@@ -1,22 +1,23 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { AppLocale } from "@/i18n/config";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export function LocaleSwitcher() {
   const t = useTranslations("common");
   const locale = useLocale();
+  const pathname = usePathname();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
   function setLocale(next: AppLocale) {
     document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=31536000; samesite=lax`;
     startTransition(() => {
-      router.refresh();
+      router.replace(pathname, { locale: next });
     });
   }
 
