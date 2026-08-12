@@ -43,57 +43,63 @@ export async function registerAction(
   }
 
   const email = parsed.data.email.toLowerCase();
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return { ok: false, error: "email_taken" };
-  }
-
-  const passwordHash = await hashPassword(parsed.data.password);
-
-  const user = await prisma.user.create({
-    data: {
-      email,
-      name: parsed.data.name,
-      passwordHash,
-      locale: "lv",
-    },
-  });
-
-  const created = await createWorkspaceForUser({
-    userId: user.id,
-    name: parsed.data.businessName,
-    email,
-    locale: "lv",
-  });
-
-  const referralCode = String(formData.get("referralCode") || "")
-    .trim()
-    .toUpperCase();
-  if (referralCode) {
-    try {
-      const { attachWorkspaceViaReferral } = await import(
-        "@/services/partner/partner-service"
-      );
-      await attachWorkspaceViaReferral({
-        workspaceId: created.id,
-        referralCode,
-      });
-    } catch (error) {
-      console.error("[partner/referral]", error);
-    }
-  }
 
   try {
-    await signIn("credentials", {
-      email,
-      password: parsed.data.password,
-      redirect: false,
-    });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return { ok: false, error: "signin_failed" };
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return { ok: false, error: "email_taken" };
     }
-    throw error;
+
+    const passwordHash = await hashPassword(parsed.data.password);
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name: parsed.data.name,
+        passwordHash,
+        locale: "lv",
+      },
+    });
+
+    const created = await createWorkspaceForUser({
+      userId: user.id,
+      name: parsed.data.businessName,
+      email,
+      locale: "lv",
+    });
+
+    const referralCode = String(formData.get("referralCode") || "")
+      .trim()
+      .toUpperCase();
+    if (referralCode) {
+      try {
+        const { attachWorkspaceViaReferral } = await import(
+          "@/services/partner/partner-service"
+        );
+        await attachWorkspaceViaReferral({
+          workspaceId: created.id,
+          referralCode,
+        });
+      } catch (error) {
+        console.error("[partner/referral]", error);
+      }
+    }
+
+    try {
+      await signIn("credentials", {
+        email,
+        password: parsed.data.password,
+        redirect: false,
+      });
+    } catch (error) {
+      if (error instanceof AuthError) {
+        return { ok: false, error: "signin_failed" };
+      }
+      throw error;
+    }
+  } catch (error) {
+    console.error("[auth/register]", error);
+    return { ok: false, error: "service_unavailable" };
   }
 
   redirect("/onboarding");

@@ -12,7 +12,7 @@ export default async function AuthLayout({
     <div className="relative flex min-h-dvh flex-col bg-[radial-gradient(ellipse_at_top,var(--hero-spot),transparent_50%),linear-gradient(180deg,#f7f6f3,#eef2ee)]">
       <div className="mx-auto flex w-full max-w-6xl items-center px-4 py-6 sm:px-6">
         <Link
-          href="/"
+          href="/lv"
           className="font-display text-lg font-semibold text-foreground"
         >
           {home("brand")}

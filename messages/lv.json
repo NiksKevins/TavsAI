@@ -316,7 +316,8 @@
       "email_taken": "Šis e-pasts jau ir reģistrēts.",
       "signin_failed": "Neizdevās pieteikties. Mēģiniet vēlreiz.",
       "invalid_credentials": "Nepareizs e-pasts vai parole.",
-      "invalid_token": "Atiestatīšanas saite nav derīga vai ir beigusies."
+      "invalid_token": "Atiestatīšanas saite nav derīga vai ir beigusies.",
+      "service_unavailable": "Pakalpojums īslaicīgi nav pieejams. Mēģiniet vēlāk."
     }
   },
   "onboarding": {
