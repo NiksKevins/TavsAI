@@ -199,7 +199,7 @@ function HomeHow({ dict }: { dict: MarketingDict }) {
             </h2>
             <Link
               href="/how"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+              className="link-premium-primary mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
             >
               {dict.bridge.linkLabel}
               <ArrowUpRight className="size-4" aria-hidden />

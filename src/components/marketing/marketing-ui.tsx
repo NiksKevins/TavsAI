@@ -208,7 +208,7 @@ export function MarketingFinalCta({
           {secondaryHref && secondaryLabel ? (
             <Link
               href={secondaryHref}
-              className="text-center text-sm text-text-muted-on-dark transition-colors hover:text-text-on-dark sm:text-left"
+              className="link-premium text-center text-sm text-text-muted-on-dark hover:text-text-on-dark sm:text-left"
             >
               {secondaryLabel} →
             </Link>

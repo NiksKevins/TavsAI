@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "TavsWebs Bot — AI darbinieks jūsu mājaslapai",
-    "description": "Piešķir savai mājaslapai AI darbinieku. Atbildi 24/7, apkopo leadus un palīdzi klientiem nonākt līdz pieteikumam."
+    "title": "TavsWebs Bot — Nezaudē klientus dienu un nakti",
+    "description": "Beidz zaudēt apmeklētājus pēc darba laika. Sistēma, kas atbild uz jautājumiem, apkopo leadus un palīdz pieteikties — visu diennakti.",
+    "ogTitle": "Nezaudē nevienu klientu — arī pēc darba laika",
+    "ogDescription": "Tava mājaslapa nekad neklusē. Jautājumi tiek atbildēti, leadi saglabāti, pieteikumi sākti — 24/7.",
+    "keywords": "AI čats, mājaslapas asistents, leadu apkopošana, latviešu AI, klientu atbalsts, TavsWebs"
   },
   "nav": {
     "pricing": "Cenas",
@@ -15,26 +18,26 @@
   },
   "home": {
     "brand": "TavsWebs Bot",
-    "headline": "Piešķir savai mājaslapai AI darbinieku.",
-    "subhead": "Atbildi uz klientu jautājumiem 24/7, apkopo potenciālos klientus un palīdzi viņiem nonākt līdz pieteikumam — automātiski.",
+    "headline": "Beidz zaudēt klientus pēc darba laika.",
+    "subhead": "Saņem sistēmu, kas atbild uz jautājumiem, apkopo leadus un palīdz cilvēkiem pieteikties — dienu un nakti, vietnē, ko viņi jau apmeklē.",
     "ctaPrimary": "Pamēģināt bez maksas",
     "ctaSecondary": "Noskatīties demo",
     "phaseNote": ""
   },
   "marketing": {
     "hero": {
-      "headline": "Piešķir savai mājaslapai AI darbinieku.",
-      "subhead": "Atbildi uz klientu jautājumiem 24/7, apkopo potenciālos klientus un palīdzi viņiem nonākt līdz pieteikumam — automātiski.",
+      "headline": "Beidz zaudēt klientus pēc darba laika.",
+      "subhead": "Saņem sistēmu, kas atbild uz jautājumiem, apkopo leadus un palīdz cilvēkiem pieteikties — dienu un nakti, vietnē, ko viņi jau apmeklē.",
       "ctaPrimary": "Pamēģināt bez maksas",
       "ctaSecondary": "Noskatīties demo",
-      "proof": "Produkta priekšskatījums",
+      "proof": "Redzi, kā tas strādā",
       "trust": "Bezmaksas sākumā · Kartes nav vajadzīgas · Latviešu un angļu valoda",
-      "tryHint": "Pamēģiniet čatu tieši šeit — izvēlieties nozari un uzdodiet jautājumu."
+      "tryHint": "Izmēģini uzreiz šeit — izvēlies nozari un uzdod jautājumu."
     },
     "demo": {
-      "eyebrow": "Izmēģiniet",
-      "title": "Sarunājieties ar AI darbinieku",
-      "subtitle": "Izvēlieties nozari un uzdodiet reālu jautājumu. Atbildes nāk no īsta asistenta ar nozares zināšanām — nevis no iepriekš ierakstīta skripta.",
+      "eyebrow": "Redzi rezultātu",
+      "title": "Skaties, kā apmeklētājs saņem palīdzību — uzreiz",
+      "subtitle": "Izvēlies nozari un uzdod reālu jautājumu. Redzēsi, ko saņem tavi klienti: skaidras atbildes, nākamos soļus un ceļu, kā ar tevi sazināties.",
       "choose": "Izvēlieties nozari",
       "liveHint": "Dzīva demo saruna",
       "online": "Tiešsaistē",
@@ -64,9 +67,9 @@
       }
     },
     "solution": {
-      "eyebrow": "Risinājums",
-      "title": "Jūsu AI darbinieks dara to, kas jums aizņem vakarus.",
-      "subtitle": "Viņš zina jūsu biznesu, runā ar klientiem un noved viņus līdz nākamajam solim.",
+      "eyebrow": "Ko jūs saņemat",
+      "title": "Klienti paliek — arī tad, kad birojs ir slēgts.",
+      "subtitle": "Katrs apmeklētājs saņem palīdzību, nopietnie leadi tiek saglabāti, un tu pamosties ar cilvēkiem, kas ir gatavi runāt.",
       "items": {
         "0": {
           "title": "Atbild",
@@ -93,11 +96,11 @@
           "body": "Palīdz pieteikt vizīti, kad kalendārs ir savienots."
         }
       },
-      "footnote": "Nav jauna čata rīka, ko klientiem jāapgūst — tikai poga jūsu esošajā mājaslapā."
+      "footnote": "Nav jauna rīka, ko klientiem jāapgūst — tikai palīdzība vietnē, ko viņi jau lieto."
     },
     "visuals": {
       "showcaseTitle": "Ko jūs saņemat",
-      "showcaseSubtitle": "Čata logrīks jūsu mājaslapā, apmācīts ar jūsu biznesa zināšanām — un visi leadi jūsu panelī.",
+      "showcaseSubtitle": "Atbildes visu diennakti tavā mājaslapā, apmācītas ar tava biznesa zināšanām — un katrs leads gaida tavā panelī.",
       "siteUrl": "autoserviss.lv",
       "siteHeadline": "Autoserviss un riepu montāža",
       "siteNav": ["Pakalpojumi", "Cenas", "Kontakti"],
@@ -105,14 +108,14 @@
       "chatBusiness": "AutoServiss",
       "chatUserMsg": "Cik maksā eļļas maiņa?",
       "chatBotMsg": "No €45 ar filtru. Vēlaties pierakstīties?",
-      "badge247": "Atbildes 24/7",
+      "badge247": "Vienmēr pieejams",
       "badgeLead": "Leads saglabāts",
-      "cardWidgetTitle": "Darbojas jūsu mājaslapā",
-      "cardWidgetBody": "Viens koda fragments — čata poga jebkurā lapas stūrī.",
-      "cardKnowledgeTitle": "Zina jūsu biznesu",
-      "cardKnowledgeBody": "Apmācīts ar mājaslapu, FAQ un augšupielādētiem dokumentiem.",
-      "cardLeadsTitle": "Leadi jūsu panelī",
-      "cardLeadsBody": "Vārds, tālrunis un visa saruna — gatavs turpinājumam.",
+      "cardWidgetTitle": "Palīdzība katrā lapā",
+      "cardWidgetBody": "Apmeklētāji saņem atbildes, neizejot no tavas mājaslapas — jebkurā diennakts laikā.",
+      "cardKnowledgeTitle": "Apmācīts ar tavu biznesu",
+      "cardKnowledgeBody": "Cenas, pakalpojumi un FAQ paliek precīzi — no tavas vietnes un dokumentiem.",
+      "cardLeadsTitle": "Leadi, ko vari izsaukt",
+      "cardLeadsBody": "Vārds, tālrunis un visa saruna — gatavi, kad tu esi.",
       "leadName": "Anna B.",
       "leadPhone": "+371 2X XXX XXX",
       "leadStatus": "Jauns",
@@ -229,11 +232,11 @@
     },
     "finalCta": {
       "eyebrow": "Sākt šodien",
-      "title": "Jūsu mājaslapa strādā arī tad, kad jūs nestrādājat.",
+      "title": "Saglabā katru apmeklētāju — arī kamēr tu guļi.",
       "cta": "Sākt bez maksas"
     },
     "footer": {
-      "tagline": "AI darbinieks Latvijas mājaslapām — atbildes, leadi un pieteikumi bez naktsmaiņām.",
+      "tagline": "Beidz zaudēt klientus pēc darba laika. Atbildes, leadi un pieteikumi — visu diennakti.",
       "demo": "Demo",
       "pricing": "Cenas",
       "start": "Sākt",

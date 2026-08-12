@@ -1,7 +1,10 @@
 {
   "meta": {
-    "title": "TavsWebs Bot — AI employee for your website",
-    "description": "Give your website an AI employee. Answer 24/7, capture leads, and help customers reach a booking."
+    "title": "TavsWebs Bot — Keep every customer, day and night",
+    "description": "Stop losing visitors after hours. A system that answers questions, captures leads, and helps customers book — around the clock.",
+    "ogTitle": "Keep every customer — even after hours",
+    "ogDescription": "Your website never goes quiet. Questions get answered, leads get captured, bookings get started — 24/7.",
+    "keywords": "AI chatbot, website assistant, lead capture, Latvian AI, customer support bot, TavsWebs"
   },
   "nav": {
     "pricing": "Pricing",
@@ -15,26 +18,26 @@
   },
   "home": {
     "brand": "TavsWebs Bot",
-    "headline": "Give your website an AI employee.",
-    "subhead": "Answer customer questions 24/7, capture leads, and help them reach a booking — automatically.",
+    "headline": "Stop losing customers after hours.",
+    "subhead": "Get a system that answers questions, captures leads, and helps people book — day and night, on the site they already visit.",
     "ctaPrimary": "Try for free",
     "ctaSecondary": "Watch the demo",
     "phaseNote": ""
   },
   "marketing": {
     "hero": {
-      "headline": "Give your website an AI employee.",
-      "subhead": "Answer customer questions 24/7, capture leads, and help them reach a booking — automatically.",
+      "headline": "Stop losing customers after hours.",
+      "subhead": "Get a system that answers questions, captures leads, and helps people book — day and night, on the site they already visit.",
       "ctaPrimary": "Try for free",
       "ctaSecondary": "Watch the demo",
-      "proof": "Product preview",
+      "proof": "See it working",
       "trust": "Free to start · No card required · Latvian and English",
-      "tryHint": "Try the chat right here — pick an industry and ask a question."
+      "tryHint": "Try it right here — pick an industry and ask a question."
     },
     "demo": {
-      "eyebrow": "Try it",
-      "title": "Chat with an AI employee",
-      "subtitle": "Pick an industry and ask a real question. Replies come from a live assistant with industry knowledge — not a hard-coded script.",
+      "eyebrow": "See the outcome",
+      "title": "Watch a visitor get help — instantly",
+      "subtitle": "Pick an industry and ask something real. You see what your customers get: clear answers, next steps, and a path to contact you.",
       "choose": "Choose an industry",
       "liveHint": "Live demo conversation",
       "online": "Online",
@@ -64,9 +67,9 @@
       }
     },
     "solution": {
-      "eyebrow": "The solution",
-      "title": "Your AI employee does the evening shift for you.",
-      "subtitle": "It knows your business, talks to customers, and moves them to the next step.",
+      "eyebrow": "What you get",
+      "title": "Customers stay — even when the office is closed.",
+      "subtitle": "Every visitor gets help, every serious lead gets captured, and you wake up to people ready to talk.",
       "items": {
         "0": {
           "title": "Answers",
@@ -93,11 +96,11 @@
           "body": "Helps schedule a visit when your calendar is connected."
         }
       },
-      "footnote": "Not another chat app for customers to learn — just a button on the site they already use."
+      "footnote": "No new app for customers to learn — just help on the website they already use."
     },
     "visuals": {
       "showcaseTitle": "What you get",
-      "showcaseSubtitle": "A chat widget on your website, trained on your business — with every lead in your dashboard.",
+      "showcaseSubtitle": "Around-the-clock answers on your site, trained on your business — and every lead waiting in your panel.",
       "siteUrl": "autoserviss.lv",
       "siteHeadline": "Auto service & tyre fitting",
       "siteNav": ["Services", "Prices", "Contact"],
@@ -105,14 +108,14 @@
       "chatBusiness": "AutoServiss",
       "chatUserMsg": "How much is an oil change?",
       "chatBotMsg": "From €45 incl. filter. Want to book a time?",
-      "badge247": "24/7 replies",
+      "badge247": "Always on",
       "badgeLead": "Lead captured",
-      "cardWidgetTitle": "Lives on your website",
-      "cardWidgetBody": "One script tag — a chat button in the corner of any page.",
-      "cardKnowledgeTitle": "Knows your business",
-      "cardKnowledgeBody": "Trained on your site, FAQs, and uploaded documents.",
-      "cardLeadsTitle": "Leads in your panel",
-      "cardLeadsBody": "Name, phone, and full conversation — ready to follow up.",
+      "cardWidgetTitle": "Help on every page",
+      "cardWidgetBody": "Visitors get answers without leaving your website — any hour of the day.",
+      "cardKnowledgeTitle": "Trained on your business",
+      "cardKnowledgeBody": "Prices, services, and FAQs stay accurate — from your site and documents.",
+      "cardLeadsTitle": "Leads you can call",
+      "cardLeadsBody": "Name, phone, and the full conversation — ready when you are.",
       "leadName": "Anna B.",
       "leadPhone": "+371 2X XXX XXX",
       "leadStatus": "New",
@@ -229,11 +232,11 @@
     },
     "finalCta": {
       "eyebrow": "Get started",
-      "title": "Your website works even when you don’t.",
+      "title": "Keep every visitor — even while you sleep.",
       "cta": "Start for free"
     },
     "footer": {
-      "tagline": "An AI employee for Latvian websites — answers, leads, and bookings without night shifts.",
+      "tagline": "Stop losing customers after hours. Answers, leads, and bookings — around the clock.",
       "demo": "Demo",
       "pricing": "Pricing",
       "start": "Start",

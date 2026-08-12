@@ -31,7 +31,7 @@ export function HowStepsEditorial({
               {index === steps.length - 1 && linkHref && linkLabel ? (
                 <Link
                   href={linkHref}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                  className="link-premium-primary mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
                 >
                   {linkLabel}
                   <ArrowUpRight className="size-4" aria-hidden />

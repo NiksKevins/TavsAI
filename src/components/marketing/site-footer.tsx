@@ -32,10 +32,23 @@ export async function SiteFooter() {
     <footer className="border-t border-white/10 bg-surface-dark text-text-muted-on-dark">
       <MarketingContainer wide className="grid gap-8 py-10 sm:grid-cols-[1.2fr_1fr_1fr] sm:py-12">
         <div>
-          <p className="font-display text-xl font-semibold text-text-on-dark">
+          <Link
+            href="/"
+            className="font-display text-xl font-semibold text-text-on-dark transition-opacity hover:opacity-90"
+          >
             {home("brand")}
-          </p>
+          </Link>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">{t("tagline")}</p>
+          <p className="mt-4">
+            <a
+              href="https://tavswebs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-premium text-sm text-slate-400 hover:text-text-on-dark"
+            >
+              tavswebs.com
+            </a>
+          </p>
         </div>
         {columns.map((col) => (
           <div key={col.title}>
@@ -47,7 +60,7 @@ export async function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="transition-colors hover:text-text-on-dark"
+                    className="link-premium text-text-muted-on-dark hover:text-text-on-dark"
                   >
                     {link.label}
                   </Link>
@@ -60,7 +73,12 @@ export async function SiteFooter() {
       <div className="border-t border-white/10">
         <MarketingContainer className="flex flex-col gap-2 py-4 text-xs text-slate-500 sm:flex-row sm:justify-between">
           <span>© {new Date().getFullYear()} TavsWebs</span>
-          <span>bot.tavswebs.com</span>
+          <a
+            href="https://bot.tavswebs.com"
+            className="link-premium text-slate-500 hover:text-slate-300"
+          >
+            bot.tavswebs.com
+          </a>
         </MarketingContainer>
       </div>
     </footer>

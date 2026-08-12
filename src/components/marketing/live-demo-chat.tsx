@@ -189,7 +189,7 @@ export function LiveDemoChat({
             aria-selected={active}
             onClick={() => setIndustryId(id)}
             className={cn(
-              "rounded-full border px-3 py-1.5 text-left text-xs font-medium transition-colors sm:text-[13px]",
+              "cursor-pointer rounded-full border px-3 py-1.5 text-left text-xs font-medium transition-colors sm:text-[13px]",
               variant === "page" && "rounded-none px-4 py-3",
               variant === "stage" &&
                 (active
@@ -198,7 +198,7 @@ export function LiveDemoChat({
               variant === "showcase" &&
                 (active
                   ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                  : "border-border/80 bg-white/90 text-ink-soft shadow-sm hover:border-primary/30"),
+                  : "border-border/80 bg-white/90 text-ink-soft shadow-sm hover:border-primary/30 hover:bg-accent/80"),
               variant === "embed" &&
                 (active ? itemTheme.chipActive : itemTheme.chip),
               variant === "page" &&
@@ -305,7 +305,7 @@ export function LiveDemoChat({
               type="button"
               disabled={pending}
               onClick={() => send(s)}
-              className="rounded-full border border-border bg-secondary px-2.5 py-1 text-[11px] text-ink-soft transition-colors hover:border-primary/25 hover:bg-accent sm:text-xs"
+              className="cursor-pointer rounded-full border border-border bg-secondary px-2.5 py-1 text-[11px] text-ink-soft transition-colors hover:border-primary/25 hover:bg-accent sm:text-xs"
             >
               {s}
             </button>
