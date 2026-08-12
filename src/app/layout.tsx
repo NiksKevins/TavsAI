@@ -26,8 +26,10 @@ const syne = Syne({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("meta");
   const locale = await getLocale();
+  // Share previews (WhatsApp/etc.) must stay Latvian — crawlers often send en Accept-Language.
+  const tOg = await getTranslations({ locale: "lv", namespace: "meta" });
+  const t = locale === "lv" ? tOg : await getTranslations("meta");
   const siteUrl = new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "https://bot.tavswebs.com",
   );
@@ -57,16 +59,17 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_GB" : "lv_LV",
+      locale: "lv_LV",
+      alternateLocale: ["en_GB"],
       url: siteUrl,
       siteName: "TavsWebs Bot",
-      title: t("ogTitle"),
-      description: t("ogDescription"),
+      title: tOg("ogTitle"),
+      description: tOg("ogDescription"),
     },
     twitter: {
       card: "summary_large_image",
-      title: t("ogTitle"),
-      description: t("ogDescription"),
+      title: tOg("ogTitle"),
+      description: tOg("ogDescription"),
     },
     icons: {
       icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],

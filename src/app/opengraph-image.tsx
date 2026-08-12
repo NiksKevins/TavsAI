@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 import { loadOgFonts } from "@/lib/brand/og-fonts";
 
 export const alt =
-  "TavsWebs Bot — Keep every customer after hours. Answers, leads, and bookings around the clock.";
+  "TavsWebs Bot — Nezaudē klientus pēc darba laika. Atbildes, leadi un pieteikumi 24/7.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -126,28 +126,28 @@ export default async function OpenGraphImage() {
               <div
                 style={{
                   fontFamily: "Syne",
-                  fontSize: 58,
+                  fontSize: 52,
                   fontWeight: 700,
-                  lineHeight: 1.05,
+                  lineHeight: 1.08,
                   letterSpacing: "-0.045em",
                   maxWidth: 580,
                 }}
               >
-                Stop losing customers after hours.
+                Beidz zaudēt klientus pēc darba laika.
               </div>
 
               <div
                 style={{
                   fontFamily: "Manrope",
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: 500,
                   lineHeight: 1.45,
                   color: "#94a3b8",
                   maxWidth: 520,
                 }}
               >
-                A system that answers, captures leads, and helps people book —
-                day and night.
+                Sistēma, kas atbild, apkopo leadus un palīdz pieteikties — dienu
+                un nakti.
               </div>
             </div>
 
@@ -165,13 +165,13 @@ export default async function OpenGraphImage() {
                   gap: 10,
                 }}
               >
-                {["Always on", "No lost leads", "On your website"].map(
+                {["Vienmēr online", "Bez zaudētiem leadiem", "Tavā mājaslapā"].map(
                   (label) => (
                     <div
                       key={label}
                       style={{
                         fontFamily: "Manrope",
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: 600,
                         color: "#cbd5e1",
                         padding: "8px 14px",
@@ -273,10 +273,10 @@ export default async function OpenGraphImage() {
                     fontWeight: 700,
                     letterSpacing: "-0.03em",
                     color: "#e2e8f0",
-                    maxWidth: 200,
+                    maxWidth: 220,
                   }}
                 >
-                  Auto service & tyre fitting
+                  Auto serviss & riepu maiņa
                 </div>
                 <div
                   style={{
@@ -322,7 +322,7 @@ export default async function OpenGraphImage() {
                           color: "#0f172a",
                         }}
                       >
-                        AI assistant
+                        AI asistents
                       </div>
                       <div
                         style={{
@@ -345,7 +345,7 @@ export default async function OpenGraphImage() {
                         borderRadius: 999,
                       }}
                     >
-                      LIVE
+                      TIEŠSAISTĒ
                     </div>
                   </div>
                   <div
@@ -369,7 +369,7 @@ export default async function OpenGraphImage() {
                         maxWidth: 170,
                       }}
                     >
-                      How much is an oil change?
+                      Cik maksā eļļas maiņa?
                     </div>
                     <div
                       style={{
@@ -384,7 +384,7 @@ export default async function OpenGraphImage() {
                         border: "1px solid #e2e8f0",
                       }}
                     >
-                      From €45 incl. filter. Want to book a time?
+                      No 45 € ar filtru. Vai pierakstīties?
                     </div>
                   </div>
                 </div>
