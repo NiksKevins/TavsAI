@@ -1,0 +1,894 @@
+// Phase 0 — core multi-tenant schema for bot.tavswebs.com
+// pgvector: enable extension on the database before first migrate:
+//   CREATE EXTENSION IF NOT EXISTS vector;
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum SubscriptionPlan {
+  FREE
+  STARTER
+  BUSINESS
+  PRO
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+}
+
+enum IndustryTemplate {
+  BEAUTY_SALON
+  BARBER
+  AUTOMOTIVE
+  CONSTRUCTION
+  REAL_ESTATE
+  RESTAURANT
+  DENTAL_CLINIC
+  PROFESSIONAL_SERVICES
+  OTHER
+}
+
+enum CrawlJobStatus {
+  QUEUED
+  CRAWLING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum WebsiteStatus {
+  PENDING
+  QUEUED
+  CRAWLING
+  READY
+  FAILED
+}
+
+enum KnowledgeDocumentType {
+  WEBSITE_PAGE
+  UPLOAD
+  MANUAL
+  FAQ
+  SERVICE
+  BUSINESS_INFORMATION
+}
+
+enum KnowledgeDocumentStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum ConversationStatus {
+  OPEN
+  QUALIFIED
+  HANDED_OFF
+  CLOSED
+}
+
+enum MessageRole {
+  USER
+  VISITOR
+  ASSISTANT
+  SYSTEM
+  HUMAN_AGENT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  WON
+  LOST
+  SPAM
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  FAILED
+  COMPLETED
+  NO_SHOW
+}
+
+enum IntegrationType {
+  WEBHOOK
+  CALENDAR
+  CRM
+  EMAIL
+  CUSTOM
+}
+
+enum NotificationChannel {
+  EMAIL
+  IN_APP
+  WEBHOOK
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  EXPORT
+  BILLING
+  SETTINGS
+  OTHER
+}
+
+enum Locale {
+  lv
+  en
+}
+
+// ─── Auth / Tenancy ───────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  passwordHash  String?
+  imageUrl      String?
+  locale        Locale    @default(lv)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  memberships         WorkspaceMember[]
+  sessions            Session[]
+  accounts            Account[]
+  auditLogs           AuditLog[]
+  passwordResetTokens PasswordResetToken[]
+  partnerMemberships  PartnerMember[]
+
+  @@index([createdAt])
+}
+
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionToken String   @unique
+  userId       String   @db.Uuid
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Workspace {
+  id                    String           @id @default(uuid()) @db.Uuid
+  name                  String
+  slug                  String           @unique
+  industry              IndustryTemplate @default(OTHER)
+  primaryLocale         Locale           @default(lv)
+  secondaryLocales      Locale[]         @default([en])
+  timezone              String           @default("Europe/Riga")
+  onboardingStep        Int              @default(1)
+  onboardingCompletedAt DateTime?
+  dataRetentionDays     Int       @default(365)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
+
+  members                 WorkspaceMember[]
+  subscription            Subscription?
+  businessInformation     BusinessInformation?
+  assistantConfiguration  AssistantConfiguration?
+  assistantConfigVersions AssistantConfigurationVersion[]
+  widgetConfiguration     WidgetConfiguration?
+  websites                Website[]
+  crawlJobs               CrawlJob[]
+  knowledgeDocuments     KnowledgeDocument[]
+  knowledgeChunks         KnowledgeChunk[]
+  services                Service[]
+  faqs                    FAQ[]
+  conversations           Conversation[]
+  leads                   Lead[]
+  appointments            Appointment[]
+  integrations            Integration[]
+  notifications           Notification[]
+  usageRecords            UsageRecord[]
+  aiUsageEvents           AiUsageEvent[]
+  auditLogs               AuditLog[]
+  partnerLink             PartnerWorkspace?
+
+  @@index([createdAt])
+  @@index([deletedAt])
+}
+
+model WorkspaceMember {
+  id          String        @id @default(uuid()) @db.Uuid
+  workspaceId String        @db.Uuid
+  userId      String        @db.Uuid
+  role        WorkspaceRole @default(MEMBER)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+  @@index([workspaceId, role])
+}
+
+// ─── Billing ─────────────────────────────────────────────────────────────────
+
+model Subscription {
+  id                   String             @id @default(uuid()) @db.Uuid
+  workspaceId          String             @unique @db.Uuid
+  plan                 SubscriptionPlan   @default(FREE)
+  status               SubscriptionStatus @default(ACTIVE)
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  stripePriceId        String?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([plan])
+}
+
+// ─── Business / Assistant ────────────────────────────────────────────────────
+
+model BusinessInformation {
+  id           String   @id @default(uuid()) @db.Uuid
+  workspaceId  String   @unique @db.Uuid
+  legalName    String?
+  displayName  String?
+  description  String?  @db.Text
+  phone        String?
+  email        String?
+  address      String?
+  city         String?
+  country      String?  @default("LV")
+  websiteUrl   String?
+  openingHours Json?
+  socialLinks  Json?
+  languages    String[] @default(["lv"])
+  policies     String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model AssistantConfiguration {
+  id                    String   @id @default(uuid()) @db.Uuid
+  workspaceId           String   @unique @db.Uuid
+  name                  String   @default("AI darbinieks")
+  greetingLv            String   @db.Text
+  greetingEn            String   @db.Text
+  fallbackLv            String   @db.Text
+  fallbackEn            String   @db.Text
+  tone                  String   @default("professional")
+  languageMode          String   @default("auto") // lv | en | auto
+  systemInstructions    String?  @db.Text
+  allowedTopics         String[] @default([])
+  restrictedTopics      String[] @default([])
+  leadFields            Json?
+  qualificationQs       Json?
+  minLeadCriteria       Json?
+  leadNotificationEmail String?
+  collectLeads          Boolean  @default(true)
+  handoffEnabled        Boolean  @default(true)
+  handoffCreatesLead    Boolean  @default(true)
+  handoffTriggers       Json?
+  handoffCustomRules    String?  @db.Text
+  handoffMessageLv      String?  @db.Text
+  handoffMessageEn      String?  @db.Text
+  model                 String   @default("gpt-4.1-mini")
+  temperature           Float    @default(0.3)
+  version               Int      @default(1)
+  publishedAt           DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  workspace Workspace                     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  versions  AssistantConfigurationVersion[]
+}
+
+/// Immutable snapshots for future rollback / audit. Active config stays on AssistantConfiguration.
+model AssistantConfigurationVersion {
+  id            String   @id @default(uuid()) @db.Uuid
+  workspaceId   String   @db.Uuid
+  assistantId   String   @db.Uuid
+  version       Int
+  snapshot      Json
+  createdById   String?  @db.Uuid
+  note          String?
+  createdAt     DateTime @default(now())
+
+  assistant AssistantConfiguration @relation(fields: [assistantId], references: [id], onDelete: Cascade)
+  workspace Workspace              @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([assistantId, version])
+  @@index([workspaceId, createdAt])
+}
+
+model WidgetConfiguration {
+  id               String    @id @default(uuid()) @db.Uuid
+  workspaceId      String    @unique @db.Uuid
+  publicKey        String    @unique @default(uuid())
+  primaryColor     String    @default("#0F5C4C")
+  position         String    @default("bottom-right")
+  theme            String    @default("light")
+  borderRadius     Int       @default(16)
+  launcherTextLv   String?
+  launcherTextEn   String?
+  welcomeMessageLv String?   @db.Text
+  welcomeMessageEn String?   @db.Text
+  logoUrl          String?
+  avatarUrl        String?
+  quickActions     String[]  @default(["Cenas", "Pakalpojumi", "Darba laiks", "Kontakti", "Vēlos pieteikt vizīti"])
+  leadFormEnabled  Boolean   @default(true)
+  leadFields       Json?
+  allowedOrigins   String[]  @default([])
+  isActive         Boolean   @default(true)
+  lastLoadedAt     DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([publicKey])
+}
+
+// ─── Knowledge / RAG ─────────────────────────────────────────────────────────
+
+model Website {
+  id            String        @id @default(uuid()) @db.Uuid
+  workspaceId   String        @db.Uuid
+  url           String
+  normalizedUrl String
+  title         String?
+  status        WebsiteStatus @default(PENDING)
+  lastCrawledAt DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  workspace          Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  crawlJobs          CrawlJob[]
+  knowledgeDocuments KnowledgeDocument[]
+
+  @@unique([workspaceId, normalizedUrl])
+  @@index([workspaceId])
+  @@index([workspaceId, status])
+}
+
+model CrawlJob {
+  id              String         @id @default(uuid()) @db.Uuid
+  workspaceId     String         @db.Uuid
+  websiteId       String         @db.Uuid
+  status          CrawlJobStatus @default(QUEUED)
+  pagesDiscovered Int            @default(0)
+  pagesProcessed  Int            @default(0)
+  pageLimit       Int            @default(10)
+  errorMessage    String?        @db.Text
+  failureLog      Json?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  website   Website   @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, status])
+  @@index([websiteId])
+  @@index([createdAt])
+}
+
+model KnowledgeDocument {
+  id           String                  @id @default(uuid()) @db.Uuid
+  workspaceId  String                  @db.Uuid
+  websiteId    String?                 @db.Uuid
+  type         KnowledgeDocumentType
+  status       KnowledgeDocumentStatus @default(PENDING)
+  title        String
+  sourceUrl    String?
+  mimeType     String?
+  contentHash  String?
+  rawText      String?                 @db.Text
+  metadata     Json?
+  errorMessage String?                 @db.Text
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+
+  workspace Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  website   Website?          @relation(fields: [websiteId], references: [id], onDelete: SetNull)
+  chunks    KnowledgeChunk[]
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, type])
+  @@index([websiteId])
+  @@index([workspaceId, sourceUrl])
+  @@index([contentHash])
+}
+
+model KnowledgeChunk {
+  id           String                       @id @default(uuid()) @db.Uuid
+  workspaceId  String                       @db.Uuid
+  documentId   String                       @db.Uuid
+  chunkIndex   Int
+  content      String                       @db.Text
+  contentHash  String?
+  tokenCount   Int?
+  embedding    Unsupported("vector(1536)")?
+  embeddedAt   DateTime?
+  metadata     Json?
+  createdAt    DateTime                     @default(now())
+  updatedAt    DateTime                     @updatedAt
+
+  workspace Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  document  KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, chunkIndex])
+  @@index([workspaceId])
+  @@index([documentId])
+  @@index([contentHash])
+}
+
+model Service {
+  id            String   @id @default(uuid()) @db.Uuid
+  workspaceId   String   @db.Uuid
+  nameLv        String
+  nameEn        String?
+  descriptionLv String?  @db.Text
+  descriptionEn String?  @db.Text
+  priceFrom     Decimal? @db.Decimal(10, 2)
+  priceTo       Decimal? @db.Decimal(10, 2)
+  currency      String   @default("EUR")
+  duration      String?
+  category      String?
+  notes         String?  @db.Text
+  isActive      Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, isActive])
+  @@index([workspaceId, category])
+}
+
+model FAQ {
+  id          String   @id @default(uuid()) @db.Uuid
+  workspaceId String   @db.Uuid
+  questionLv  String
+  questionEn  String?
+  answerLv    String   @db.Text
+  answerEn    String?  @db.Text
+  category    String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, isActive])
+  @@index([workspaceId, category])
+}
+
+// ─── Conversations / Leads ───────────────────────────────────────────────────
+
+model Conversation {
+  id              String             @id @default(uuid()) @db.Uuid
+  workspaceId     String             @db.Uuid
+  status          ConversationStatus @default(OPEN)
+  visitorId       String?
+  visitorLocale   Locale             @default(lv)
+  visitorMetadata Json?
+  summary         String?            @db.Text
+  startedAt       DateTime           @default(now())
+  lastMessageAt   DateTime           @default(now())
+  closedAt        DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  workspace    Workspace             @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  messages     ConversationMessage[]
+  lead         Lead?
+  appointments Appointment[]
+  aiUsageEvents AiUsageEvent[]
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, lastMessageAt])
+  @@index([visitorId])
+}
+
+model ConversationMessage {
+  id             String      @id @default(uuid()) @db.Uuid
+  workspaceId    String      @db.Uuid
+  conversationId String      @db.Uuid
+  role           MessageRole
+  content        String      @db.Text
+  metadata       Json?
+  createdAt      DateTime    @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([workspaceId, createdAt])
+}
+
+model Lead {
+  id             String     @id @default(uuid()) @db.Uuid
+  workspaceId    String     @db.Uuid
+  conversationId String?    @unique @db.Uuid
+  status         LeadStatus @default(NEW)
+  name           String?
+  email          String?
+  phone          String?
+  service        String?
+  summary        String?    @db.Text
+  intent         String?
+  notes          String?    @db.Text
+  score          Int?
+  source         String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  workspace    Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  conversation Conversation?      @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  fields       LeadField[]
+  appointments Appointment[]
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, service])
+  @@index([email])
+  @@index([phone])
+}
+
+model LeadField {
+  id        String   @id @default(uuid()) @db.Uuid
+  leadId    String   @db.Uuid
+  key       String
+  value     String   @db.Text
+  createdAt DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@unique([leadId, key])
+  @@index([leadId])
+}
+
+model Appointment {
+  id               String            @id @default(uuid()) @db.Uuid
+  workspaceId      String            @db.Uuid
+  conversationId   String?           @db.Uuid
+  leadId           String?           @db.Uuid
+  status           AppointmentStatus @default(PENDING)
+  service          String?
+  startTime        DateTime?
+  endTime          DateTime?
+  customerName     String?
+  customerEmail    String?
+  customerPhone    String?
+  title            String?
+  notes            String?           @db.Text
+  externalEventId  String?
+  provider         String?
+  failureReason    String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  lead         Lead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, startTime])
+}
+
+// ─── Ops ─────────────────────────────────────────────────────────────────────
+
+model Integration {
+  id                   String          @id @default(uuid()) @db.Uuid
+  workspaceId          String          @db.Uuid
+  type                 IntegrationType
+  name                 String
+  provider             String?
+  config               Json
+  accessTokenEnc       String?         @db.Text
+  refreshTokenEnc      String?         @db.Text
+  tokenExpiresAt       DateTime?
+  scopes               String[]        @default([])
+  externalAccountEmail String?
+  isActive             Boolean         @default(false)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, type, provider])
+  @@index([workspaceId, type])
+}
+
+model Notification {
+  id          String              @id @default(uuid()) @db.Uuid
+  workspaceId String              @db.Uuid
+  channel     NotificationChannel
+  title       String
+  body        String              @db.Text
+  payload     Json?
+  readAt      DateTime?
+  sentAt      DateTime?
+  createdAt   DateTime            @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, readAt])
+}
+
+model UsageRecord {
+  id          String   @id @default(uuid()) @db.Uuid
+  workspaceId String   @db.Uuid
+  metric      String
+  quantity    Int      @default(1)
+  periodStart DateTime
+  periodEnd   DateTime
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, metric, periodStart])
+  @@unique([workspaceId, metric, periodStart, periodEnd])
+}
+
+/// Idempotency ledger for Stripe webhooks (event.id is unique).
+model ProcessedStripeEvent {
+  id          String   @id // Stripe event id (evt_...)
+  type        String
+  processedAt DateTime @default(now())
+  payload     Json?
+}
+
+model AiUsageEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  workspaceId    String   @db.Uuid
+  conversationId String?  @db.Uuid
+  model          String
+  inputTokens    Int      @default(0)
+  outputTokens   Int      @default(0)
+  estimatedCost  Decimal  @db.Decimal(12, 6)
+  createdAt      DateTime @default(now())
+
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@index([conversationId])
+}
+
+model AuditLog {
+  id          String      @id @default(uuid()) @db.Uuid
+  workspaceId String?     @db.Uuid
+  userId      String?     @db.Uuid
+  action      AuditAction
+  entityType  String?
+  entityId    String?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}
+
+// ─── Partner / Agency (isolated from core SaaS tenancy) ───────────────────────
+// Join tables only — Workspace remains usable without any partner link.
+
+enum PartnerStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum PartnerMemberRole {
+  OWNER
+  ADMIN
+  VIEWER
+}
+
+enum PartnerWorkspaceStatus {
+  INVITED
+  ACTIVE
+  CHURNED
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  VOID
+}
+
+/// Agency / reseller account (e.g. TavsWebs). Independent of Workspace.
+model Partner {
+  id                     String        @id @default(uuid()) @db.Uuid
+  name                   String
+  slug                   String        @unique
+  status                 PartnerStatus @default(ACTIVE)
+  /// Default recurring commission in basis points (2000 = 20%).
+  defaultCommissionBps   Int           @default(2000)
+  /// Reserved for future white-label (logo, colors, display name). Not applied yet.
+  branding               Json?
+  /// Reserved for custom partner portal domain.
+  customDomain           String?
+  /// Reserved for widget brand string override.
+  widgetBrandName        String?
+  notes                  String?       @db.Text
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+
+  members    PartnerMember[]
+  workspaces PartnerWorkspace[]
+  referrals  Referral[]
+  commissions Commission[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model PartnerMember {
+  id        String            @id @default(uuid()) @db.Uuid
+  partnerId String            @db.Uuid
+  userId    String            @db.Uuid
+  role      PartnerMemberRole @default(VIEWER)
+  createdAt DateTime          @default(now())
+
+  partner Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([partnerId, userId])
+  @@index([userId])
+}
+
+/// Links a customer Workspace to a Partner without embedding partner into core tenancy.
+model PartnerWorkspace {
+  id                     String                 @id @default(uuid()) @db.Uuid
+  partnerId              String                 @db.Uuid
+  workspaceId            String                 @unique @db.Uuid
+  status                 PartnerWorkspaceStatus @default(INVITED)
+  /// Null → use Partner.defaultCommissionBps
+  commissionBpsOverride  Int?
+  source                 String?
+  referralId             String?                @db.Uuid
+  /// When the customer activated the AI assistant (onboarding completed).
+  activatedAt            DateTime?
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+
+  partner   Partner   @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  referral  Referral? @relation(fields: [referralId], references: [id], onDelete: SetNull)
+  commissions Commission[]
+
+  @@index([partnerId, status])
+  @@index([referralId])
+  @@index([createdAt])
+}
+
+/// Partner referral / tracking codes (replaces unused customer-referral stub).
+model Referral {
+  id          String   @id @default(uuid()) @db.Uuid
+  partnerId   String   @db.Uuid
+  code        String   @unique
+  label       String?
+  clicks      Int      @default(0)
+  conversions Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  partner            Partner            @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerWorkspaces  PartnerWorkspace[]
+
+  @@index([partnerId])
+}
+
+/// Recurring commission rows, typically created from Stripe invoice.paid.
+model Commission {
+  id                    String           @id @default(uuid()) @db.Uuid
+  partnerId             String           @db.Uuid
+  workspaceId           String           @db.Uuid
+  partnerWorkspaceId    String           @db.Uuid
+  stripeInvoiceId       String           @unique
+  currency              String           @default("eur")
+  invoiceAmountCents    Int
+  commissionBps         Int
+  commissionAmountCents Int
+  status                CommissionStatus @default(PENDING)
+  periodStart           DateTime?
+  periodEnd             DateTime?
+  paidAt                DateTime?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  partner          Partner          @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  partnerWorkspace PartnerWorkspace @relation(fields: [partnerWorkspaceId], references: [id], onDelete: Cascade)
+
+  @@index([partnerId, createdAt])
+  @@index([workspaceId])
+  @@index([status])
+}

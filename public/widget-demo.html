@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="lv">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>TavsWebs Bot — Plain HTML demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #14201c;
+        --muted: #5b6b64;
+        --bg: #eef2ee;
+        --panel: #fffcf8;
+        --line: #d7dbd4;
+        --accent: #0f5c4c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, #d9e8e1, transparent 40%),
+          linear-gradient(180deg, var(--bg), #f7f6f3 55%);
+      }
+      main {
+        max-width: 42rem;
+        margin: 0 auto;
+        padding: 4rem 1.25rem 8rem;
+      }
+      h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        letter-spacing: -0.02em;
+        margin: 0.5rem 0 0;
+      }
+      p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+      code {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 0.1rem 0.35rem;
+        border-radius: 4px;
+        font-size: 0.85em;
+      }
+      .panel {
+        margin-top: 2rem;
+        padding: 1rem 1.1rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Plain HTML embed test</p>
+      <h1>Klienta mājaslapas simulācija</h1>
+      <p>
+        Šī lapa ielādē <code>widget.js</code> ar publisko
+        <code>data-widget-id</code>. Atveriet čatu apakšējā stūrī.
+      </p>
+      <div class="panel">
+        <p style="margin: 0">
+          Widget ID:
+          <code id="widget-id-label">loading…</code>
+        </p>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get("id");
+        var label = document.getElementById("widget-id-label");
+        if (!id) {
+          label.textContent = "missing ?id=PUBLIC_WIDGET_ID";
+          return;
+        }
+        label.textContent = id;
+        var origin = window.location.origin;
+        var s = document.createElement("script");
+        s.src = origin + "/widget.js";
+        s.async = true;
+        s.dataset.widgetId = id;
+        document.body.appendChild(s);
+      })();
+    </script>
+  </body>
+</html>

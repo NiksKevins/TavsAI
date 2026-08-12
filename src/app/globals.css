@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  /* TavsWebs brand — blue accent on clean light surfaces */
+  --background: #fafafa;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+  --accent-foreground: #2563eb;
+  --destructive: #b42318;
+  --destructive-foreground: #fff7f6;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #3b82f6;
+  --radius: 0.75rem;
+  --hero-spot: #dbeafe;
+  --ink-soft: #475569;
+  --accent-cyan: #5eead4;
+  --accent-bright: #60a5fa;
+  --surface-dark: #05070c;
+  --surface-elevated: #0a1220;
+  --text-on-dark: #ffffff;
+  --text-muted-on-dark: #94a3b8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-hero-spot: var(--hero-spot);
+  --color-ink-soft: var(--ink-soft);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-bright: var(--accent-bright);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text-on-dark: var(--text-on-dark);
+  --color-text-muted-on-dark: var(--text-muted-on-dark);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-syne), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.marketing-hero-bg {
+  background: linear-gradient(180deg, #f8fafc 0%, #fafafa 100%);
+}
+
+.marketing-hero-accent {
+  background: radial-gradient(
+    ellipse 55% 45% at 100% 0%,
+    rgba(59, 130, 246, 0.09),
+    transparent 65%
+  );
+}
+
+.marketing-stage-bg {
+  background-color: #05070c;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% 0%, rgba(59, 130, 246, 0.28), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 10% 100%, rgba(96, 165, 250, 0.12), transparent 50%),
+    linear-gradient(165deg, #05070c 0%, #0a1220 45%, #0c1a2e 100%);
+}
+
+.marketing-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.marketing-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border) 15%,
+    var(--border) 85%,
+    transparent 100%
+  );
+}
+

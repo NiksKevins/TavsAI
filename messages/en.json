@@ -1,0 +1,1264 @@
+{
+  "meta": {
+    "title": "TavsWebs Bot — AI employee for your website",
+    "description": "Give your website an AI employee. Answer 24/7, capture leads, and help customers reach a booking."
+  },
+  "nav": {
+    "pricing": "Pricing",
+    "login": "Log in",
+    "register": "Start free",
+    "product": "Product",
+    "demo": "Demo",
+    "how": "How it works",
+    "industries": "Industries",
+    "faq": "FAQ"
+  },
+  "home": {
+    "brand": "TavsWebs Bot",
+    "headline": "Give your website an AI employee.",
+    "subhead": "Answer customer questions 24/7, capture leads, and help them reach a booking — automatically.",
+    "ctaPrimary": "Try for free",
+    "ctaSecondary": "Watch the demo",
+    "phaseNote": ""
+  },
+  "marketing": {
+    "hero": {
+      "headline": "Give your website an AI employee.",
+      "subhead": "Answer customer questions 24/7, capture leads, and help them reach a booking — automatically.",
+      "ctaPrimary": "Try for free",
+      "ctaSecondary": "Watch the demo",
+      "proof": "Product preview",
+      "trust": "Free to start · No card required · Latvian and English",
+      "tryHint": "Try the chat right here — pick an industry and ask a question."
+    },
+    "demo": {
+      "eyebrow": "Try it",
+      "title": "Chat with an AI employee",
+      "subtitle": "Pick an industry and ask a real question. Replies come from a live assistant with industry knowledge — not a hard-coded script.",
+      "choose": "Choose an industry",
+      "liveHint": "Live demo conversation",
+      "online": "Online",
+      "typing": "Typing…",
+      "placeholder": "Ask a question…",
+      "send": "Send",
+      "error": "Could not get a reply. Please try again.",
+      "rateLimited": "Too many requests. Please wait a moment.",
+      "leadTitle": "Leave your details — the team will follow up",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email (optional)",
+      "submitLead": "Send request",
+      "sending": "Sending…",
+      "leadError": "Could not submit. Check your details.",
+      "leadThanks": "Thanks! The {business} team would receive this lead. (Demo only — on a real site, leads land in your dashboard.)"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "title": "Customers ask. You lose time and leads.",
+      "hint": "It happens every week — even with a good website.",
+      "items": {
+        "0": "Customers ask the same questions over and over — prices, hours, availability.",
+        "1": "Many visit after working hours, when nobody replies.",
+        "2": "Potential leads leave without contacting the company.",
+        "3": "Your team spends hours answering repetitive questions."
+      }
+    },
+    "solution": {
+      "eyebrow": "The solution",
+      "title": "Your AI employee does the evening shift for you.",
+      "subtitle": "It knows your business, talks to customers, and moves them to the next step.",
+      "items": {
+        "0": {
+          "title": "Answers",
+          "body": "Questions about prices, services, and hours — in Latvian and English."
+        },
+        "1": {
+          "title": "Understands",
+          "body": "Uses your website and documents — it does not invent facts."
+        },
+        "2": {
+          "title": "Qualifies",
+          "body": "Asks short questions to see if someone is ready to buy or book."
+        },
+        "3": {
+          "title": "Collects",
+          "body": "Captures name, phone, and email — leads land in your dashboard."
+        },
+        "4": {
+          "title": "Hands off",
+          "body": "When a human is needed, it passes the chat with context."
+        },
+        "5": {
+          "title": "Books",
+          "body": "Helps schedule a visit when your calendar is connected."
+        }
+      },
+      "footnote": "Not another chat app for customers to learn — just a button on the site they already use."
+    },
+    "visuals": {
+      "showcaseTitle": "What you get",
+      "showcaseSubtitle": "A chat widget on your website, trained on your business — with every lead in your dashboard.",
+      "siteUrl": "autoserviss.lv",
+      "siteHeadline": "Auto service & tyre fitting",
+      "siteNav": ["Services", "Prices", "Contact"],
+      "chatAssistant": "AI assistant",
+      "chatBusiness": "AutoServiss",
+      "chatUserMsg": "How much is an oil change?",
+      "chatBotMsg": "From €45 incl. filter. Want to book a time?",
+      "badge247": "24/7 replies",
+      "badgeLead": "Lead captured",
+      "cardWidgetTitle": "Lives on your website",
+      "cardWidgetBody": "One script tag — a chat button in the corner of any page.",
+      "cardKnowledgeTitle": "Knows your business",
+      "cardKnowledgeBody": "Trained on your site, FAQs, and uploaded documents.",
+      "cardLeadsTitle": "Leads in your panel",
+      "cardLeadsBody": "Name, phone, and full conversation — ready to follow up.",
+      "leadName": "Anna B.",
+      "leadPhone": "+371 2X XXX XXX",
+      "leadStatus": "New",
+      "knowledgeWebsite": "Website crawl",
+      "knowledgeFaq": "FAQ & services",
+      "knowledgeDocs": "PDF price list"
+    },
+    "homeBridge": {
+      "howTitle": "How it works",
+      "howBody": "From website URL to live conversations — four steps, no heavy setup.",
+      "pricingTitle": "Pricing",
+      "pricingBody": "Start free. Pay when volume grows — clear limits, no surprises.",
+      "linkLabel": "View"
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Four steps to the first conversation.",
+      "steps": {
+        "0": {
+          "title": "Add your website",
+          "body": "Enter your URL — the system starts learning your content."
+        },
+        "1": {
+          "title": "AI learns the business",
+          "body": "Services, FAQs, documents, and business info become the knowledge base."
+        },
+        "2": {
+          "title": "Paste one code snippet",
+          "body": "A small script on your site — no heavy integration project."
+        },
+        "3": {
+          "title": "AI starts talking",
+          "body": "Customers get answers 24/7; you get leads and summaries."
+        }
+      }
+    },
+    "industries": {
+      "eyebrow": "Industries",
+      "title": "Built for Latvian service businesses.",
+      "subtitle": "Especially useful when customers ask about prices and want to book.",
+      "items": {
+        "0": "Auto services",
+        "1": "Beauty salons",
+        "2": "Hair salons",
+        "3": "Construction",
+        "4": "Real estate",
+        "5": "Dentistry",
+        "6": "Restaurants",
+        "7": "Professional services"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Start free. Scale when demand grows.",
+      "subtitle": "Clear conversation limits. BUSINESS is the recommended plan for most companies.",
+      "perMonth": "/ month",
+      "conversations": "{count} conversations / month",
+      "recommended": "Recommended",
+      "cta": "Start",
+      "features": {
+        "FREE": {
+          "0": "Widget and basic assistant",
+          "1": "Website crawl",
+          "2": "Lead capture"
+        },
+        "STARTER": {
+          "0": "Everything in Free",
+          "1": "More crawl pages",
+          "2": "Lead email notifications"
+        },
+        "BUSINESS": {
+          "0": "Everything in Starter",
+          "1": "Analytics and unanswered questions",
+          "2": "Appointment booking flow",
+          "3": "Ready for priority support"
+        },
+        "PRO": {
+          "0": "Everything in Business",
+          "1": "High conversation limit",
+          "2": "Larger knowledge bases",
+          "3": "For teams with heavy traffic"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "items": {
+        "0": {
+          "q": "Do I need to know how to code?",
+          "a": "No. You add your website, configure the assistant in the dashboard, and paste one ready-made snippet."
+        },
+        "1": {
+          "q": "How quickly can I set it up?",
+          "a": "A first version is usually ready the same day: registration, crawl, and widget code take minutes, not weeks."
+        },
+        "2": {
+          "q": "Does the AI speak Latvian?",
+          "a": "Yes. The assistant is built for Latvian and English — with optional automatic language matching."
+        },
+        "3": {
+          "q": "Will it work with my website?",
+          "a": "Yes, if you can paste a script (WordPress, Webflow, custom HTML, and more). The widget is small and CMS-agnostic."
+        },
+        "4": {
+          "q": "Can I control what the AI says?",
+          "a": "Yes. You set tone, restricted topics, greetings, fallbacks, and knowledge sources. Answers are grounded in your content."
+        },
+        "5": {
+          "q": "Can I cancel my subscription?",
+          "a": "Yes. Cancel from the dashboard; access continues until the end of the paid period."
+        }
+      }
+    },
+    "finalCta": {
+      "eyebrow": "Get started",
+      "title": "Your website works even when you don’t.",
+      "cta": "Start for free"
+    },
+    "footer": {
+      "tagline": "An AI employee for Latvian websites — answers, leads, and bookings without night shifts.",
+      "demo": "Demo",
+      "pricing": "Pricing",
+      "start": "Start",
+      "login": "Log in"
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Start free. Pay only when conversation volume grows.",
+    "perMonth": "/ month",
+    "conversations": "{count} conversations / month",
+    "cta": "Start",
+    "recommended": "Recommended",
+    "note": "Upgrade anytime from Dashboard → Billing. Stripe Checkout handles payments securely."
+  },
+  "common": {
+    "language": "Language",
+    "latvian": "Latviešu",
+    "english": "English",
+    "comingSoon": "Coming soon"
+  },
+  "auth": {
+    "fields": {
+      "name": "Name",
+      "businessName": "Business name",
+      "email": "Email",
+      "password": "Password",
+      "newPassword": "New password",
+      "passwordHint": "At least 8 characters."
+    },
+    "login": {
+      "title": "Log in",
+      "subtitle": "Sign in to your TavsWebs Bot account.",
+      "submit": "Log in",
+      "submitting": "Signing in…",
+      "forgot": "Forgot password?",
+      "noAccount": "No account?",
+      "registerLink": "Register"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Start on the free plan — no card required.",
+      "submit": "Create account",
+      "submitting": "Creating…",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "referral": "Partner referral: {code}"
+    },
+    "forgot": {
+      "title": "Reset password",
+      "subtitle": "Enter your email. If an account exists, we will prepare a reset link.",
+      "submit": "Send link",
+      "submitting": "Sending…",
+      "sent": "If an account exists, a reset link is ready. In development, check the server log.",
+      "back": "Back to login"
+    },
+    "reset": {
+      "title": "New password",
+      "subtitle": "Choose a strong password for your account.",
+      "submit": "Save password",
+      "submitting": "Saving…"
+    },
+    "errors": {
+      "invalid_input": "Please check your input.",
+      "email_taken": "This email is already registered.",
+      "signin_failed": "Could not sign in. Try again.",
+      "invalid_credentials": "Incorrect email or password.",
+      "invalid_token": "This reset link is invalid or expired."
+    }
+  },
+  "onboarding": {
+    "progress": "Step {step} of {total}",
+    "continue": "Continue",
+    "back": "Back",
+    "finish": "Open dashboard",
+    "fields": {
+      "businessName": "Business name",
+      "websiteUrl": "Website URL",
+      "industry": "Industry",
+      "assistantName": "Assistant name",
+      "greeting": "Greeting",
+      "tone": "Tone",
+      "suggestedQuestions": "Suggested questions",
+      "suggestedHint": "One question per line — shown as widget quick actions.",
+      "leadFields": "Lead fields (automatic)",
+      "language": "Primary language"
+    },
+    "tones": {
+      "professional": "Professional",
+      "friendly": "Friendly",
+      "concise": "Concise",
+      "warm": "Warm"
+    },
+    "steps": {
+      "business": {
+        "title": "What’s your business called?",
+        "subtitle": "This name appears in the dashboard and in the assistant greeting."
+      },
+      "website": {
+        "title": "What’s your website address?",
+        "subtitle": "We’ll validate it now, then load content into the knowledge base.",
+        "note": "A valid public http(s) URL. Internal networks and localhost are not allowed."
+      },
+      "industry": {
+        "title": "What’s your industry?",
+        "subtitle": "Used to auto-set tone, greeting, and lead questions."
+      },
+      "crawl": {
+        "title": "Analyzing your website",
+        "subtitle": "This takes a moment. Numbers come from a real crawl — not a demo.",
+        "analyzing": "Analyzing your website...",
+        "done": "Website processed.",
+        "finishedWithIssues": "Crawl finished with warnings — continue or retry.",
+        "finding": "Discovering pages…",
+        "found": "Found {count} pages",
+        "processing": "Processing content…",
+        "processed": "Processed {count} pages",
+        "knowledgePending": "Building the AI knowledge base…",
+        "knowledgeReady": "AI knowledge base ready ({docs} documents, {chunks} chunks)",
+        "skip": "Skip for now",
+        "retry": "Retry"
+      },
+      "customize": {
+        "title": "Customize your assistant",
+        "subtitle": "We prepared settings from your industry. Edit anything you need."
+      },
+      "preview": {
+        "title": "Try a conversation",
+        "subtitle": "Ask as a customer — replies use your knowledge when it’s ready.",
+        "placeholder": "e.g. How much are your services?",
+        "send": "Send"
+      },
+      "install": {
+        "title": "Add the code to your website",
+        "subtitle": "One snippet — and your AI employee starts answering visitors.",
+        "copy": "Copy code",
+        "copied": "Copied",
+        "test": "Test on my website",
+        "hint": "After pasting, open your site and check the widget. You can change appearance and allowed origins in the dashboard."
+      }
+    },
+    "languages": {
+      "lv": "Latviešu",
+      "en": "English"
+    },
+    "industries": {
+      "BEAUTY_SALON": "Beauty",
+      "BARBER": "Barbershop",
+      "AUTOMOTIVE": "Auto service",
+      "CONSTRUCTION": "Construction",
+      "REAL_ESTATE": "Real estate",
+      "RESTAURANT": "Restaurant",
+      "DENTAL_CLINIC": "Dental",
+      "PROFESSIONAL_SERVICES": "Professional services",
+      "OTHER": "Other"
+    },
+    "errors": {
+      "invalid_step": "Invalid step.",
+      "invalid_name": "Enter a valid name.",
+      "invalid_url": "Enter a valid website URL.",
+      "invalid_industry": "Choose an industry.",
+      "invalid_assistant_name": "Enter an assistant name.",
+      "invalid_greeting": "Enter a greeting.",
+      "invalid_tone": "Choose a tone.",
+      "invalid_locale": "Choose a language.",
+      "invalid_question": "Enter a short question.",
+      "preview_failed": "Could not get a reply.",
+      "crawl_start_failed": "Could not start the crawl.",
+      "copy_failed": "Could not copy."
+    }
+  },
+  "dashboard": {
+    "logout": "Log out",
+    "nav": {
+      "overview": "Overview",
+      "conversations": "Conversations",
+      "leads": "Leads",
+      "knowledge": "Knowledge",
+      "assistant": "Assistant",
+      "widget": "Widget",
+      "analytics": "Analytics",
+      "appointments": "Appointments",
+      "integrations": "Integrations",
+      "billing": "Billing",
+      "settings": "Settings",
+      "partner": "Partner portal"
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Welcome, {workspace}.",
+      "last30Days": "Last 30 days",
+      "viewAll": "View all",
+      "viewAnalytics": "Analytics",
+      "noData": "No activity yet — install the widget to start collecting conversations.",
+      "workspace": "Workspace",
+      "plan": "Plan",
+      "planLimit": "{count} conversations / month",
+      "next": "Next steps",
+      "nextHint": "Next: add your website under Knowledge and run a crawl.",
+      "metrics": {
+        "conversations": "Conversations",
+        "leads": "Leads",
+        "leadConversion": "Lead conversion",
+        "unanswered": "Unanswered",
+        "usage": "Usage",
+        "knowledgeChunks": "Knowledge chunks",
+        "appointments": "Upcoming bookings"
+      },
+      "usageCard": {
+        "title": "Plan & usage",
+        "remaining": "{count} conversations left this period",
+        "period": "Period ends",
+        "upgrade": "Manage plan"
+      },
+      "setup": {
+        "title": "Setup checklist",
+        "subtitle": "{done} of {total} complete",
+        "website": "Add your website URL",
+        "crawl": "Crawl website content",
+        "content": "Add FAQs, services, or documents",
+        "assistant": "Configure the assistant",
+        "widget": "Install widget on your site",
+        "calendar": "Connect Google Calendar"
+      },
+      "system": {
+        "title": "System status",
+        "widget": "Widget",
+        "widgetLive": "Live on site",
+        "widgetPending": "Not detected yet",
+        "widgetInactive": "Disabled",
+        "assistant": "Assistant",
+        "knowledge": "Knowledge base",
+        "knowledgeReady": "Ready",
+        "knowledgeEmpty": "Needs content",
+        "calendar": "Calendar",
+        "calendarConnected": "Connected",
+        "calendarDisconnected": "Not connected"
+      },
+      "charts": {
+        "conversations": "Conversations over time",
+        "leads": "Leads over time"
+      },
+      "recentConversations": {
+        "title": "Recent conversations",
+        "empty": "No conversations yet. Once the widget is live, they appear here.",
+        "visitor": "Visitor",
+        "columns": {
+          "preview": "Last message",
+          "status": "Status",
+          "lead": "Lead",
+          "date": "Date"
+        }
+      },
+      "recentLeads": {
+        "title": "Recent leads",
+        "empty": "No leads yet. The assistant captures them during chats.",
+        "columns": {
+          "contact": "Contact",
+          "service": "Service",
+          "status": "Status",
+          "date": "Date"
+        }
+      },
+      "knowledgeSummary": {
+        "title": "Knowledge base",
+        "website": "Website",
+        "pages": "Pages indexed",
+        "faqs": "FAQs",
+        "services": "Services",
+        "documents": "Uploaded files",
+        "chunks": "Searchable chunks",
+        "crawlStatus": "Crawl status",
+        "noWebsite": "Not added"
+      },
+      "conversationStatuses": {
+        "OPEN": "Open",
+        "QUALIFIED": "Qualified",
+        "HANDED_OFF": "Handed off",
+        "CLOSED": "Closed"
+      }
+    },
+    "pages": {
+      "conversations": {
+        "title": "Conversations",
+        "empty": "Customer conversations will appear here once the widget is live. No data yet."
+      },
+      "leads": {
+        "title": "Leads",
+        "empty": "Leads will appear when the assistant starts collecting contacts."
+      },
+      "knowledge": {
+        "title": "Knowledge",
+        "empty": "Knowledge base (website, documents, FAQs) lands in the next phase."
+      },
+      "assistant": {
+        "title": "Assistant",
+        "empty": "Behavior and tone settings will be available after the AI phase."
+      },
+      "widget": {
+        "title": "Widget",
+        "empty": "Widget install code will live here in a later phase."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "empty": "Open Analytics for conversations, leads, and unanswered questions."
+      },
+      "appointments": {
+        "title": "Appointments",
+        "empty": "Appointments appear when customers book via the assistant."
+      },
+      "integrations": {
+        "title": "Integrations",
+        "empty": "Connect Google Calendar under Integrations to enable booking."
+      },
+      "billing": {
+        "title": "Billing",
+        "empty": "Manage your plan and usage under Billing."
+      },
+      "settings": {
+        "title": "Settings",
+        "empty": "Workspace and team settings come in a later iteration."
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Knowledge",
+    "subtitle": "Website content your assistant will use for answers.",
+    "links": {
+      "website": "Website crawl"
+    },
+    "fields": {
+      "websiteUrl": "Website URL"
+    },
+    "actions": {
+      "scan": "Scan website",
+      "rescan": "Rescan",
+      "cancel": "Cancel"
+    },
+    "status": {
+      "title": "Crawl status",
+      "noWebsite": "No website added yet.",
+      "discovered": "Pages discovered",
+      "processed": "Pages processed",
+      "limit": "Limit"
+    },
+    "stats": {
+      "website": "Website",
+      "lastCrawl": "Last crawl",
+      "documents": "Documents",
+      "chunks": "Chunks"
+    },
+    "explorer": {
+      "heading": "Page explorer",
+      "subtitle": "Grouped by page type. Open a page to inspect content.",
+      "empty": "No pages ingested yet. Start a crawl.",
+      "title": "Title",
+      "url": "URL",
+      "status": "Status",
+      "chunks": "Chunks"
+    },
+    "categories": {
+      "home": "Home",
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "other": "Other pages"
+    },
+    "websitePage": {
+      "title": "Website",
+      "subtitle": "Crawl is one knowledge source — not the only one.",
+      "note": "Crawl runs in the background. After scanning, content is chunked and embedded."
+    },
+    "document": {
+      "updated": "Updated",
+      "content": "Extracted content",
+      "untrusted": "This content is untrusted data — it is never executed as system instructions.",
+      "chunks": "Knowledge chunks",
+      "chunksNote": "Chunks with embeddings used for AI answers."
+    },
+    "tabs": {
+      "website": "Website",
+      "services": "Services",
+      "faqs": "FAQs",
+      "documents": "Documents",
+      "business": "Business",
+      "test": "Test AI"
+    },
+    "reindex": {
+      "action": "Reindex knowledge",
+      "running": "Indexing…",
+      "done": "Embedded {embedded}, skipped {skipped}",
+      "error": "Reindex failed"
+    },
+    "business": {
+      "title": "Business information",
+      "subtitle": "This is a high-priority source for AI answers.",
+      "save": "Save",
+      "saved": "Saved and synced to knowledge.",
+      "error": "Could not save. Check fields and JSON.",
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "city": "City",
+        "website": "Website",
+        "hours": "Opening hours (JSON)",
+        "hoursHint": "Example: {\"mon\":\"9-18\",\"tue\":\"9-18\"}",
+        "social": "Social links (JSON)",
+        "socialHint": "Example: {\"instagram\":\"https://...\"}",
+        "languages": "Languages",
+        "languagesHint": "Comma-separated, e.g. lv, en",
+        "policies": "Policies / terms"
+      }
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Manually control what the AI knows about your offer. Price is optional.",
+      "create": "New service",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saved": "Saved.",
+      "error": "Could not save.",
+      "delete": "Delete",
+      "empty": "No services yet.",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "fields": {
+        "name": "Name",
+        "description": "Description",
+        "price": "Price from",
+        "priceOptional": "Optional",
+        "duration": "Duration",
+        "category": "Category",
+        "notes": "Notes",
+        "available": "Available"
+      }
+    },
+    "faqs": {
+      "title": "FAQs",
+      "subtitle": "Questions and answers. Changes automatically refresh embeddings.",
+      "create": "New FAQ",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saved": "Saved.",
+      "error": "Could not save.",
+      "delete": "Delete",
+      "empty": "No FAQs yet.",
+      "search": "Search…",
+      "searchAction": "Search",
+      "published": "Published",
+      "draft": "Draft",
+      "fromAnalytics": "Prefilled from an unanswered analytics question. Edit the answer, then save to embed it in knowledge.",
+      "fields": {
+        "question": "Question",
+        "answer": "Answer",
+        "category": "Category",
+        "published": "Published"
+      }
+    },
+    "documents": {
+      "title": "Documents",
+      "subtitle": "Upload PDF, TXT, or DOCX. Files are validated, extracted, and embedded.",
+      "upload": "Upload",
+      "uploadHint": "Max 5 MB. Allowed: .pdf, .txt, .docx",
+      "uploadAction": "Upload",
+      "uploading": "Uploading…",
+      "uploaded": "Document processed.",
+      "empty": "No documents yet.",
+      "delete": "Delete",
+      "errors": {
+        "missing_file": "Choose a file.",
+        "file_too_large": "File is too large.",
+        "invalid_extension": "Extension not allowed.",
+        "invalid_mime": "MIME type not allowed.",
+        "empty_file": "Empty file.",
+        "malware_detected": "File rejected for security.",
+        "extract_failed": "Could not extract text.",
+        "empty_text": "No text found in file."
+      }
+    },
+    "test": {
+      "title": "Test your AI",
+      "subtitle": "Ask a question and see the answer plus sources used — never system instructions.",
+      "placeholder": "Example: How much does X cost?",
+      "ask": "Ask",
+      "running": "Generating…",
+      "answer": "AI answer",
+      "sources": "Sources used",
+      "noSources": "No sufficiently similar content found.",
+      "fallback": "Fallback used",
+      "error": "Test failed."
+    },
+    "errors": {
+      "invalid_url": "Invalid URL.",
+      "empty_url": "Enter a URL.",
+      "unsupported_protocol": "Only http/https are allowed.",
+      "invalid_hostname": "Invalid hostname.",
+      "blocked_hostname": "This host is not allowed.",
+      "private_ip": "Private/internal addresses are blocked.",
+      "dns_failed": "DNS lookup failed.",
+      "crawl_in_progress": "A crawl is already running.",
+      "website_missing": "Add a website first.",
+      "crawl_not_active": "No active crawl to cancel."
+    }
+  },
+  "widgetAdmin": {
+    "title": "Widget",
+    "subtitle": "Embeddable chat for customer sites — no API keys in the snippet.",
+    "status": {
+      "installed": "Installed",
+      "notInstalled": "Not installed",
+      "live": "Live",
+      "paused": "Paused"
+    },
+    "install": {
+      "title": "Installation",
+      "subtitle": "Add this code to your website. The widget ID is public — it never includes secrets.",
+      "copy": "Copy code",
+      "copied": "Copied",
+      "test": "Test widget",
+      "htmlDemo": "Plain HTML demo",
+      "publicKeyHint": "Public widget ID:",
+      "guides": {
+        "html": "Paste the script tag on any HTML page before the closing body tag.",
+        "wordpress": "Add the code in Appearance → Theme File Editor → footer.php, or use an Insert Headers and Footers plugin.",
+        "react": "Load the script once, for example inside useEffect (see example).",
+        "next": "Add next/script in a layout with strategy=\"afterInteractive\" and data-widget-id."
+      }
+    },
+    "config": {
+      "title": "Look & behavior",
+      "subtitle": "These settings are what visitors see on your website.",
+      "sections": {
+        "look": "Appearance",
+        "lookHint": "Color, theme, and position — the first thing customers notice.",
+        "content": "Content",
+        "contentHint": "Copy and quick replies that help start the conversation.",
+        "behavior": "Behavior",
+        "behaviorHint": "What happens when someone wants to leave contact details."
+      },
+      "color": "Brand color",
+      "colorHint": "Pick a color, or click a ready-made swatch.",
+      "radius": "Corner roundness",
+      "radiusHint": "How rounded the chat window feels.",
+      "position": "Screen position",
+      "positionHint": "Where the chat button sits.",
+      "positionRight": "Bottom right",
+      "positionLeft": "Bottom left",
+      "theme": "Theme",
+      "themeHint": "Light or dark chat window.",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "launcher": "Button label",
+      "launcherHint": "Shown when hovering the button (e.g. “Chat”).",
+      "welcome": "Welcome message",
+      "welcomeHint": "First message visitors see when they open the chat.",
+      "logo": "Logo URL",
+      "logoHint": "Optional. If empty, we show the assistant initial.",
+      "quickActions": "Quick replies",
+      "quickActionsHint": "One button per line. A click sends that text as a message.",
+      "leads": "Collect contact details",
+      "leadsHint": "Show name, phone, and email when answers are missing or someone asks for a human.",
+      "active": "Widget is on",
+      "activeHint": "If off, the snippet will not open chat on customer sites.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saveHint": "Preview reloads automatically after saving.",
+      "saved": "Changes saved.",
+      "error": "Could not save. Check the color (#RRGGBB) and other fields."
+    },
+    "preview": {
+      "title": "Preview",
+      "subtitle": "Live widget — open the button and try a conversation.",
+      "liveHint": "Saved settings"
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "subtitle": "Potential customers from conversations and widget forms.",
+    "configure": "Lead settings",
+    "unnamed": "Unnamed",
+    "filters": {
+      "search": "Search name, phone, email…",
+      "allStatuses": "All statuses",
+      "service": "Service",
+      "apply": "Filter"
+    },
+    "columns": {
+      "customer": "Customer",
+      "service": "Service",
+      "status": "Status",
+      "source": "Source",
+      "date": "Date"
+    },
+    "status": {
+      "NEW": "New",
+      "CONTACTED": "Contacted",
+      "QUALIFIED": "Qualified",
+      "WON": "Won",
+      "LOST": "Lost",
+      "SPAM": "Spam"
+    },
+    "empty": {
+      "title": "No leads yet",
+      "subtitle": "When a visitor shows purchase intent and meets your criteria, leads appear here."
+    },
+    "actions": {
+      "contacted": "Mark contacted",
+      "qualified": "Mark qualified",
+      "won": "Mark won",
+      "lost": "Mark lost",
+      "delete": "Delete lead"
+    },
+    "detail": {
+      "customer": "Customer information",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "service": "Service",
+      "intent": "Intent",
+      "source": "Source",
+      "summary": "Summary",
+      "summaryHint": "Short AI extraction from the conversation.",
+      "noSummary": "No summary yet.",
+      "fields": "Collected information",
+      "noFields": "No extra fields collected.",
+      "notes": "Notes",
+      "saveNotes": "Save notes",
+      "notesSaved": "Notes saved.",
+      "conversation": "Conversation",
+      "openConversation": "Open full conversation",
+      "noConversation": "No messages linked to this lead."
+    }
+  },
+  "conversations": {
+    "title": "Conversations",
+    "subtitle": "All customer chats with your AI employee.",
+    "visitor": "Visitor",
+    "linkedLead": "Linked lead",
+    "columns": {
+      "customer": "Customer",
+      "lastMessage": "Last message",
+      "status": "Status",
+      "lead": "Lead",
+      "intent": "Intent",
+      "date": "Date"
+    },
+    "empty": {
+      "title": "No conversations yet",
+      "subtitle": "Once the widget is live, conversations will appear here."
+    },
+    "detail": {
+      "messages": "Messages",
+      "delete": "Delete conversation"
+    }
+  },
+  "assistantAdmin": {
+    "title": "Assistant",
+    "subtitle": "Configure how the AI answers customers — no technical knowledge needed.",
+    "identity": {
+      "title": "Identity",
+      "hint": "How the assistant introduces itself at the start of a chat.",
+      "name": "Assistant name",
+      "business": "Business",
+      "greetingLv": "Greeting (LV)",
+      "greetingEn": "Greeting (EN)"
+    },
+    "language": {
+      "title": "Language",
+      "hint": "Automatic detects the customer’s language.",
+      "lv": "Latvian",
+      "en": "English",
+      "auto": "Automatic"
+    },
+    "tone": {
+      "title": "Tone",
+      "hint": "Safe presets — you can’t accidentally create unsafe behavior.",
+      "professional": "Professional",
+      "friendly": "Friendly",
+      "concise": "Concise",
+      "warm": "Warm"
+    },
+    "instructions": {
+      "title": "Business instructions",
+      "hint": "Extra guidance for the AI assistant.",
+      "placeholder": "Example: Always offer to book a service. Never promise a specific repair price."
+    },
+    "restrictions": {
+      "title": "Restrictions",
+      "hint": "Topics the AI must not answer — it will use the fallback message below.",
+      "custom": "Custom / extra topics",
+      "customHint": "One topic per line",
+      "fallbackLv": "Fallback message (LV)",
+      "fallbackEn": "Fallback message (EN)"
+    },
+    "handoff": {
+      "title": "Human handoff",
+      "hint": "When the AI should pass the conversation to your team.",
+      "enabled": "Enable human handoff",
+      "customerAsksHuman": "Customer asks for a human",
+      "cannotAnswer": "AI cannot answer",
+      "requestsQuote": "Customer requests a quote",
+      "customRules": "Custom rules",
+      "customRulesText": "Custom rules (one per line)",
+      "customRulesHint": "Keywords or /regex/i",
+      "messageLv": "Handoff message (LV)",
+      "messageEn": "Handoff message (EN)",
+      "createsLead": "Handoff creates a lead"
+    },
+    "leadsPanel": {
+      "title": "Lead collection",
+      "hint": "Which contact details and fields to collect from customers.",
+      "collectLeads": "Enable lead collection",
+      "collectName": "Collect name",
+      "collectPhone": "Collect phone",
+      "collectEmail": "Collect email",
+      "customFields": "Custom fields",
+      "customFieldsHint": "One field per line, e.g. Car model",
+      "questions": "Qualification questions",
+      "email": "Notification email"
+    },
+    "preview": {
+      "tab": "Preview",
+      "sampleUser": "How much does an oil change cost?",
+      "sampleReply": "A reply in {tone} tone — save and use Test mode for a real answer.",
+      "liveHint": "Name, greeting, and tone update instantly. Full AI answers are in Test mode."
+    },
+    "test": {
+      "tab": "Test assistant",
+      "hint": "Ask a question and see the answer plus knowledge sources.",
+      "placeholder": "Example: Do you service BMW?",
+      "ask": "Test assistant",
+      "running": "Testing…",
+      "answer": "Answer",
+      "sources": "Knowledge sources",
+      "noSources": "No sources found.",
+      "error": "Test failed. Try again."
+    },
+    "save": {
+      "action": "Save",
+      "saving": "Saving…",
+      "saved": "Configuration published.",
+      "error": "Could not save. Check the fields.",
+      "version": "Version {version}",
+      "hint": "The previous version is snapshotted before publish — the live config is never corrupted mid-write."
+    },
+    "leads": {
+      "title": "Lead configuration",
+      "subtitle": "Decide when a conversation becomes a business opportunity.",
+      "email": "Notification email",
+      "emailHint": "Get an email when a new lead is created (Resend).",
+      "questions": "Qualification questions",
+      "questionsHint": "One question per line. The AI asks missing ones one at a time.",
+      "handoffMessage": "Handoff message",
+      "criteria": "Minimum lead criteria",
+      "criteriaHint": "A lead is created only when these conditions are met.",
+      "requireIntent": "Require purchase / booking intent",
+      "requireContact": "Require phone or email",
+      "requireName": "Require name",
+      "requireService": "Require service",
+      "behavior": "Behavior",
+      "collectLeads": "Enable lead collection",
+      "handoffEnabled": "Enable human handoff",
+      "handoffCreatesLead": "Handoff creates a lead",
+      "save": "Save",
+      "saved": "Settings saved.",
+      "error": "Could not save. Check the email and fields."
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Business outcomes from real conversations — no vanity AI metrics.",
+    "insight": "Business insight",
+    "insightEmpty": "Not enough data yet for an insight. Metrics below stay empty until conversations exist.",
+    "noData": "No data in this period",
+    "ranges": {
+      "d7": "7 days",
+      "d30": "30 days",
+      "d90": "90 days"
+    },
+    "metrics": {
+      "conversations": "Conversations",
+      "leads": "Leads",
+      "qualified": "Qualified leads",
+      "won": "Won leads",
+      "handoffs": "Human handoffs",
+      "aiResolution": "AI resolution",
+      "leadConversion": "Lead conversion"
+    },
+    "charts": {
+      "conversations": "Conversations over time",
+      "leads": "Leads over time",
+      "conversion": "Lead status breakdown",
+      "outcomes": "Conversation outcomes"
+    },
+    "topQuestions": {
+      "title": "Top questions",
+      "empty": "No customer questions classified in this period."
+    },
+    "topics": {
+      "price": "Price",
+      "hours": "Opening hours",
+      "booking": "Booking",
+      "location": "Location",
+      "services": "Services",
+      "other": "Other"
+    },
+    "unanswered": {
+      "card": "Unanswered questions",
+      "open": "Review unanswered",
+      "title": "Unanswered questions",
+      "subtitle": "Fallback answers and human handoffs — fix gaps by creating FAQs.",
+      "back": "← Analytics",
+      "empty": "No unanswered questions in this period.",
+      "createFaq": "Create FAQ",
+      "viewConversation": "View conversation",
+      "reasonFallback": "Insufficient knowledge / fallback",
+      "reasonHandoff": "Human handoff",
+      "reasonBoth": "Fallback + handoff"
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Plan, usage, invoices, and payment method — powered by Stripe.",
+    "currentPlan": "Current plan",
+    "usage": "Conversation usage",
+    "remaining": "Remaining",
+    "ofLimit": "Counted when a new conversation starts in this billing period.",
+    "billingCycle": "Billing cycle",
+    "price": "Price",
+    "perMonth": "/mo",
+    "paymentMethod": "Payment method",
+    "noPaymentMethod": "No card on file",
+    "invoices": "Invoices",
+    "noInvoices": "No invoices yet.",
+    "upgrade": "Upgrade",
+    "current": "Current",
+    "manageBilling": "Customer portal",
+    "cancel": "Cancel at period end",
+    "resume": "Keep subscription",
+    "cancelHint": "Access continues until the end of the current billing period.",
+    "pastDue": "Payment failed",
+    "cancelPending": "Cancels at period end",
+    "stripeMissing": "Stripe is not configured yet. Add STRIPE_SECRET_KEY and price IDs to enable checkout (test mode is fine).",
+    "conversations": "conversations",
+    "status": "Status",
+    "download": "PDF",
+    "view": "View",
+    "flash": {
+      "success": "Subscription activated. Welcome aboard.",
+      "updated": "Plan updated.",
+      "canceled": "Checkout canceled.",
+      "canceledPending": "Cancellation scheduled for the end of the billing period.",
+      "resumed": "Subscription will renew as usual."
+    },
+    "errors": {
+      "stripe_not_configured": "Stripe is not configured on this environment.",
+      "invalid_plan": "Invalid plan selected.",
+      "price_not_configured": "That plan has no Stripe price ID configured.",
+      "invalid_price_id": "STRIPE_PRICE_* must be a Price ID (price_…), not a Product ID (prod_…). Open the product in Stripe → Pricing → copy the price ID.",
+      "no_subscription": "No subscription record found for this workspace.",
+      "no_customer": "No Stripe customer yet — start a paid plan first.",
+      "subscription_invalid": "Could not update the Stripe subscription.",
+      "checkout_failed": "Could not start Stripe Checkout."
+    }
+  },
+  "appointments": {
+    "title": "Appointments",
+    "subtitle": "Bookings created from the assistant — only confirmed after the calendar accepts them.",
+    "empty": "No appointments in this view.",
+    "manageCalendar": "Calendar settings",
+    "untitled": "Appointment",
+    "noTime": "Time TBD",
+    "cancel": "Cancel",
+    "views": {
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "FAILED": "Failed",
+      "COMPLETED": "Completed",
+      "NO_SHOW": "No-show"
+    }
+  },
+  "integrations": {
+    "title": "Integrations",
+    "subtitle": "Connect external calendars. OAuth tokens are encrypted at rest and never sent to the browser.",
+    "connected": "Connected",
+    "disconnected": "Not connected",
+    "google": {
+      "hint": "Used for real availability and booking confirmation. The AI never invents free slots.",
+      "connect": "Connect Google Calendar",
+      "disconnect": "Disconnect",
+      "notConnected": "Connect Google Calendar to enable appointment booking in chat.",
+      "connectedNoEmail": "Google Calendar connected.",
+      "viewAppointments": "View appointments"
+    },
+    "comingSoon": {
+      "title": "Coming later",
+      "hint": "Same CalendarIntegration interface — additional providers later."
+    },
+    "flash": {
+      "connected": "Google Calendar connected."
+    },
+    "errors": {
+      "google_not_configured": "Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the environment.",
+      "encryption_missing": "Set TOKEN_ENCRYPTION_KEY to encrypt OAuth tokens at rest.",
+      "oauth_denied": "Google authorization was denied.",
+      "oauth_invalid": "Invalid OAuth response.",
+      "oauth_state": "OAuth state is invalid or expired. Try again.",
+      "token_exchange": "Could not exchange the Google authorization code."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Privacy, retention, and account controls for this workspace.",
+    "ownerOnly": "Only the workspace owner can change privacy and deletion settings.",
+    "workspace": {
+      "title": "Workspace",
+      "slug": "Slug",
+      "role": "Your role"
+    },
+    "retention": {
+      "title": "Conversation retention",
+      "hint": "Automatically delete customer conversations older than this many days. Default is 365.",
+      "days": "Retention (days)",
+      "save": "Save retention",
+      "zero": "Set to 0 to disable automatic purge (manual deletion still available).",
+      "runNow": "Run retention purge now"
+    },
+    "export": {
+      "title": "Export data",
+      "hint": "Download a JSON export of conversations, leads, appointments, FAQs, and document metadata. Secrets and OAuth tokens are never included.",
+      "action": "Download export"
+    },
+    "danger": {
+      "workspaceTitle": "Delete workspace",
+      "workspaceHint": "Soft-deletes the workspace and permanently erases conversations, leads, appointments, knowledge, and uploads.",
+      "confirmSlug": "Type the workspace slug to confirm",
+      "deleteWorkspace": "Delete workspace",
+      "accountTitle": "Delete account",
+      "accountHint": "Deletes your user account and soft-deletes every workspace you own.",
+      "confirmEmail": "Type your email to confirm",
+      "deleteAccount": "Delete account"
+    },
+    "flash": {
+      "retention": "Retention settings saved.",
+      "retention_run": "Retention purge finished."
+    },
+    "errors": {
+      "invalid_retention": "Retention must be between 0 and 3650 days.",
+      "confirm_slug": "Slug confirmation did not match.",
+      "confirm_email": "Email confirmation did not match."
+    }
+  },
+  "partner": {
+    "portal": "Partner portal",
+    "subtitle": "Sell websites with an AI Website Employee. Track customers, activations, and recurring commission — without changing core SaaS workspaces.",
+    "backToDashboard": "Back to dashboard",
+    "nav": {
+      "overview": "Overview",
+      "customers": "Customers"
+    },
+    "stats": {
+      "customers": "Customers",
+      "activeAssistants": "Active AI assistants",
+      "mrr": "Customer billing (month)",
+      "commissionMonth": "Commission (month)",
+      "commissionPending": "Commission pending",
+      "commissionPaid": "Commission paid",
+      "conversions": "Referral conversions / clicks"
+    },
+    "commission": {
+      "title": "Commission rate",
+      "hint": "Default recurring commission is {rate}%. Configurable per partner.",
+      "percent": "Percent",
+      "save": "Save rate"
+    },
+    "referrals": {
+      "title": "Referral links",
+      "hint": "Customers who register with ?ref=CODE are linked to this partner.",
+      "link": "Open link",
+      "empty": "No referral codes yet.",
+      "label": "Label",
+      "create": "Create code"
+    },
+    "commissionsRecent": "Recent commissions",
+    "commissionsEmpty": "No commissions yet — they appear when a linked customer pays via Stripe.",
+    "table": {
+      "invoice": "Invoice",
+      "amount": "Paid",
+      "commission": "Commission",
+      "status": "Status"
+    },
+    "whitelabelNote": "White-label fields (branding, custom domain, widget brand) are reserved on Partner for later — not applied to the product UI yet.",
+    "bootstrap": {
+      "title": "Activate partner access",
+      "hint": "Create the TavsWebs agency partner and make your account an owner. Core SaaS stays unchanged.",
+      "action": "Bootstrap TavsWebs partner"
+    },
+    "customers": {
+      "title": "Customers",
+      "subtitle": "Workspaces linked to this partner via referral or manual attach.",
+      "empty": "No linked customers yet.",
+      "linkLabel": "Link workspace by ID",
+      "link": "Link customer",
+      "notActivated": "Not activated",
+      "col": {
+        "name": "Customer",
+        "status": "Status",
+        "plan": "Plan",
+        "assistant": "AI assistant",
+        "commission": "Earned"
+      }
+    }
+  }
+}
+

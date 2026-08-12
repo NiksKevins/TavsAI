@@ -1,0 +1,1263 @@
+{
+  "meta": {
+    "title": "TavsWebs Bot — AI darbinieks jūsu mājaslapai",
+    "description": "Piešķir savai mājaslapai AI darbinieku. Atbildi 24/7, apkopo leadus un palīdzi klientiem nonākt līdz pieteikumam."
+  },
+  "nav": {
+    "pricing": "Cenas",
+    "login": "Ieiet",
+    "register": "Sākt bez maksas",
+    "product": "Produkts",
+    "demo": "Demo",
+    "how": "Kā tas strādā",
+    "industries": "Nozares",
+    "faq": "BUJ"
+  },
+  "home": {
+    "brand": "TavsWebs Bot",
+    "headline": "Piešķir savai mājaslapai AI darbinieku.",
+    "subhead": "Atbildi uz klientu jautājumiem 24/7, apkopo potenciālos klientus un palīdzi viņiem nonākt līdz pieteikumam — automātiski.",
+    "ctaPrimary": "Pamēģināt bez maksas",
+    "ctaSecondary": "Noskatīties demo",
+    "phaseNote": ""
+  },
+  "marketing": {
+    "hero": {
+      "headline": "Piešķir savai mājaslapai AI darbinieku.",
+      "subhead": "Atbildi uz klientu jautājumiem 24/7, apkopo potenciālos klientus un palīdzi viņiem nonākt līdz pieteikumam — automātiski.",
+      "ctaPrimary": "Pamēģināt bez maksas",
+      "ctaSecondary": "Noskatīties demo",
+      "proof": "Produkta priekšskatījums",
+      "trust": "Bezmaksas sākumā · Kartes nav vajadzīgas · Latviešu un angļu valoda",
+      "tryHint": "Pamēģiniet čatu tieši šeit — izvēlieties nozari un uzdodiet jautājumu."
+    },
+    "demo": {
+      "eyebrow": "Izmēģiniet",
+      "title": "Sarunājieties ar AI darbinieku",
+      "subtitle": "Izvēlieties nozari un uzdodiet reālu jautājumu. Atbildes nāk no īsta asistenta ar nozares zināšanām — nevis no iepriekš ierakstīta skripta.",
+      "choose": "Izvēlieties nozari",
+      "liveHint": "Dzīva demo saruna",
+      "online": "Tiešsaistē",
+      "typing": "Raksta…",
+      "placeholder": "Uzrakstiet jautājumu…",
+      "send": "Sūtīt",
+      "error": "Neizdevās saņemt atbildi. Mēģiniet vēlreiz.",
+      "rateLimited": "Pārāk daudz pieprasījumu. Uzgaidiet brīdi.",
+      "leadTitle": "Atstājiet kontaktus — komanda sazināsies",
+      "name": "Vārds",
+      "phone": "Tālrunis",
+      "email": "E-pasts (neobligāti)",
+      "submitLead": "Nosūtīt pieteikumu",
+      "sending": "Sūta…",
+      "leadError": "Neizdevās nosūtīt. Pārbaudiet datus.",
+      "leadThanks": "Paldies! {business} komanda saņems jūsu pieteikumu. (Šī ir demo — reālā vietnē lead nonāk jūsu panelī.)"
+    },
+    "problem": {
+      "eyebrow": "Problēma",
+      "title": "Klienti jautā — jūs zaudējat laiku un leadus.",
+      "hint": "Parasti tā notiek katru nedēļu — pat ar labu mājaslapu.",
+      "items": {
+        "0": "Klienti atkārtoti uzdod tos pašus jautājumus — cenas, darba laiku, pieejamību.",
+        "1": "Daudzi apmeklē mājaslapu pēc darba laika, kad neviens neatbild.",
+        "2": "Potenciālie klienti aiziet, neatsūtot ziņu un nepiesakoties.",
+        "3": "Komanda tērē stundas, atbildot uz vienkāršiem, atkārtotiem jautājumiem."
+      }
+    },
+    "solution": {
+      "eyebrow": "Risinājums",
+      "title": "Jūsu AI darbinieks dara to, kas jums aizņem vakarus.",
+      "subtitle": "Viņš zina jūsu biznesu, runā ar klientiem un noved viņus līdz nākamajam solim.",
+      "items": {
+        "0": {
+          "title": "Atbild",
+          "body": "Uz jautājumiem par cenām, pakalpojumiem un darba laiku — latviski un angliski."
+        },
+        "1": {
+          "title": "Saprot",
+          "body": "Izmanto jūsu mājaslapas un dokumentu zināšanas, nevis izdomā faktus."
+        },
+        "2": {
+          "title": "Kvalificē",
+          "body": "Uzdod īsus jautājumus, lai saprastu, vai klients ir gatavs pirkt vai pieteikties."
+        },
+        "3": {
+          "title": "Apkopo",
+          "body": "Savāc vārdu, tālruni un e-pastu — leadi nonāk jūsu panelī."
+        },
+        "4": {
+          "title": "Nodod",
+          "body": "Kad vajag cilvēku, nodod sarunu jums ar kontekstu."
+        },
+        "5": {
+          "title": "Pieraksta",
+          "body": "Palīdz pieteikt vizīti, kad kalendārs ir savienots."
+        }
+      },
+      "footnote": "Nav jauna čata rīka, ko klientiem jāapgūst — tikai poga jūsu esošajā mājaslapā."
+    },
+    "visuals": {
+      "showcaseTitle": "Ko jūs saņemat",
+      "showcaseSubtitle": "Čata logrīks jūsu mājaslapā, apmācīts ar jūsu biznesa zināšanām — un visi leadi jūsu panelī.",
+      "siteUrl": "autoserviss.lv",
+      "siteHeadline": "Autoserviss un riepu montāža",
+      "siteNav": ["Pakalpojumi", "Cenas", "Kontakti"],
+      "chatAssistant": "AI asistents",
+      "chatBusiness": "AutoServiss",
+      "chatUserMsg": "Cik maksā eļļas maiņa?",
+      "chatBotMsg": "No €45 ar filtru. Vēlaties pierakstīties?",
+      "badge247": "Atbildes 24/7",
+      "badgeLead": "Leads saglabāts",
+      "cardWidgetTitle": "Darbojas jūsu mājaslapā",
+      "cardWidgetBody": "Viens koda fragments — čata poga jebkurā lapas stūrī.",
+      "cardKnowledgeTitle": "Zina jūsu biznesu",
+      "cardKnowledgeBody": "Apmācīts ar mājaslapu, FAQ un augšupielādētiem dokumentiem.",
+      "cardLeadsTitle": "Leadi jūsu panelī",
+      "cardLeadsBody": "Vārds, tālrunis un visa saruna — gatavs turpinājumam.",
+      "leadName": "Anna B.",
+      "leadPhone": "+371 2X XXX XXX",
+      "leadStatus": "Jauns",
+      "knowledgeWebsite": "Mājaslapas saturs",
+      "knowledgeFaq": "FAQ un pakalpojumi",
+      "knowledgeDocs": "PDF cenu saraksts"
+    },
+    "homeBridge": {
+      "howTitle": "Kā tas strādā",
+      "howBody": "No mājaslapas URL līdz dzīvai sarunai — četri soļi, bez sarežģītas uzstādīšanas.",
+      "pricingTitle": "Cenas",
+      "pricingBody": "Sāciet bez maksas. Maksājiet, kad sarunu apjoms aug — caurspīdīgi limiti, bez pārsteigumiem.",
+      "linkLabel": "Skatīt"
+    },
+    "how": {
+      "eyebrow": "Kā tas strādā",
+      "title": "Četri soļi līdz pirmajai sarunai.",
+      "steps": {
+        "0": {
+          "title": "Pievieno savu mājaslapu",
+          "body": "Norādiet URL — sistēma sāk iepazīt jūsu saturu."
+        },
+        "1": {
+          "title": "AI apgūst uzņēmumu",
+          "body": "Pakalpojumi, FAQ, dokumenti un biznesa informācija kļūst par zināšanu bāzi."
+        },
+        "2": {
+          "title": "Ievieto vienu kodu",
+          "body": "Neliels skripts jūsu mājaslapā — bez smagas integrācijas."
+        },
+        "3": {
+          "title": "AI sāk sarunāties",
+          "body": "Klienti saņem atbildes 24/7; jūs saņemat leadus un kopsavilkumus."
+        }
+      }
+    },
+    "industries": {
+      "eyebrow": "Nozares",
+      "title": "Veidots Latvijas pakalpojumu biznesam.",
+      "subtitle": "Īpaši noderīgi, ja klienti bieži jautā par cenām un vēlas pieteikties.",
+      "items": {
+        "0": "Autoservisi",
+        "1": "Skaistumkopšanas saloni",
+        "2": "Frizētavas",
+        "3": "Būvniecība",
+        "4": "Nekustamie īpašumi",
+        "5": "Zobārstniecība",
+        "6": "Restorāni",
+        "7": "Profesionālie pakalpojumi"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Cenas",
+      "title": "Sāciet bez maksas. Augiet, kad pieaug pieprasījums.",
+      "subtitle": "Caurspīdīgas sarunu limits. BUSINESS ir ieteicamais plāns lielākajai daļai uzņēmumu.",
+      "perMonth": "/ mēnesī",
+      "conversations": "{count} sarunas / mēnesī",
+      "recommended": "Ieteicamais",
+      "cta": "Sākt",
+      "features": {
+        "FREE": {
+          "0": "Widget un pamata asistents",
+          "1": "Mājaslapas crawl",
+          "2": "Leadu ievākšana"
+        },
+        "STARTER": {
+          "0": "Viss Free plānā",
+          "1": "Vairāk crawl lapu",
+          "2": "E-pasta paziņojumi par leadiem"
+        },
+        "BUSINESS": {
+          "0": "Viss Starter plānā",
+          "1": "Analītika un neatbildētie jautājumi",
+          "2": "Pierakstu plūsma",
+          "3": "Prioritāra atbalsta gatavība"
+        },
+        "PRO": {
+          "0": "Viss Business plānā",
+          "1": "Augsts sarunu limits",
+          "2": "Lielākas zināšanu bāzes",
+          "3": "Komandām ar lielu plūsmu"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "BUJ",
+      "title": "Biežāk uzdotie jautājumi",
+      "items": {
+        "0": {
+          "q": "Vai man jāprot programmēt?",
+          "a": "Nē. Jūs pievienojat mājaslapu, konfigurējat asistentu panelī un ievietojat vienu gatavu koda rindu."
+        },
+        "1": {
+          "q": "Cik ātri varu to uzstādīt?",
+          "a": "Pirmā versija parasti ir gatava tajā pašā dienā: reģistrācija, crawl un widget kods aizņem minūtes, ne nedēļas."
+        },
+        "2": {
+          "q": "Vai AI runā latviski?",
+          "a": "Jā. Asistents ir veidots latviešu un angļu valodai — ar iespēju automātiski pielāgoties klienta valodai."
+        },
+        "3": {
+          "q": "Vai tas darbojas ar manu mājaslapu?",
+          "a": "Jā, ja varat ievietot skriptu (WordPress, Webflow, pielāgota HTML u.c.). Widget ir neliels un neatkarīgs no CMS."
+        },
+        "4": {
+          "q": "Vai es varu kontrolēt, ko AI saka?",
+          "a": "Jā. Jūs iestatāt toni, ierobežotās tēmas, sveicienu, fallback tekstus un zināšanu avotus. Atbildes balstās uz jūsu saturu."
+        },
+        "5": {
+          "q": "Vai varu pārtraukt abonementu?",
+          "a": "Jā. Abonementu varat atcelt no paneļa; pieeja turpinās līdz apmaksātā perioda beigām."
+        }
+      }
+    },
+    "finalCta": {
+      "eyebrow": "Sākt šodien",
+      "title": "Jūsu mājaslapa strādā arī tad, kad jūs nestrādājat.",
+      "cta": "Sākt bez maksas"
+    },
+    "footer": {
+      "tagline": "AI darbinieks Latvijas mājaslapām — atbildes, leadi un pieteikumi bez naktsmaiņām.",
+      "demo": "Demo",
+      "pricing": "Cenas",
+      "start": "Sākt",
+      "login": "Ieiet"
+    }
+  },
+  "pricing": {
+    "title": "Cenas",
+    "subtitle": "Sāciet bez maksas. Maksājiet tikai tad, kad sarunu apjoms aug.",
+    "perMonth": "/ mēnesī",
+    "conversations": "{count} sarunas / mēnesī",
+    "cta": "Sākt",
+    "recommended": "Ieteicamais",
+    "note": "Jauniniet jebkurā brīdī: Panelis → Norēķini. Maksājumus droši apstrādā Stripe Checkout."
+  },
+  "common": {
+    "language": "Valoda",
+    "latvian": "Latviešu",
+    "english": "English",
+    "comingSoon": "Drīzumā"
+  },
+  "auth": {
+    "fields": {
+      "name": "Vārds",
+      "businessName": "Uzņēmuma nosaukums",
+      "email": "E-pasts",
+      "password": "Parole",
+      "newPassword": "Jaunā parole",
+      "passwordHint": "Vismaz 8 rakstzīmes."
+    },
+    "login": {
+      "title": "Ieiet",
+      "subtitle": "Piesakieties savā TavsWebs Bot kontā.",
+      "submit": "Ieiet",
+      "submitting": "Notiek pieteikšanās…",
+      "forgot": "Aizmirsāt paroli?",
+      "noAccount": "Nav konta?",
+      "registerLink": "Reģistrēties"
+    },
+    "register": {
+      "title": "Izveidot kontu",
+      "subtitle": "Sāciet ar bezmaksas plānu — bez kartes.",
+      "submit": "Izveidot kontu",
+      "submitting": "Veidojam…",
+      "hasAccount": "Jau ir konts?",
+      "loginLink": "Ieiet",
+      "referral": "Partnera referral: {code}"
+    },
+    "forgot": {
+      "title": "Atiestatīt paroli",
+      "subtitle": "Ievadiet e-pastu. Ja konts eksistē, nosūtīsim atiestatīšanas saiti.",
+      "submit": "Nosūtīt saiti",
+      "submitting": "Sūtam…",
+      "sent": "Ja konts eksistē, atiestatīšanas saite ir sagatavota. Izstrādes režīmā skatiet servera žurnālu.",
+      "back": "Atpakaļ uz ieeju"
+    },
+    "reset": {
+      "title": "Jauna parole",
+      "subtitle": "Izvēlieties drošu paroli savam kontam.",
+      "submit": "Saglabāt paroli",
+      "submitting": "Saglabā…"
+    },
+    "errors": {
+      "invalid_input": "Pārbaudiet ievadītos datus.",
+      "email_taken": "Šis e-pasts jau ir reģistrēts.",
+      "signin_failed": "Neizdevās pieteikties. Mēģiniet vēlreiz.",
+      "invalid_credentials": "Nepareizs e-pasts vai parole.",
+      "invalid_token": "Atiestatīšanas saite nav derīga vai ir beigusies."
+    }
+  },
+  "onboarding": {
+    "progress": "Solis {step} no {total}",
+    "continue": "Turpināt",
+    "back": "Atpakaļ",
+    "finish": "Atvērt paneli",
+    "fields": {
+      "businessName": "Uzņēmuma nosaukums",
+      "websiteUrl": "Mājaslapas adrese",
+      "industry": "Nozare",
+      "assistantName": "Asistenta vārds",
+      "greeting": "Sveiciens",
+      "tone": "Tonis",
+      "suggestedQuestions": "Ieteiktie jautājumi",
+      "suggestedHint": "Viens jautājums katrā rindā — parādīsies widget ātrajās darbībās.",
+      "leadFields": "Lead lauki (automātiski)",
+      "language": "Galvenā valoda"
+    },
+    "tones": {
+      "professional": "Profesionāls",
+      "friendly": "Draudzīgs",
+      "concise": "Īss",
+      "warm": "Silts"
+    },
+    "steps": {
+      "business": {
+        "title": "Kā sauc jūsu uzņēmumu?",
+        "subtitle": "Šis vārds parādīsies panelī un asistenta sveicienā."
+      },
+      "website": {
+        "title": "Jūsu mājaslapas adrese?",
+        "subtitle": "Mēs pārbaudīsim adresi un pēc tam ielādēsim saturu zināšanu bāzei.",
+        "note": "Derīga publiska http(s) adrese. Iekšējie tīkli un localhost nav atļauti."
+      },
+      "industry": {
+        "title": "Kāda ir jūsu nozare?",
+        "subtitle": "Palīdzēs automātiski iestatīt toni, sveicienu un lead jautājumus."
+      },
+      "crawl": {
+        "title": "Analizējam jūsu mājaslapu",
+        "subtitle": "Tas aizņem brīdi. Skaitļi nāk no reāla crawl — nevis no demonstrācijas.",
+        "analyzing": "Analizējam jūsu mājaslapu...",
+        "done": "Mājaslapa apstrādāta.",
+        "finishedWithIssues": "Crawl beidzās ar brīdinājumiem — varat turpināt vai mēģināt vēlreiz.",
+        "finding": "Meklējam lapas…",
+        "found": "Atrastas {count} lapas",
+        "processing": "Apstrādājam saturu…",
+        "processed": "Apstrādātas {count} lapas",
+        "knowledgePending": "Veidojam AI zināšanu bāzi…",
+        "knowledgeReady": "Izveidota AI zināšanu bāze ({docs} dokumenti, {chunks} fragmenti)",
+        "skip": "Izlaist pagaidām",
+        "retry": "Mēģināt vēlreiz"
+      },
+      "customize": {
+        "title": "Pielāgojiet asistentu",
+        "subtitle": "Mēs sagatavojām iestatījumus pēc nozares. Labojiet to, kas vajadzīgs."
+      },
+      "preview": {
+        "title": "Izmēģiniet sarunu",
+        "subtitle": "Uzdodiet jautājumu kā klients — atbilde izmanto jūsu zināšanas, ja tās ir gatavas.",
+        "placeholder": "Piemēram: Cik maksā jūsu pakalpojumi?",
+        "send": "Sūtīt"
+      },
+      "install": {
+        "title": "Ievietojiet kodu mājaslapā",
+        "subtitle": "Viena rinda — un AI darbinieks sāk atbildēt apmeklētājiem.",
+        "copy": "Kopēt kodu",
+        "copied": "Nokopēts",
+        "test": "Testēt manā mājaslapā",
+        "hint": "Pēc ievietošanas atveriet savu vietni un pārbaudiet widget. Panelī varēsiet mainīt izskatu un atļautās izcelsmes."
+      }
+    },
+    "languages": {
+      "lv": "Latviešu",
+      "en": "English"
+    },
+    "industries": {
+      "BEAUTY_SALON": "Skaistumkopšana",
+      "BARBER": "Barbershops",
+      "AUTOMOTIVE": "Autoserviss",
+      "CONSTRUCTION": "Būvniecība",
+      "REAL_ESTATE": "Nekustamie īpašumi",
+      "RESTAURANT": "Restorāns",
+      "DENTAL_CLINIC": "Zobārstniecība",
+      "PROFESSIONAL_SERVICES": "Profesionālie pakalpojumi",
+      "OTHER": "Cits"
+    },
+    "errors": {
+      "invalid_step": "Nederīgs solis.",
+      "invalid_name": "Ievadiet derīgu nosaukumu.",
+      "invalid_url": "Ievadiet derīgu mājaslapas adresi.",
+      "invalid_industry": "Izvēlieties nozari.",
+      "invalid_assistant_name": "Ievadiet asistenta vārdu.",
+      "invalid_greeting": "Ievadiet sveicienu.",
+      "invalid_tone": "Izvēlieties toni.",
+      "invalid_locale": "Izvēlieties valodu.",
+      "invalid_question": "Ievadiet īsu jautājumu.",
+      "preview_failed": "Neizdevās saņemt atbildi.",
+      "crawl_start_failed": "Neizdevās sākt crawl.",
+      "copy_failed": "Neizdevās nokopēt."
+    }
+  },
+  "dashboard": {
+    "logout": "Iziet",
+    "nav": {
+      "overview": "Pārskats",
+      "conversations": "Sarunas",
+      "leads": "Leadi",
+      "knowledge": "Zināšanas",
+      "assistant": "Asistents",
+      "widget": "Widget",
+      "analytics": "Analītika",
+      "appointments": "Pieraksti",
+      "integrations": "Integrācijas",
+      "billing": "Norēķini",
+      "settings": "Iestatījumi",
+      "partner": "Partneru portāls"
+    },
+    "overview": {
+      "title": "Pārskats",
+      "subtitle": "Sveicināti, {workspace}.",
+      "last30Days": "Pēdējās 30 dienas",
+      "viewAll": "Skatīt visu",
+      "viewAnalytics": "Analītika",
+      "noData": "Vēl nav aktivitātes — uzstādiet widget, lai sāktu vākt sarunas.",
+      "workspace": "Darba vieta",
+      "plan": "Plāns",
+      "planLimit": "{count} sarunas / mēnesī",
+      "next": "Nākamie soļi",
+      "nextHint": "Nākamais: pievienojiet mājaslapu sadaļā Zināšanas un palaidiet crawlu.",
+      "metrics": {
+        "conversations": "Sarunas",
+        "leads": "Leadi",
+        "leadConversion": "Lead konversija",
+        "unanswered": "Neatbildētie",
+        "usage": "Lietojums",
+        "knowledgeChunks": "Zināšanu fragmenti",
+        "appointments": "Gaidāmie pieraksti"
+      },
+      "usageCard": {
+        "title": "Plāns un lietojums",
+        "remaining": "Atlikušas {count} sarunas šajā periodā",
+        "period": "Periods beidzas",
+        "upgrade": "Pārvaldīt plānu"
+      },
+      "setup": {
+        "title": "Uzstādīšanas kontrolsaraksts",
+        "subtitle": "{done} no {total} pabeigti",
+        "website": "Pievienot mājaslapas URL",
+        "crawl": "Apstrādāt mājaslapas saturu",
+        "content": "Pievienot FAQ, pakalpojumus vai dokumentus",
+        "assistant": "Konfigurēt asistentu",
+        "widget": "Uzstādīt widget mājaslapā",
+        "calendar": "Savienot Google Calendar"
+      },
+      "system": {
+        "title": "Sistēmas statuss",
+        "widget": "Widget",
+        "widgetLive": "Aktīvs vietnē",
+        "widgetPending": "Vēl nav konstatēts",
+        "widgetInactive": "Izslēgts",
+        "assistant": "Asistents",
+        "knowledge": "Zināšanu bāze",
+        "knowledgeReady": "Gatava",
+        "knowledgeEmpty": "Nepieciešams saturs",
+        "calendar": "Kalendārs",
+        "calendarConnected": "Savienots",
+        "calendarDisconnected": "Nav savienots"
+      },
+      "charts": {
+        "conversations": "Sarunas laika gaitā",
+        "leads": "Leadi laika gaitā"
+      },
+      "recentConversations": {
+        "title": "Jaunākās sarunas",
+        "empty": "Vēl nav sarunu. Kad widget būs aktīvs, tās parādīsies šeit.",
+        "visitor": "Apmeklētājs",
+        "columns": {
+          "preview": "Pēdējā ziņa",
+          "status": "Statuss",
+          "lead": "Leads",
+          "date": "Datums"
+        }
+      },
+      "recentLeads": {
+        "title": "Jaunākie leadi",
+        "empty": "Vēl nav leadu. Asistents tos apkopo sarunu laikā.",
+        "columns": {
+          "contact": "Kontakts",
+          "service": "Pakalpojums",
+          "status": "Statuss",
+          "date": "Datums"
+        }
+      },
+      "knowledgeSummary": {
+        "title": "Zināšanu bāze",
+        "website": "Mājaslapa",
+        "pages": "Indeksētās lapas",
+        "faqs": "FAQ",
+        "services": "Pakalpojumi",
+        "documents": "Augšupielādētie faili",
+        "chunks": "Meklējami fragmenti",
+        "crawlStatus": "Crawl statuss",
+        "noWebsite": "Nav pievienota"
+      },
+      "conversationStatuses": {
+        "OPEN": "Atvērta",
+        "QUALIFIED": "Kvalificēta",
+        "HANDED_OFF": "Nodota",
+        "CLOSED": "Slēgta"
+      }
+    },
+    "pages": {
+      "conversations": {
+        "title": "Sarunas",
+        "empty": "Šeit parādīsies klientu sarunas, kad widget būs aktīvs. Pagaidām nav datu."
+      },
+      "leads": {
+        "title": "Leadi",
+        "empty": "Leadu saraksts būs pieejams, kad asistents sāks ievākt kontaktus."
+      },
+      "knowledge": {
+        "title": "Zināšanas",
+        "empty": "Zināšanu bāze (mājaslapa, dokumenti, FAQ) tiks pievienota nākamajā fāzē."
+      },
+      "assistant": {
+        "title": "Asistents",
+        "empty": "Uzvedības un toņa iestatījumi būs pieejami pēc AI fāzes."
+      },
+      "widget": {
+        "title": "Widget",
+        "empty": "Widget instalācijas kods būs šeit nākamajā fāzē."
+      },
+      "analytics": {
+        "title": "Analītika",
+        "empty": "Atveriet Analītiku — sarunas, leadi un neatbildētie jautājumi."
+      },
+      "appointments": {
+        "title": "Pieraksti",
+        "empty": "Pieraksti parādās, kad klienti pierakstās caur asistentu."
+      },
+      "integrations": {
+        "title": "Integrācijas",
+        "empty": "Pievienojiet Google Calendar sadaļā Integrācijas, lai ieslēgtu pierakstus."
+      },
+      "billing": {
+        "title": "Norēķini",
+        "empty": "Pārvaldiet plānu un lietojumu sadaļā Norēķini."
+      },
+      "settings": {
+        "title": "Iestatījumi",
+        "empty": "Darba vietas un komandas iestatījumi — nākamajā iterācijā."
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Zināšanas",
+    "subtitle": "Mājaslapas saturs, ko asistents izmantos atbildēm.",
+    "links": {
+      "website": "Mājaslapas crawls"
+    },
+    "fields": {
+      "websiteUrl": "Mājaslapas adrese"
+    },
+    "actions": {
+      "scan": "Skenēt mājaslapu",
+      "rescan": "Skenēt vēlreiz",
+      "cancel": "Atcelt"
+    },
+    "status": {
+      "title": "Crawl statuss",
+      "noWebsite": "Mājaslapa vēl nav pievienota.",
+      "discovered": "Atrastās lapas",
+      "processed": "Apstrādātās lapas",
+      "limit": "Limite"
+    },
+    "stats": {
+      "website": "Mājaslapa",
+      "lastCrawl": "Pēdējais crawls",
+      "documents": "Dokumenti",
+      "chunks": "Gabali"
+    },
+    "explorer": {
+      "heading": "Lapu pārlūks",
+      "subtitle": "Grupēts pēc lapas tipa. Atveriet lapu, lai redzētu saturu.",
+      "empty": "Vēl nav ielādētu lapu. Palaižiet crawlu.",
+      "title": "Virsraksts",
+      "url": "URL",
+      "status": "Statuss",
+      "chunks": "Gabali"
+    },
+    "categories": {
+      "home": "Sākums",
+      "services": "Pakalpojumi",
+      "about": "Par mums",
+      "contact": "Kontakti",
+      "faq": "BUJ",
+      "other": "Citas lapas"
+    },
+    "websitePage": {
+      "title": "Mājaslapa",
+      "subtitle": "Crawl kā viens no zināšanu avotiem — ne vienīgais.",
+      "note": "Crawl notiek fonā. Pēc skenēšanas saturs tiek chunkots un iegults."
+    },
+    "document": {
+      "updated": "Atjaunināts",
+      "content": "Izvilktais saturs",
+      "untrusted": "Šis saturs ir neuzticami dati — tas nekad netiek izpildīts kā sistēmas instrukcijas.",
+      "chunks": "Zināšanu gabali",
+      "chunksNote": "Gabali ar embeddingiem, ko izmanto AI atbildēm."
+    },
+    "tabs": {
+      "website": "Mājaslapa",
+      "services": "Pakalpojumi",
+      "faqs": "BUJ",
+      "documents": "Dokumenti",
+      "business": "Uzņēmums",
+      "test": "Testēt AI"
+    },
+    "reindex": {
+      "action": "Reindeksēt zināšanas",
+      "running": "Indeksē…",
+      "done": "Iegulti {embedded}, izlaisti {skipped}",
+      "error": "Reindeksēšana neizdevās"
+    },
+    "business": {
+      "title": "Uzņēmuma informācija",
+      "subtitle": "Šie dati ir prioritārs avots AI atbildēm.",
+      "save": "Saglabāt",
+      "saved": "Saglabāts un sinhronizēts zināšanās.",
+      "error": "Neizdevās saglabāt. Pārbaudiet laukus un JSON.",
+      "fields": {
+        "name": "Nosaukums",
+        "description": "Apraksts",
+        "phone": "Tālrunis",
+        "email": "E-pasts",
+        "address": "Adrese",
+        "city": "Pilsēta",
+        "website": "Mājaslapa",
+        "hours": "Darba laiks (JSON)",
+        "hoursHint": "Piemērs: {\"mon\":\"9-18\",\"tue\":\"9-18\"}",
+        "social": "Sociālie linki (JSON)",
+        "socialHint": "Piemērs: {\"instagram\":\"https://...\"}",
+        "languages": "Valodas",
+        "languagesHint": "Atdaliet ar komatu, piem. lv, en",
+        "policies": "Politikas / noteikumi"
+      }
+    },
+    "services": {
+      "title": "Pakalpojumi",
+      "subtitle": "Manuāli kontrolējiet, ko AI zina par jūsu piedāvājumu. Cena nav obligāta.",
+      "create": "Jauns pakalpojums",
+      "edit": "Rediģēt",
+      "cancel": "Atcelt",
+      "save": "Saglabāt",
+      "saved": "Saglabāts.",
+      "error": "Neizdevās saglabāt.",
+      "delete": "Dzēst",
+      "empty": "Vēl nav pakalpojumu.",
+      "available": "Pieejams",
+      "unavailable": "Nepieejams",
+      "fields": {
+        "name": "Nosaukums",
+        "description": "Apraksts",
+        "price": "Cena no",
+        "priceOptional": "Neobligāti",
+        "duration": "Ilgums",
+        "category": "Kategorija",
+        "notes": "Piezīmes",
+        "available": "Pieejams"
+      }
+    },
+    "faqs": {
+      "title": "BUJ",
+      "subtitle": "Jautājumi un atbildes. Izmaiņas automātiski atjauno embeddingus.",
+      "create": "Jauns BUJ",
+      "edit": "Rediģēt",
+      "cancel": "Atcelt",
+      "save": "Saglabāt",
+      "saved": "Saglabāts.",
+      "error": "Neizdevās saglabāt.",
+      "delete": "Dzēst",
+      "empty": "Vēl nav BUJ.",
+      "search": "Meklēt…",
+      "searchAction": "Meklēt",
+      "published": "Publicēts",
+      "draft": "Melnraksts",
+      "fromAnalytics": "Iepriekš aizpildīts no neatbildēta analītikas jautājuma. Labojiet atbildi un saglabājiet, lai iegultu zināšanās.",
+      "fields": {
+        "question": "Jautājums",
+        "answer": "Atbilde",
+        "category": "Kategorija",
+        "published": "Publicēts"
+      }
+    },
+    "documents": {
+      "title": "Dokumenti",
+      "subtitle": "Augšupielādējiet PDF, TXT vai DOCX. Faili tiek validēti, izvilkti un iegulti.",
+      "upload": "Augšupielāde",
+      "uploadHint": "Maks. 5 MB. Atļauti: .pdf, .txt, .docx",
+      "uploadAction": "Augšupielādēt",
+      "uploading": "Augšupielādē…",
+      "uploaded": "Dokuments apstrādāts.",
+      "empty": "Vēl nav dokumentu.",
+      "delete": "Dzēst",
+      "errors": {
+        "missing_file": "Izvēlieties failu.",
+        "file_too_large": "Fails ir pārāk liels.",
+        "invalid_extension": "Neatļauts paplašinājums.",
+        "invalid_mime": "Neatļauts faila tips.",
+        "empty_file": "Tukšs fails.",
+        "malware_detected": "Fails noraidīts drošības dēļ.",
+        "extract_failed": "Neizdevās izvilkt tekstu.",
+        "empty_text": "Failā nav teksta."
+      }
+    },
+    "test": {
+      "title": "Testēt AI",
+      "subtitle": "Uzdodiet jautājumu un redziet atbildi plus izmantotos avotus — bez sistēmas instrukcijām.",
+      "placeholder": "Piemēram: Cik maksā X?",
+      "ask": "Jautāt",
+      "running": "Ģenerē…",
+      "answer": "AI atbilde",
+      "sources": "Izmantotie avoti",
+      "noSources": "Nav atrasts pietiekami līdzīgs saturs.",
+      "fallback": "Izmantots fallback",
+      "error": "Tests neizdevās."
+    },
+    "errors": {
+      "invalid_url": "Nederīga adrese.",
+      "empty_url": "Ievadiet adresi.",
+      "unsupported_protocol": "Atļauts tikai http/https.",
+      "invalid_hostname": "Nederīgs hosta nosaukums.",
+      "blocked_hostname": "Šī adrese nav atļauta.",
+      "private_ip": "Privātās/iekšējās adreses ir aizliegtas.",
+      "dns_failed": "Neizdevās atrisināt DNS.",
+      "crawl_in_progress": "Crawl jau notiek.",
+      "website_missing": "Vispirms pievienojiet mājaslapu.",
+      "crawl_not_active": "Nav aktīva crawla, ko atcelt."
+    }
+  },
+  "widgetAdmin": {
+    "title": "Widget",
+    "subtitle": "Iegultais čats klientu mājaslapām — bez API atslēgām snippetā.",
+    "status": {
+      "installed": "Instalēts",
+      "notInstalled": "Nav instalēts",
+      "live": "Aktīvs",
+      "paused": "Pauzēts"
+    },
+    "install": {
+      "title": "Instalācija",
+      "subtitle": "Ievietojiet kodu savā mājaslapā. Widget ID ir publisks identifikators — tajā nav slepeno atslēgu.",
+      "copy": "Kopēt kodu",
+      "copied": "Nokopēts",
+      "test": "Testēt widget",
+      "htmlDemo": "Plain HTML demo",
+      "publicKeyHint": "Publiskais widget ID:",
+      "guides": {
+        "html": "Ielīmējiet script tagu jebkurā HTML lapā pirms ķermeņa beigu taga.",
+        "wordpress": "Pievienojiet kodu Appearance → Theme File Editor → footer.php, vai izmantojiet “Insert Headers and Footers” pluginu.",
+        "react": "Ielādējiet script vienu reizi, piemēram, useEffect iekšā (skat. piemēru).",
+        "next": "Pievienojiet next/script layoutā ar strategy=\"afterInteractive\" un data-widget-id."
+      }
+    },
+    "config": {
+      "title": "Izskats un uzvedība",
+      "subtitle": "Šīs izmaiņas redzēs jūsu mājaslapas apmeklētāji.",
+      "sections": {
+        "look": "Izskats",
+        "lookHint": "Krāsa, tēma un pozīcija — pirmā lieta, ko klients pamana.",
+        "content": "Saturs",
+        "contentHint": "Teksti un ātrās pogas, kas palīdz sākt sarunu.",
+        "behavior": "Uzvedība",
+        "behaviorHint": "Kas notiek, kad klients vēlas atstāt kontaktus."
+      },
+      "color": "Zīmola krāsa",
+      "colorHint": "Izvēlieties krāsu ar picker, vai noklikšķiniet uz gatavas paletes.",
+      "radius": "Stūru noapaļojums",
+      "radiusHint": "Cik noapaļots būs čata logs.",
+      "position": "Pozīcija ekrānā",
+      "positionHint": "Kur parādās čata poga.",
+      "positionRight": "Apakšā labajā",
+      "positionLeft": "Apakšā kreisajā",
+      "theme": "Tēma",
+      "themeHint": "Gaišs vai tumšs čata logs.",
+      "themeLight": "Gaiša",
+      "themeDark": "Tumša",
+      "launcher": "Pogas nosaukums",
+      "launcherHint": "Parādās, kad uzbrauc ar peli uz pogas (piem., “Sarakste”).",
+      "welcome": "Sveicienziņa",
+      "welcomeHint": "Pirmā ziņa, ko klients redz, atverot čatu.",
+      "logo": "Logo adrese (URL)",
+      "logoHint": "Neobligāti. Ja tukšs, rādīsim asistenta iniciāli.",
+      "quickActions": "Ātrās pogas",
+      "quickActionsHint": "Viena poga katrā rindā. Klients ar vienu klikšķi nosūta šo tekstu.",
+      "leads": "Kontaktformas ievākšana",
+      "leadsHint": "Rādīt vārda, tālruņa un e-pasta formu, kad trūkst atbildes vai klients vēlas runāt ar cilvēku.",
+      "active": "Widget ir ieslēgts",
+      "activeHint": "Ja izslēgts, snippet nepalaiž čatu klientu lapās.",
+      "save": "Saglabāt izmaiņas",
+      "saving": "Saglabā…",
+      "saveHint": "Pēc saglabāšanas priekšskatījums pārlādējas automātiski.",
+      "saved": "Izmaiņas saglabātas.",
+      "error": "Neizdevās saglabāt. Pārbaudiet krāsu (#RRGGBB) un pārējos laukus."
+    },
+    "preview": {
+      "title": "Priekšskatījums",
+      "subtitle": "Dzīvais widget — atveriet pogu un izmēģiniet sarunu.",
+      "liveHint": "Saglabātās iestatījumu versija"
+    }
+  },
+  "leads": {
+    "title": "Leadi",
+    "subtitle": "Potenciālie klienti no sarunām un widget formām.",
+    "configure": "Lead iestatījumi",
+    "unnamed": "Bez vārda",
+    "filters": {
+      "search": "Meklēt vārdu, telefonu, e-pastu…",
+      "allStatuses": "Visi statusi",
+      "service": "Pakalpojums",
+      "apply": "Filtrēt"
+    },
+    "columns": {
+      "customer": "Klients",
+      "service": "Pakalpojums",
+      "status": "Statuss",
+      "source": "Avots",
+      "date": "Datums"
+    },
+    "status": {
+      "NEW": "Jauns",
+      "CONTACTED": "Kontaktēts",
+      "QUALIFIED": "Kvalificēts",
+      "WON": "Uzvarēts",
+      "LOST": "Zaudēts",
+      "SPAM": "Spam"
+    },
+    "empty": {
+      "title": "Vēl nav leadu",
+      "subtitle": "Kad klients parādīs pirkuma nodomu un izpildīs kritērijus, leads parādīsies šeit."
+    },
+    "actions": {
+      "contacted": "Kontaktēts",
+      "qualified": "Kvalificēts",
+      "won": "Uzvarēts",
+      "lost": "Zaudēts",
+      "delete": "Dzēst lead"
+    },
+    "detail": {
+      "customer": "Klienta informācija",
+      "name": "Vārds",
+      "phone": "Tālrunis",
+      "email": "E-pasts",
+      "service": "Pakalpojums",
+      "intent": "Nodoms",
+      "source": "Avots",
+      "summary": "Kopsavilkums",
+      "summaryHint": "Īss AI izvilkums no sarunas.",
+      "noSummary": "Kopsavilkums vēl nav pieejams.",
+      "fields": "Savāktā informācija",
+      "noFields": "Papildu lauki nav aizpildīti.",
+      "notes": "Piezīmes",
+      "saveNotes": "Saglabāt piezīmes",
+      "notesSaved": "Piezīmes saglabātas.",
+      "conversation": "Saruna",
+      "openConversation": "Atvērt pilnu sarunu",
+      "noConversation": "Šim leadam nav piesaistītas ziņas."
+    }
+  },
+  "conversations": {
+    "title": "Sarunas",
+    "subtitle": "Visas klientu sarunas ar AI darbinieku.",
+    "visitor": "Apmeklētājs",
+    "linkedLead": "Saistīts leads",
+    "columns": {
+      "customer": "Klients",
+      "lastMessage": "Pēdējā ziņa",
+      "status": "Statuss",
+      "lead": "Leads",
+      "intent": "Nodoms",
+      "date": "Datums"
+    },
+    "empty": {
+      "title": "Vēl nav sarunu",
+      "subtitle": "Kad widget būs aktīvs, sarunas parādīsies šeit."
+    },
+    "detail": {
+      "messages": "Ziņojumi",
+      "delete": "Dzēst sarunu"
+    }
+  },
+  "assistantAdmin": {
+    "title": "Asistents",
+    "subtitle": "Konfigurējiet, kā AI atbild klientiem — bez tehniskām zināšanām.",
+    "identity": {
+      "title": "Identitāte",
+      "hint": "Kā asistents sevi prezentē sarunas sākumā.",
+      "name": "Asistenta vārds",
+      "business": "Uzņēmums",
+      "greetingLv": "Sveiciens (LV)",
+      "greetingEn": "Sveiciens (EN)"
+    },
+    "language": {
+      "title": "Valoda",
+      "hint": "Automātiski nosaka klienta valodu, ja izvēlaties Automātiski.",
+      "lv": "Latviešu",
+      "en": "Angļu",
+      "auto": "Automātiski"
+    },
+    "tone": {
+      "title": "Tonis",
+      "hint": "Droši stili — nav iespējams nejauši iestatīt nedrošu uzvedību.",
+      "professional": "Profesionāls",
+      "friendly": "Draudzīgs",
+      "concise": "Kodolīgs",
+      "warm": "Silts"
+    },
+    "instructions": {
+      "title": "Biznesa norādījumi",
+      "hint": "Papildu norādījumi AI asistentam.",
+      "placeholder": "Piemēram: Vienmēr piedāvā pieteikt servisu. Neapsoli konkrētu remonta cenu."
+    },
+    "restrictions": {
+      "title": "Ierobežojumi",
+      "hint": "Tēmas, uz kurām AI neatbild — izmanto zemāk esošo rezerves ziņu.",
+      "custom": "Pielāgotas / papildu tēmas",
+      "customHint": "Viena tēma katrā rindā",
+      "fallbackLv": "Rezerves ziņa (LV)",
+      "fallbackEn": "Rezerves ziņa (EN)"
+    },
+    "handoff": {
+      "title": "Nodošana cilvēkam",
+      "hint": "Kad AI nodod sarunu komandai.",
+      "enabled": "Iespējot nodošanu cilvēkam",
+      "customerAsksHuman": "Klients lūdz cilvēku",
+      "cannotAnswer": "AI nevar atbildēt",
+      "requestsQuote": "Klients lūdz tāmi / cenu",
+      "customRules": "Pielāgotie noteikumi",
+      "customRulesText": "Pielāgotie noteikumi (viens katrā rindā)",
+      "customRulesHint": "Atslēgvārdi vai /regex/i",
+      "messageLv": "Nodošanas ziņa (LV)",
+      "messageEn": "Nodošanas ziņa (EN)",
+      "createsLead": "Nodošana izveido leadu"
+    },
+    "leadsPanel": {
+      "title": "Lead ievākšana",
+      "hint": "Kādus kontaktus un datus vākt no klientiem.",
+      "collectLeads": "Iespējot lead ievākšanu",
+      "collectName": "Vākt vārdu",
+      "collectPhone": "Vākt telefonu",
+      "collectEmail": "Vākt e-pastu",
+      "customFields": "Pielāgotie lauki",
+      "customFieldsHint": "Viens lauks katrā rindā, piem. Automašīnas modelis",
+      "questions": "Kvalifikācijas jautājumi",
+      "email": "Paziņojumu e-pasts"
+    },
+    "preview": {
+      "tab": "Priekšskatījums",
+      "sampleUser": "Cik maksā eļļas maiņa?",
+      "sampleReply": "Atbilde {tone} stilā — saglabājiet, lai redzētu reālo atbildi Testa režīmā.",
+      "liveHint": "Vārds, sveiciens un tonis atjauninās uzreiz. Pilna AI atbilde — Testa režīmā."
+    },
+    "test": {
+      "tab": "Testēt asistentu",
+      "hint": "Uzdodiet jautājumu un redziet atbildi + zināšanu avotus.",
+      "placeholder": "Piemēram: Vai jūs remontējat BMW?",
+      "ask": "Testēt asistentu",
+      "running": "Testē…",
+      "answer": "Atbilde",
+      "sources": "Zināšanu avoti",
+      "noSources": "Nav atrasts neviens avots.",
+      "error": "Tests neizdevās. Mēģiniet vēlreiz."
+    },
+    "save": {
+      "action": "Saglabāt",
+      "saving": "Saglabā…",
+      "saved": "Konfigurācija publicēta.",
+      "error": "Neizdevās saglabāt. Pārbaudiet laukus.",
+      "version": "Versija {version}",
+      "hint": "Pirms publicēšanas tiek saglabāta iepriekšējā versija — aktīvā konfigurācija netiek bojāta."
+    },
+    "leads": {
+      "title": "Lead konfigurācija",
+      "subtitle": "Nosakiet, kad saruna kļūst par biznesa iespēju.",
+      "email": "Paziņojumu e-pasts",
+      "emailHint": "Saņemiet e-pastu, kad tiek izveidots jauns leads (Resend).",
+      "questions": "Kvalifikācijas jautājumi",
+      "questionsHint": "Viens jautājums katrā rindā. AI uzdos trūkstošos pa vienam.",
+      "handoffMessage": "Handoff ziņa",
+      "criteria": "Minimālie lead kritēriji",
+      "criteriaHint": "Leads tiek izveidots tikai tad, ja šie nosacījumi ir izpildīti.",
+      "requireIntent": "Nepieciešams pirkuma / pieraksta nodoms",
+      "requireContact": "Nepieciešams telefons vai e-pasts",
+      "requireName": "Nepieciešams vārds",
+      "requireService": "Nepieciešams pakalpojums",
+      "behavior": "Uzvedība",
+      "collectLeads": "Iespējot lead ievākšanu",
+      "handoffEnabled": "Iespējot handoff uz cilvēku",
+      "handoffCreatesLead": "Handoff izveido leadu",
+      "save": "Saglabāt",
+      "saved": "Iestatījumi saglabāti.",
+      "error": "Neizdevās saglabāt. Pārbaudiet e-pastu un laukus."
+    }
+  },
+  "analytics": {
+    "title": "Analītika",
+    "subtitle": "Biznesa rezultāti no reālām sarunām — bez mākslīgiem AI rādītājiem.",
+    "insight": "Biznesa ieskats",
+    "insightEmpty": "Vēl nav pietiekami datu ieskatam. Zemāk esošie rādītāji paliek tukši, līdz ir sarunas.",
+    "noData": "Šajā periodā nav datu",
+    "ranges": {
+      "d7": "7 dienas",
+      "d30": "30 dienas",
+      "d90": "90 dienas"
+    },
+    "metrics": {
+      "conversations": "Sarunas",
+      "leads": "Leadi",
+      "qualified": "Kvalificēti leadi",
+      "won": "Iegūti leadi",
+      "handoffs": "Nodošanas cilvēkam",
+      "aiResolution": "AI atrisināšana",
+      "leadConversion": "Lead konversija"
+    },
+    "charts": {
+      "conversations": "Sarunas laikā",
+      "leads": "Leadi laikā",
+      "conversion": "Lead statusu sadalījums",
+      "outcomes": "Sarunu iznākumi"
+    },
+    "topQuestions": {
+      "title": "Biežākie jautājumi",
+      "empty": "Šajā periodā nav klasificētu klientu jautājumu."
+    },
+    "topics": {
+      "price": "Cena",
+      "hours": "Darba laiks",
+      "booking": "Pieraksts",
+      "location": "Atrašanās vieta",
+      "services": "Pakalpojumi",
+      "other": "Cits"
+    },
+    "unanswered": {
+      "card": "Neatbildētie jautājumi",
+      "open": "Skatīt neatbildētos",
+      "title": "Neatbildētie jautājumi",
+      "subtitle": "Rezerves atbildes un nodošanas cilvēkam — aizpildiet zināšanu caurumus ar BUJ.",
+      "back": "← Analītika",
+      "empty": "Šajā periodā nav neatbildētu jautājumu.",
+      "createFaq": "Izveidot BUJ",
+      "viewConversation": "Skatīt sarunu",
+      "reasonFallback": "Nepietiekamas zināšanas / rezerve",
+      "reasonHandoff": "Nodošana cilvēkam",
+      "reasonBoth": "Rezerve + nodošana"
+    }
+  },
+  "billing": {
+    "title": "Norēķini",
+    "subtitle": "Plāns, lietojums, rēķini un maksājuma metode — caur Stripe.",
+    "currentPlan": "Pašreizējais plāns",
+    "usage": "Sarunu lietojums",
+    "remaining": "Atlicis",
+    "ofLimit": "Skaita, kad šajā norēķinu periodā sākas jauna saruna.",
+    "billingCycle": "Norēķinu periods",
+    "price": "Cena",
+    "perMonth": "/mēn.",
+    "paymentMethod": "Maksājuma metode",
+    "noPaymentMethod": "Nav pievienota karte",
+    "invoices": "Rēķini",
+    "noInvoices": "Rēķinu vēl nav.",
+    "upgrade": "Jaunināt",
+    "current": "Pašreizējais",
+    "manageBilling": "Klientu portāls",
+    "cancel": "Atcelt perioda beigās",
+    "resume": "Saglabāt abonementu",
+    "cancelHint": "Piekļuve turpinās līdz pašreizējā perioda beigām.",
+    "pastDue": "Maksājums neizdevās",
+    "cancelPending": "Atcelšana perioda beigās",
+    "stripeMissing": "Stripe vēl nav konfigurēts. Pievienojiet STRIPE_SECRET_KEY un cenu ID, lai ieslēgtu Checkout (der arī test režīms).",
+    "conversations": "sarunas",
+    "status": "Statuss",
+    "download": "PDF",
+    "view": "Skatīt",
+    "flash": {
+      "success": "Abonements aktivizēts.",
+      "updated": "Plāns atjaunināts.",
+      "canceled": "Checkout atcelts.",
+      "canceledPending": "Atcelšana ieplānota perioda beigās.",
+      "resumed": "Abonements atjaunosies kā ierasts."
+    },
+    "errors": {
+      "stripe_not_configured": "Šajā vidē Stripe nav konfigurēts.",
+      "invalid_plan": "Nederīgs plāns.",
+      "price_not_configured": "Šim plānam nav Stripe cenas ID.",
+      "invalid_price_id": "STRIPE_PRICE_* jābūt Price ID (price_…), nevis Product ID (prod_…). Stripe → produkts → Pricing → nokopējiet price ID.",
+      "no_subscription": "Šai darba vietai nav abonementa ieraksta.",
+      "no_customer": "Vēl nav Stripe klienta — vispirms izvēlieties maksas plānu.",
+      "subscription_invalid": "Neizdevās atjaunināt Stripe abonementu.",
+      "checkout_failed": "Neizdevās sākt Stripe Checkout."
+    }
+  },
+  "appointments": {
+    "title": "Pieraksti",
+    "subtitle": "Pieraksti no asistenta — apstiprināti tikai pēc kalendāra apstiprinājuma.",
+    "empty": "Šajā skatā nav pierakstu.",
+    "manageCalendar": "Kalendāra iestatījumi",
+    "untitled": "Pieraksts",
+    "noTime": "Laiks nav noteikts",
+    "cancel": "Atcelt",
+    "views": {
+      "today": "Šodien",
+      "upcoming": "Gaidāmie",
+      "past": "Pagājušie",
+      "cancelled": "Atceltie"
+    },
+    "status": {
+      "PENDING": "Gaida",
+      "CONFIRMED": "Apstiprināts",
+      "CANCELLED": "Atcelts",
+      "FAILED": "Neizdevās",
+      "COMPLETED": "Pabeigts",
+      "NO_SHOW": "Neieradās"
+    }
+  },
+  "integrations": {
+    "title": "Integrācijas",
+    "subtitle": "Pievienojiet ārējos kalendārus. OAuth marķieri tiek šifrēti un netiek rādīti pārlūkā.",
+    "connected": "Savienots",
+    "disconnected": "Nav savienots",
+    "google": {
+      "hint": "Izmanto reālai pieejamībai un pierakstu apstiprināšanai. AI nekad neizdomā brīvus laikus.",
+      "connect": "Pievienot Google Calendar",
+      "disconnect": "Atvienot",
+      "notConnected": "Pievienojiet Google Calendar, lai čatā ieslēgtu pierakstus.",
+      "connectedNoEmail": "Google Calendar pievienots.",
+      "viewAppointments": "Skatīt pierakstus"
+    },
+    "comingSoon": {
+      "title": "Drīzumā",
+      "hint": "Tā pati CalendarIntegration saskarne — citi pakalpojumu sniedzēji vēlāk."
+    },
+    "flash": {
+      "connected": "Google Calendar pievienots."
+    },
+    "errors": {
+      "google_not_configured": "Iestatiet GOOGLE_CLIENT_ID un GOOGLE_CLIENT_SECRET vidē.",
+      "encryption_missing": "Iestatiet TOKEN_ENCRYPTION_KEY, lai šifrētu OAuth marķierus.",
+      "oauth_denied": "Google autorizācija tika noraidīta.",
+      "oauth_invalid": "Nederīga OAuth atbilde.",
+      "oauth_state": "OAuth stāvoklis ir nederīgs vai beidzies. Mēģiniet vēlreiz.",
+      "token_exchange": "Neizdevās apmainīt Google autorizācijas kodu."
+    }
+  },
+  "settings": {
+    "title": "Iestatījumi",
+    "subtitle": "Privātums, datu glabāšana un konta kontroles šim darba telpai.",
+    "ownerOnly": "Tikai darba telpas īpašnieks var mainīt privātuma un dzēšanas iestatījumus.",
+    "workspace": {
+      "title": "Darba telpa",
+      "slug": "Slug",
+      "role": "Jūsu loma"
+    },
+    "retention": {
+      "title": "Sarunu glabāšana",
+      "hint": "Automātiski dzēst klientu sarunas, kas vecākas par norādītajām dienām. Noklusējums ir 365.",
+      "days": "Glabāšana (dienas)",
+      "save": "Saglabāt",
+      "zero": "Iestatiet 0, lai atslēgtu automātisko tīrīšanu (manuālā dzēšana joprojām pieejama).",
+      "runNow": "Palaist tīrīšanu tagad"
+    },
+    "export": {
+      "title": "Eksportēt datus",
+      "hint": "Lejupielādējiet JSON eksportu ar sarunām, leads, tikšanās, FAQ un dokumentu metadatiem. Noslēpumi un OAuth marķieri netiek iekļauti.",
+      "action": "Lejupielādēt eksportu"
+    },
+    "danger": {
+      "workspaceTitle": "Dzēst darba telpu",
+      "workspaceHint": "Mīksti dzēš darba telpu un neatgriezeniski izdzēš sarunas, leads, tikšanās, zināšanas un augšupielādes.",
+      "confirmSlug": "Apstiprināšanai ierakstiet darba telpas slug",
+      "deleteWorkspace": "Dzēst darba telpu",
+      "accountTitle": "Dzēst kontu",
+      "accountHint": "Dzēš jūsu lietotāja kontu un mīksti dzēš visas jums piederošās darba telpas.",
+      "confirmEmail": "Apstiprināšanai ierakstiet savu e-pastu",
+      "deleteAccount": "Dzēst kontu"
+    },
+    "flash": {
+      "retention": "Glabāšanas iestatījumi saglabāti.",
+      "retention_run": "Glabāšanas tīrīšana pabeigta."
+    },
+    "errors": {
+      "invalid_retention": "Glabāšanai jābūt no 0 līdz 3650 dienām.",
+      "confirm_slug": "Slug apstiprinājums nesakrīt.",
+      "confirm_email": "E-pasta apstiprinājums nesakrīt."
+    }
+  },
+  "partner": {
+    "portal": "Partneru portāls",
+    "subtitle": "Pārdodiet mājaslapas ar AI darbinieku. Sekojiet klientiem, aktivācijām un periodiskai komisijai — nepieskaroties pamata SaaS darba vietām.",
+    "backToDashboard": "Atpakaļ uz paneli",
+    "nav": {
+      "overview": "Pārskats",
+      "customers": "Klienti"
+    },
+    "stats": {
+      "customers": "Klienti",
+      "activeAssistants": "Aktīvie AI asistenti",
+      "mrr": "Klientu apgrozījums (mēnesis)",
+      "commissionMonth": "Komisija (mēnesis)",
+      "commissionPending": "Komisija gaida",
+      "commissionPaid": "Komisija izmaksāta",
+      "conversions": "Referral konversijas / klikšķi"
+    },
+    "commission": {
+      "title": "Komisijas likme",
+      "hint": "Noklusētā periodiskā komisija ir {rate}%. Konfigurējama katram partnerim.",
+      "percent": "Procenti",
+      "save": "Saglabāt"
+    },
+    "referrals": {
+      "title": "Referral saites",
+      "hint": "Klienti, kas reģistrējas ar ?ref=CODE, tiek piesaistīti šim partnerim.",
+      "link": "Atvērt saiti",
+      "empty": "Vēl nav referral kodu.",
+      "label": "Nosaukums",
+      "create": "Izveidot kodu"
+    },
+    "commissionsRecent": "Jaunākās komisijas",
+    "commissionsEmpty": "Vēl nav komisiju — tās parādās, kad piesaistītais klients maksā caur Stripe.",
+    "table": {
+      "invoice": "Rēķins",
+      "amount": "Samaksāts",
+      "commission": "Komisija",
+      "status": "Statuss"
+    },
+    "whitelabelNote": "White-label lauki (zīmola, domēna, widget nosaukuma) ir rezervēti Partner ierakstā vēlākai ieviešanai — produktā vēl netiek lietoti.",
+    "bootstrap": {
+      "title": "Aktivizēt partnera piekļuvi",
+      "hint": "Izveido TavsWebs aģentūras partneri un padara jūsu kontu par īpašnieku. Pamata SaaS nemainās.",
+      "action": "Izveidot TavsWebs partneri"
+    },
+    "customers": {
+      "title": "Klienti",
+      "subtitle": "Darba vietas, kas piesaistītas šim partnerim ar referral vai manuāli.",
+      "empty": "Vēl nav piesaistītu klientu.",
+      "linkLabel": "Piesaistīt darba vietu pēc ID",
+      "link": "Piesaistīt klientu",
+      "notActivated": "Nav aktivizēts",
+      "col": {
+        "name": "Klients",
+        "status": "Statuss",
+        "plan": "Plāns",
+        "assistant": "AI asistents",
+        "commission": "Nopelnīts"
+      }
+    }
+  }
+}
