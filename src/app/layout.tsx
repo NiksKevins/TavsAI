@@ -25,14 +25,24 @@ const syne = Syne({
   adjustFontFallback: true,
 });
 
+function resolveSiteUrl(): URL {
+  const configured = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (configured && !/localhost|127\.0\.0\.1/i.test(configured)) {
+    return new URL(configured.endsWith("/") ? configured : `${configured}/`);
+  }
+  const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (productionHost) {
+    return new URL(`https://${productionHost}`);
+  }
+  return new URL("https://bot.tavswebs.com");
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   // Share previews (WhatsApp/etc.) must stay Latvian — crawlers often send en Accept-Language.
   const tOg = await getTranslations({ locale: "lv", namespace: "meta" });
   const t = locale === "lv" ? tOg : await getTranslations("meta");
-  const siteUrl = new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? "https://bot.tavswebs.com",
-  );
+  const siteUrl = resolveSiteUrl();
 
   return {
     metadataBase: siteUrl,
