@@ -316,7 +316,8 @@
       "email_taken": "This email is already registered.",
       "signin_failed": "Could not sign in. Try again.",
       "invalid_credentials": "Incorrect email or password.",
-      "invalid_token": "This reset link is invalid or expired."
+      "invalid_token": "This reset link is invalid or expired.",
+      "service_unavailable": "Service temporarily unavailable. Please try again soon."
     }
   },
   "onboarding": {
