@@ -59,7 +59,7 @@ export function parseChatBlocks(text: string, depth = 0): ChatBlock[] {
   let paragraph: string[] = [];
   let listItems: string[] = [];
   let listKind: "ul" | "ol" | null = null;
-  let pendingRest: string[] = [];
+  const pendingRest: string[] = [];
 
   const flushParagraph = () => {
     const joined = paragraph.join(" ").trim();
