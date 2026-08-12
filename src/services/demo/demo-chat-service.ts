@@ -19,7 +19,7 @@ export type DemoChatResult = {
 };
 
 const LEAD_INTENT =
-  /pieteikt|pierakst|vizīt|tām[ei]|vēlos|jā[,.]?\s*vēl|book|appoint|quote|yes[,.]?\s*i('d| would)? like/i;
+  /pieteikt|pierakst|vizīt|tām[ei]|vēlos|jā[,.]?\s*vēl|book|appoint|quote|yes[,.]?\s*i('d| would)? like|sākt|start free|try for free|reģistr|register|bez maksas/i;
 
 function knowledgeAsChunks(
   industryId: DemoIndustryId,
@@ -105,6 +105,8 @@ export async function runDemoChat(params: {
     };
   }
 
+  const isProduct = params.industryId === "tavswebs";
+
   const systemPrompt = buildSystemPrompt({
     business: {
       businessName: industry.businessName,
@@ -120,11 +122,15 @@ export async function runDemoChat(params: {
       tone: "professional",
       language: locale,
       languageMode: "auto",
-      toneGuidance:
-        "Friendly, concise, Latvian-business tone. Offer booking when intent is clear.",
-      customInstructions:
-        "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. When the customer wants to book or get a quote, ask for name and phone (or show that a lead form will appear).",
-      allowedTopics: ["services", "prices", "hours", "booking", "quotes"],
+      toneGuidance: isProduct
+        ? "Clear, confident, benefit-first. Talk about outcomes (keep customers, always-on answers, captured leads). Avoid jargon."
+        : "Friendly, concise, Latvian-business tone. Offer booking when intent is clear.",
+      customInstructions: isProduct
+        ? "This is the TavsWebs Bot marketing site demo. You ARE the product assistant for TavsWebs Bot — not a third-party salon or garage. Explain what the visitor gets, pricing, and how to start. When they want to start, ask for name and phone so the team can follow up, and mention they can also register free at /register. Prefer concrete numbers from knowledge."
+        : "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. When the customer wants to book or get a quote, ask for name and phone (or show that a lead form will appear).",
+      allowedTopics: isProduct
+        ? ["pricing", "how it works", "features", "onboarding", "languages", "leads"]
+        : ["services", "prices", "hours", "booking", "quotes"],
       restrictedTopics: ["competitors", "politics"],
       fallbackMessage: locale === "en" ? DEFAULT_FALLBACK_EN : DEFAULT_FALLBACK_LV,
       handoffMessage:
@@ -132,8 +138,11 @@ export async function runDemoChat(params: {
           ? "I can pass your details to the team."
           : "Varu nodot jūsu datus komandai.",
       collectLeads: true,
-      qualificationQuestions:
-        locale === "en"
+      qualificationQuestions: isProduct
+        ? locale === "en"
+          ? ["What kind of business do you run?", "Do you already have a website?"]
+          : ["Kāds ir jūsu bizness?", "Vai jums jau ir mājaslapa?"]
+        : locale === "en"
           ? ["What service do you need?", "When would you like to visit?"]
           : ["Kādu pakalpojumu vēlaties?", "Kad jums būtu ērti ierasties?"],
     },

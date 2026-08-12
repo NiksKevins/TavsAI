@@ -1,6 +1,6 @@
 import type { Locale } from "@prisma/client";
 
-export type DemoIndustryId = "beauty" | "auto" | "construction";
+export type DemoIndustryId = "beauty" | "auto" | "construction" | "tavswebs";
 
 export type DemoKnowledgeChunk = {
   title: string;
@@ -177,6 +177,77 @@ export const DEMO_INDUSTRIES: Record<DemoIndustryId, DemoIndustry> = {
         priority: 90,
         content:
           "Telefons +371 2000 3300, e-pasts info@balticbuild.lv. Darba laiks birojā: pirmdiena–piektdiena 9:00–17:00.",
+      },
+    ],
+  },
+  tavswebs: {
+    id: "tavswebs",
+    labelLv: "TavsWebs Bot",
+    labelEn: "TavsWebs Bot",
+    businessName: "TavsWebs Bot",
+    description:
+      "Sistēma Latvijas biznesiem, kas atbild klientiem mājaslapā 24/7, apkopo leadus un palīdz nonākt līdz pieteikumam — lai nezaudētu apmeklētājus pēc darba laika.",
+    phone: "+371 2000 0000",
+    email: "hello@tavswebs.com",
+    city: "Rīga",
+    websiteUrl: "https://bot.tavswebs.com",
+    assistantName: "Tavs",
+    greetingLv:
+      "Sveiki! Esmu Tavs no TavsWebs Bot. Varu pastāstīt, kā sistēma saglabā klientus pēc darba laika, kādas ir cenas un kā sākt bez maksas.",
+    greetingEn:
+      "Hi! I’m Tavs from TavsWebs Bot. I can explain how the system keeps customers after hours, what’s included, pricing, and how to start free.",
+    suggestionsLv: [
+      "Kā tas strādā?",
+      "Cik tas maksā?",
+      "Vēlos sākt bez maksas",
+    ],
+    suggestionsEn: [
+      "How does it work?",
+      "How much does it cost?",
+      "I want to start free",
+    ],
+    knowledge: [
+      {
+        title: "Ko klients saņem",
+        source: "business",
+        priority: 100,
+        content:
+          "TavsWebs Bot ir sistēma jūsu mājaslapā, kas atbild uz klientu jautājumiem visu diennakti, apkopo kontaktus (leadus) un palīdz cilvēkiem pieteikties vai pierakstīties. Mērķis: nezaudēt apmeklētājus pēc darba laika un ietaupīt komandas laiku uz atkārtotiem jautājumiem. Darbojas latviešu un angļu valodā. Nav jauna aplikācija klientiem — tikai čata poga jūsu esošajā mājaslapā.",
+      },
+      {
+        title: "Kā tas strādā",
+        source: "faq",
+        priority: 95,
+        content:
+          "Četri soļi: 1) Pievienojat mājaslapas URL. 2) Sistēma apgūst saturu (lapas, FAQ, dokumentus, pakalpojumus). 3) Ievietojat vienu koda fragmentu savā vietnē. 4) Apmeklētāji sāk saņemt atbildes, un leadi nonāk jūsu panelī. Smagas integrācijas nav vajadzīgas.",
+      },
+      {
+        title: "Cenas",
+        source: "services",
+        priority: 100,
+        content:
+          "Free: €0, līdz 100 sarunām mēnesī. Starter: €19/mēn, 500 sarunas. Business: €39/mēn, 2000 sarunas (ieteicamais plāns). Pro: €79/mēn, 10 000 sarunas. Var sākt bez maksas, kredītkarte nav vajadzīga. Jaunināt var jebkurā brīdī no paneļa.",
+      },
+      {
+        title: "Kas iekļauts",
+        source: "faq",
+        priority: 90,
+        content:
+          "Iekļauts: atbildes no jūsu zināšanu bāzes, leadu forma un panelis, cilvēka nodošana ar kontekstu, widget pielāgošana, latviešu un angļu valoda. Ar Google Calendar var palīdzēt pierakstīt vizītes. Leadi satur vārdu, tālruni un sarunas kontekstu.",
+      },
+      {
+        title: "Kam piemērots",
+        source: "business",
+        priority: 85,
+        content:
+          "Piemērots Latvijas pakalpojumu biznesiem — skaistumkopšana, auto serviss, būvniecība, medicīna, juridiskie un citi uzņēmumi ar biežiem jautājumiem par cenām, darba laiku un pieejamību. Demo vietnē bot.tavswebs.com var izmēģināt arī citas nozares piemērus.",
+      },
+      {
+        title: "Kā sākt",
+        source: "faq",
+        priority: 98,
+        content:
+          "Sāciet bez maksas vietnē bot.tavswebs.com/register. Kartes nav vajadzīgas. Pēc reģistrācijas pievienojat mājaslapu, palaidiet crawl un ievietojat widget kodu. Ja vēlaties, atstājiet vārdu un tālruni — TavsWebs komanda var sazināties un palīdzēt ar uzstādīšanu. E-pasts: hello@tavswebs.com. Galvenā vietne: tavswebs.com.",
       },
     ],
   },

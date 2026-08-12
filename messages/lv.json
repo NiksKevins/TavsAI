@@ -55,6 +55,13 @@
       "leadError": "Neizdevās nosūtīt. Pārbaudiet datus.",
       "leadThanks": "Paldies! {business} komanda saņems jūsu pieteikumu. (Šī ir demo — reālā vietnē lead nonāk jūsu panelī.)"
     },
+    "siteChat": {
+      "launcher": "Izmēģināt botu",
+      "title": "TavsWebs Bot",
+      "subtitle": "Jautā, kā tas saglabā klientus",
+      "close": "Aizvērt",
+      "hint": "Dzīvs šī produkta demo — jautā par cenām, uzstādīšanu vai darbību."
+    },
     "problem": {
       "eyebrow": "Problēma",
       "title": "Klienti jautā — jūs zaudējat laiku un leadus.",

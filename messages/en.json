@@ -55,6 +55,13 @@
       "leadError": "Could not submit. Check your details.",
       "leadThanks": "Thanks! The {business} team would receive this lead. (Demo only — on a real site, leads land in your dashboard.)"
     },
+    "siteChat": {
+      "launcher": "Try the bot",
+      "title": "TavsWebs Bot",
+      "subtitle": "Ask how it keeps your customers",
+      "close": "Close",
+      "hint": "Live demo of this product — ask about pricing, setup, or how it works."
+    },
     "problem": {
       "eyebrow": "The problem",
       "title": "Customers ask. You lose time and leads.",

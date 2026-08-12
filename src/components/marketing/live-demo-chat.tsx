@@ -38,6 +38,12 @@ const INDUSTRY_THEME: Record<
     chip: "border-[#e8d4bc] bg-[#fdf8f2] text-[#8a4f22]",
     chipActive: "border-[#a65f2a] bg-[#a65f2a] text-white",
   },
+  tavswebs: {
+    siteBg: "from-[#eff6ff] via-[#f8fafc] to-[#f1f5f9]",
+    siteAccent: "#3b82f6",
+    chip: "border-[#bfdbfe] bg-[#eff6ff] text-[#1d4ed8]",
+    chipActive: "border-[#3b82f6] bg-[#3b82f6] text-white",
+  },
 };
 
 export function LiveDemoChat({
@@ -45,16 +51,20 @@ export function LiveDemoChat({
   className,
   industryId: controlledIndustryId,
   onIndustryChange,
+  hideIndustryPicker = false,
 }: {
-  variant?: "page" | "embed" | "stage" | "showcase";
+  variant?: "page" | "embed" | "stage" | "showcase" | "widget";
   className?: string;
   industryId?: DemoIndustryId;
   onIndustryChange?: (id: DemoIndustryId) => void;
+  hideIndustryPicker?: boolean;
 }) {
   const t = useTranslations("marketing.demo");
   const locale = useLocale() === "en" ? "en" : "lv";
   const [internalIndustryId, setInternalIndustryId] =
-    useState<DemoIndustryId>("auto");
+    useState<DemoIndustryId>(
+      controlledIndustryId === "tavswebs" ? "tavswebs" : "auto",
+    );
   const industryId = controlledIndustryId ?? internalIndustryId;
   const setIndustryId = onIndustryChange ?? setInternalIndustryId;
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -166,7 +176,12 @@ export function LiveDemoChat({
   const suggestions =
     locale === "en" ? industry.suggestionsEn : industry.suggestionsLv;
 
-  const isCompact = variant === "embed" || variant === "stage" || variant === "showcase";
+  const isCompact =
+    variant === "embed" ||
+    variant === "stage" ||
+    variant === "showcase" ||
+    variant === "widget";
+  const showPicker = !hideIndustryPicker && variant !== "widget";
 
   const industryPicker = (
     <div
@@ -239,7 +254,7 @@ export function LiveDemoChat({
               "rounded-2xl border",
               variant === "stage"
                 ? "border-white/10 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.55)]"
-                : variant === "showcase"
+                : variant === "showcase" || variant === "widget"
                   ? "border-border/60 shadow-[0_20px_50px_-12px_rgba(18,31,27,0.18)] ring-1 ring-black/[0.04]"
                   : "border-border/70 shadow-sm",
             )
@@ -270,7 +285,7 @@ export function LiveDemoChat({
           "flex flex-col gap-2.5 overflow-y-auto bg-[#faf8f5] px-3 py-3",
           variant === "stage"
             ? "h-[300px] sm:h-[360px]"
-            : variant === "showcase"
+            : variant === "showcase" || variant === "widget"
               ? "h-[320px] sm:h-[380px]"
               : variant === "embed"
                 ? "h-[260px] sm:h-[280px]"
@@ -367,10 +382,10 @@ export function LiveDemoChat({
     </div>
   );
 
-  if (variant === "embed" || variant === "stage" || variant === "showcase") {
+  if (variant === "embed" || variant === "stage" || variant === "showcase" || variant === "widget") {
     return (
       <div className={cn("space-y-4", className)}>
-        {industryPicker}
+        {showPicker ? industryPicker : null}
         {chatPanel}
       </div>
     );
@@ -393,7 +408,7 @@ export function LiveDemoChat({
         <p className="max-w-md text-base leading-relaxed text-ink-soft">
           {t("subtitle")}
         </p>
-        {industryPicker}
+        {showPicker ? industryPicker : null}
       </div>
       {chatPanel}
     </div>

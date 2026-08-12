@@ -7,7 +7,7 @@ import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 export const runtime = "nodejs";
 
 const schema = z.object({
-  industryId: z.enum(["beauty", "auto", "construction"]),
+  industryId: z.enum(["beauty", "auto", "construction", "tavswebs"]),
   name: z.string().trim().min(2).max(80),
   phone: z
     .string()

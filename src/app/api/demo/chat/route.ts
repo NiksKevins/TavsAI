@@ -8,7 +8,7 @@ import { runDemoChat } from "@/services/demo/demo-chat-service";
 export const runtime = "nodejs";
 
 const schema = z.object({
-  industryId: z.enum(["beauty", "auto", "construction"]),
+  industryId: z.enum(["beauty", "auto", "construction", "tavswebs"]),
   message: z.string().trim().min(1).max(800),
   locale: z.enum(["lv", "en"]).optional(),
   history: z
