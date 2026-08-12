@@ -7,7 +7,7 @@ import {
   parseHandoffTriggers,
 } from "@/config/assistant";
 import { prisma } from "@/lib/db";
-import { getRequestId, logError, logInfo } from "@/lib/logging";
+import { getRequestId, logInfo } from "@/lib/logging";
 import { clientIp, checkRateLimit } from "@/lib/rate-limit";
 import {
   extractContactHint,

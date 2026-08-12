@@ -27,7 +27,6 @@ export class GoogleCalendarIntegration implements CalendarIntegration {
 
   async listAvailableSlots(input: ListSlotsInput): Promise<TimeSlot[]> {
     const accessToken = await this.getAccessToken();
-    const calendarId = encodeURIComponent(this.config.calendarId || "primary");
     const duration = input.durationMinutes || this.config.slotDurationMinutes;
     const limit = input.limit ?? 8;
 

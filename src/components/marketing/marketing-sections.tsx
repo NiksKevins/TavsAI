@@ -18,7 +18,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { PLANS } from "@/config/plans";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
-import { cn } from "@/lib/utils";
 
 const LiveDemoChat = dynamic(
   () =>
