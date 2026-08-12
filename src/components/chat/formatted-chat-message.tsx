@@ -1,44 +1,14 @@
 import { Fragment, type ReactNode } from "react";
 
+import {
+  hrefFor,
+  parseChatBlocks,
+  REGISTER_PATH,
+} from "@/lib/chat/chat-markdown";
 import { cn } from "@/lib/utils";
 
 const URL_PATTERN =
   /((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s.,;!?)]+|(?:https?:\/\/)[^\s.,;!?)]+)/gi;
-
-const REGISTER_PATH = /bot\.tavswebs\.com\/register/i;
-
-/** Turn inline bullets / numbered steps into real list lines. */
-function normalizeListBreaks(text: string): string {
-  return text
-    .replace(/:\s*-\s+/g, ":\n\n- ")
-    .replace(/\.\s+-\s+/g, ".\n- ")
-    .replace(/!\s+-\s+/g, "!\n- ")
-    .replace(/\?\s+-\s+/g, "?\n- ")
-    .replace(/:\s*(\d{1,2})[.)]\s+/g, ":\n\n$1. ")
-    .replace(/\.\s+(\d{1,2})[.)]\s+/g, ".\n$1. ")
-    .replace(/!\s+(\d{1,2})[.)]\s+/g, "!\n$1. ")
-    .replace(/\?\s+(\d{1,2})[.)]\s+/g, "?\n$1. ")
-    .replace(/\s+(\d{1,2})[.)]\s+(?=\S)/g, "\n$1. ")
-    .trim();
-}
-
-/** Break dense thank-you / CTA prose into scannable paragraphs. */
-function softParagraphBreaks(text: string): string {
-  return text
-    .replace(
-      /\.\s+(?=(?:Vai|Ja vēl|Ja vēlēs|Would|If you|You can also|Also)\b)/gi,
-      ".\n\n",
-    )
-    .replace(
-      /((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/register)\.?/gi,
-      "\n\n$1\n\n",
-    )
-    .replace(/\n{3,}/g, "\n\n");
-}
-
-function hrefFor(raw: string): string {
-  return /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
-}
 
 const LINK_RE =
   /^(?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s]+$/i;
@@ -53,11 +23,11 @@ function renderInline(
   keyPrefix: string,
   registerCta?: string,
 ): ReactNode[] {
-  const chunks = text.split(/(\*\*[^*]+\*\*)/g);
+  const chunks = text.split(/(\*\*[^*\n]+?\*\*|\*[^*\n]+?\*)/g);
   const nodes: ReactNode[] = [];
 
   chunks.forEach((chunk, i) => {
-    const bold = chunk.match(/^\*\*([^*]+)\*\*$/);
+    const bold = chunk.match(/^\*\*([^*\n]+?)\*\*$/);
     if (bold) {
       nodes.push(
         <strong
@@ -66,6 +36,15 @@ function renderInline(
         >
           {bold[1]}
         </strong>,
+      );
+      return;
+    }
+    const italic = chunk.match(/^\*([^*\n]+?)\*$/);
+    if (italic) {
+      nodes.push(
+        <em key={`${keyPrefix}-i-${i}`} className="italic">
+          {italic[1]}
+        </em>,
       );
       return;
     }
@@ -105,92 +84,6 @@ function renderInline(
   return nodes;
 }
 
-type Block =
-  | { type: "p"; text: string }
-  | { type: "ul"; items: string[] }
-  | { type: "ol"; items: string[] }
-  | { type: "cta"; href: string };
-
-/** Peel a follow-up sentence stuck to the end of a list item. */
-function peelTrailingProse(item: string): { item: string; prose?: string } {
-  const match = item.match(
-    /^(.+[.!?])\s+((?:Var|Vai|Ja|Tad|Would|If|You|Can|Do|Also|Feel|Let|I can|We|Smagas)\b.+)$/i,
-  );
-  if (!match) return { item };
-  return { item: match[1], prose: match[2] };
-}
-
-function parseBlocks(text: string): Block[] {
-  const lines = softParagraphBreaks(normalizeListBreaks(text)).split(/\n/);
-  const blocks: Block[] = [];
-  let paragraph: string[] = [];
-  let listItems: string[] = [];
-  let listKind: "ul" | "ol" | null = null;
-  let pendingProse: string | null = null;
-
-  const flushParagraph = () => {
-    const joined = paragraph.join(" ").trim();
-    if (!joined) {
-      paragraph = [];
-      return;
-    }
-    const onlyUrl = joined.match(
-      /^((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s]+)$/i,
-    );
-    if (onlyUrl && REGISTER_PATH.test(onlyUrl[1])) {
-      blocks.push({ type: "cta", href: hrefFor(onlyUrl[1]) });
-    } else {
-      blocks.push({ type: "p", text: joined });
-    }
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (listItems.length && listKind) {
-      blocks.push({ type: listKind, items: listItems });
-    }
-    listItems = [];
-    listKind = null;
-    if (pendingProse) {
-      blocks.push({ type: "p", text: pendingProse });
-      pendingProse = null;
-    }
-  };
-
-  const pushItem = (kind: "ul" | "ol", rawItem: string) => {
-    flushParagraph();
-    if (listKind && listKind !== kind) flushList();
-    listKind = kind;
-    const peeled = peelTrailingProse(rawItem);
-    listItems.push(peeled.item);
-    if (peeled.prose) pendingProse = peeled.prose;
-  };
-
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (!line) {
-      flushList();
-      flushParagraph();
-      continue;
-    }
-    const numbered = line.match(/^\d{1,2}[.)]\s+(.+)$/);
-    if (numbered) {
-      pushItem("ol", numbered[1]);
-      continue;
-    }
-    const bullet = line.match(/^[-*•]\s+(.+)$/);
-    if (bullet) {
-      pushItem("ul", bullet[1]);
-      continue;
-    }
-    flushList();
-    paragraph.push(line);
-  }
-  flushList();
-  flushParagraph();
-  return blocks;
-}
-
 function ListItem({
   children,
   index,
@@ -221,15 +114,19 @@ export function FormattedChatMessage({
 }: {
   content: string;
   className?: string;
-  /** Label for register URL CTA button when present in the message. */
   registerCta?: string;
 }) {
-  const blocks = parseBlocks(content);
+  const blocks = parseChatBlocks(content);
 
   if (blocks.length === 0) return null;
 
   return (
-    <div className={cn("space-y-2.5 text-[13px] leading-relaxed sm:text-sm", className)}>
+    <div
+      className={cn(
+        "space-y-2.5 text-[13px] leading-relaxed sm:text-sm",
+        className,
+      )}
+    >
       {blocks.map((block, i) => {
         if (block.type === "cta") {
           return (
@@ -263,8 +160,15 @@ export function FormattedChatMessage({
             </ListTag>
           );
         }
+        const isSection = /:$/.test(block.text) && block.text.length < 40;
         return (
-          <p key={`p-${i}`} className="text-pretty">
+          <p
+            key={`p-${i}`}
+            className={cn(
+              "text-pretty",
+              isSection && "pt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground",
+            )}
+          >
             {renderInline(block.text, `p-${i}`, registerCta)}
           </p>
         );
