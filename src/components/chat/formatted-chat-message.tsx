@@ -2,13 +2,18 @@ import { Fragment, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-/** Turn common inline “ - Item” sequences into real list lines. */
+/** Turn inline bullets / numbered steps into real list lines. */
 function normalizeListBreaks(text: string): string {
   return text
     .replace(/:\s*-\s+/g, ":\n\n- ")
     .replace(/\.\s+-\s+/g, ".\n- ")
     .replace(/!\s+-\s+/g, "!\n- ")
     .replace(/\?\s+-\s+/g, "?\n- ")
+    .replace(/:\s*(\d{1,2})[.)]\s+/g, ":\n\n$1. ")
+    .replace(/\.\s+(\d{1,2})[.)]\s+/g, ".\n$1. ")
+    .replace(/!\s+(\d{1,2})[.)]\s+/g, "!\n$1. ")
+    .replace(/\?\s+(\d{1,2})[.)]\s+/g, "?\n$1. ")
+    .replace(/\s+(\d{1,2})[.)]\s+(?=\S)/g, "\n$1. ")
     .trim();
 }
 
@@ -29,12 +34,13 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
 
 type Block =
   | { type: "p"; text: string }
-  | { type: "ul"; items: string[] };
+  | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] };
 
 /** Peel a follow-up sentence stuck to the end of a list item. */
 function peelTrailingProse(item: string): { item: string; prose?: string } {
   const match = item.match(
-    /^(.+[.!?])\s+((?:Var|Vai|Ja|Tad|Would|If|You|Can|Do|Also|Feel|Let|I can|We)\b.+)$/i,
+    /^(.+[.!?])\s+((?:Var|Vai|Ja|Tad|Would|If|You|Can|Do|Also|Feel|Let|I can|We|Smagas)\b.+)$/i,
   );
   if (!match) return { item };
   return { item: match[1], prose: match[2] };
@@ -45,6 +51,7 @@ function parseBlocks(text: string): Block[] {
   const blocks: Block[] = [];
   let paragraph: string[] = [];
   let listItems: string[] = [];
+  let listKind: "ul" | "ol" | null = null;
   let pendingProse: string | null = null;
 
   const flushParagraph = () => {
@@ -54,12 +61,24 @@ function parseBlocks(text: string): Block[] {
   };
 
   const flushList = () => {
-    if (listItems.length) blocks.push({ type: "ul", items: listItems });
+    if (listItems.length && listKind) {
+      blocks.push({ type: listKind, items: listItems });
+    }
     listItems = [];
+    listKind = null;
     if (pendingProse) {
       blocks.push({ type: "p", text: pendingProse });
       pendingProse = null;
     }
+  };
+
+  const pushItem = (kind: "ul" | "ol", rawItem: string) => {
+    flushParagraph();
+    if (listKind && listKind !== kind) flushList();
+    listKind = kind;
+    const peeled = peelTrailingProse(rawItem);
+    listItems.push(peeled.item);
+    if (peeled.prose) pendingProse = peeled.prose;
   };
 
   for (const raw of lines) {
@@ -69,12 +88,14 @@ function parseBlocks(text: string): Block[] {
       flushParagraph();
       continue;
     }
+    const numbered = line.match(/^\d{1,2}[.)]\s+(.+)$/);
+    if (numbered) {
+      pushItem("ol", numbered[1]);
+      continue;
+    }
     const bullet = line.match(/^[-*•]\s+(.+)$/);
     if (bullet) {
-      flushParagraph();
-      const peeled = peelTrailingProse(bullet[1]);
-      listItems.push(peeled.item);
-      if (peeled.prose) pendingProse = peeled.prose;
+      pushItem("ul", bullet[1]);
       continue;
     }
     flushList();
@@ -83,6 +104,29 @@ function parseBlocks(text: string): Block[] {
   flushList();
   flushParagraph();
   return blocks;
+}
+
+function ListItem({
+  children,
+  index,
+  ordered,
+}: {
+  children: ReactNode;
+  index: number;
+  ordered: boolean;
+}) {
+  return (
+    <li className="relative flex gap-2.5 pl-0.5">
+      {ordered ? (
+        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md bg-primary/10 text-[11px] font-semibold tabular-nums text-primary">
+          {index + 1}
+        </span>
+      ) : (
+        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary/70" />
+      )}
+      <span className="min-w-0 flex-1">{children}</span>
+    </li>
+  );
 }
 
 export function FormattedChatMessage({
@@ -99,19 +143,23 @@ export function FormattedChatMessage({
   return (
     <div className={cn("space-y-2 text-[13px] leading-relaxed sm:text-sm", className)}>
       {blocks.map((block, i) => {
-        if (block.type === "ul") {
+        if (block.type === "ul" || block.type === "ol") {
+          const ListTag = block.type === "ol" ? "ol" : "ul";
           return (
-            <ul
-              key={`ul-${i}`}
-              className="my-1 space-y-1.5 border-l-2 border-primary/25 pl-3"
+            <ListTag
+              key={`${block.type}-${i}`}
+              className="my-1 space-y-2 border-l-2 border-primary/20 pl-3"
             >
               {block.items.map((item, j) => (
-                <li key={`li-${i}-${j}`} className="relative pl-0.5">
-                  <span className="absolute -left-[0.85rem] top-[0.55em] size-1 rounded-full bg-primary/70" />
+                <ListItem
+                  key={`li-${i}-${j}`}
+                  index={j}
+                  ordered={block.type === "ol"}
+                >
                   {renderInline(item, `li-${i}-${j}`)}
-                </li>
+                </ListItem>
               ))}
-            </ul>
+            </ListTag>
           );
         }
         return (

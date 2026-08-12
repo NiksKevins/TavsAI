@@ -219,7 +219,7 @@ export const DEMO_INDUSTRIES: Record<DemoIndustryId, DemoIndustry> = {
         source: "faq",
         priority: 95,
         content:
-          "Četri soļi: 1) Pievienojat mājaslapas URL. 2) Sistēma apgūst saturu (lapas, FAQ, dokumentus, pakalpojumus). 3) Ievietojat vienu koda fragmentu savā vietnē. 4) Apmeklētāji sāk saņemt atbildes, un leadi nonāk jūsu panelī. Smagas integrācijas nav vajadzīgas.",
+          "TavsWebs Bot darbojas četros soļos. Atbildi vienmēr kā numurētu sarakstu:\n1. Pievienojat savas mājaslapas URL.\n2. Sistēma apgūst jūsu saturu (lapas, FAQ, dokumentus, pakalpojumus).\n3. Ievietojat vienu koda fragmentu savā vietnē.\n4. Apmeklētāji saņem atbildes 24/7, un leadi nonāk jūsu vadības panelī.\nSmagas integrācijas nav vajadzīgas.",
       },
       {
         title: "Cenas",
