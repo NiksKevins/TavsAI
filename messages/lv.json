@@ -53,7 +53,9 @@
       "submitLead": "Nosūtīt pieteikumu",
       "sending": "Sūta…",
       "leadError": "Neizdevās nosūtīt. Pārbaudiet datus.",
-      "leadThanks": "Paldies! {business} komanda saņems jūsu pieteikumu. (Šī ir demo — reālā vietnē lead nonāk jūsu panelī.)"
+      "leadThanks": "Paldies! {business} komanda saņems jūsu pieteikumu. (Šī ir demo — reālā vietnē lead nonāk jūsu panelī.)",
+      "leadThanksProduct": "Paldies! Nododam jūsu datus komandai — drīzumā kāds ar jums sazināsies.\n\nhttps://bot.tavswebs.com/register\n\nVai vēl kaut ko varu palīdzēt?",
+      "registerCta": "Reģistrēties bez maksas →"
     },
     "siteChat": {
       "launcher": "Izmēģināt botu",

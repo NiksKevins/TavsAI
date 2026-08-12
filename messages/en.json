@@ -53,7 +53,9 @@
       "submitLead": "Send request",
       "sending": "Sending…",
       "leadError": "Could not submit. Check your details.",
-      "leadThanks": "Thanks! The {business} team would receive this lead. (Demo only — on a real site, leads land in your dashboard.)"
+      "leadThanks": "Thanks! The {business} team would receive this lead. (Demo only — on a real site, leads land in your dashboard.)",
+      "leadThanksProduct": "Thanks! We’ll pass your details to the team and someone will follow up soon.\n\nhttps://bot.tavswebs.com/register\n\nAnything else I can help with right now?",
+      "registerCta": "Start free →"
     },
     "siteChat": {
       "launcher": "Try the bot",

@@ -76,8 +76,10 @@ export function LiveDemoChat({
   const [pending, startTransition] = useTransition();
   const [leadPending, startLead] = useTransition();
   const scroller = useRef<HTMLDivElement>(null);
+  const sendingRef = useRef(false);
   const industry = DEMO_INDUSTRIES[industryId];
   const theme = INDUSTRY_THEME[industryId];
+  const registerCta = t("registerCta");
 
   useEffect(() => {
     const greeting = locale === "en" ? industry.greetingEn : industry.greetingLv;
@@ -86,6 +88,7 @@ export function LiveDemoChat({
     setLeadDone(false);
     setError(null);
     setInput("");
+    sendingRef.current = false;
   }, [industryId, industry.greetingEn, industry.greetingLv, locale]);
 
   useEffect(() => {
@@ -97,7 +100,8 @@ export function LiveDemoChat({
 
   function send(text: string) {
     const message = text.trim();
-    if (!message || pending) return;
+    if (!message || pending || sendingRef.current) return;
+    sendingRef.current = true;
     setError(null);
     const history = messages.map((m) => ({
       role: m.role,
@@ -136,6 +140,8 @@ export function LiveDemoChat({
         if (data.showLeadForm) setShowLead(true);
       } catch {
         setError(t("error"));
+      } finally {
+        sendingRef.current = false;
       }
     });
   }
@@ -165,7 +171,10 @@ export function LiveDemoChat({
           ...prev,
           {
             role: "assistant",
-            content: t("leadThanks", { business: industry.businessName }),
+            content:
+              industryId === "tavswebs"
+                ? t("leadThanksProduct")
+                : t("leadThanks", { business: industry.businessName }),
           },
         ]);
       } catch {
@@ -304,7 +313,10 @@ export function LiveDemoChat({
             )}
           >
             {m.role === "assistant" ? (
-              <FormattedChatMessage content={m.content} />
+              <FormattedChatMessage
+                content={m.content}
+                registerCta={industryId === "tavswebs" ? registerCta : undefined}
+              />
             ) : (
               m.content
             )}

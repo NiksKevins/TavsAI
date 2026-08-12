@@ -2,6 +2,11 @@ import { Fragment, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
+const URL_PATTERN =
+  /((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s.,;!?)]+|(?:https?:\/\/)[^\s.,;!?)]+)/gi;
+
+const REGISTER_PATH = /bot\.tavswebs\.com\/register/i;
+
 /** Turn inline bullets / numbered steps into real list lines. */
 function normalizeListBreaks(text: string): string {
   return text
@@ -17,25 +22,94 @@ function normalizeListBreaks(text: string): string {
     .trim();
 }
 
-function renderInline(text: string, keyPrefix: string): ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+/** Break dense thank-you / CTA prose into scannable paragraphs. */
+function softParagraphBreaks(text: string): string {
+  return text
+    .replace(
+      /\.\s+(?=(?:Vai|Ja vēl|Ja vēlēs|Would|If you|You can also|Also)\b)/gi,
+      ".\n\n",
+    )
+    .replace(
+      /((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/register)\.?/gi,
+      "\n\n$1\n\n",
+    )
+    .replace(/\n{3,}/g, "\n\n");
+}
+
+function hrefFor(raw: string): string {
+  return /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+}
+
+const LINK_RE =
+  /^(?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s]+$/i;
+const HTTP_RE = /^https?:\/\/[^\s]+$/i;
+
+function isLinkToken(part: string): boolean {
+  return LINK_RE.test(part) || HTTP_RE.test(part);
+}
+
+function renderInline(
+  text: string,
+  keyPrefix: string,
+  registerCta?: string,
+): ReactNode[] {
+  const chunks = text.split(/(\*\*[^*]+\*\*)/g);
+  const nodes: ReactNode[] = [];
+
+  chunks.forEach((chunk, i) => {
+    const bold = chunk.match(/^\*\*([^*]+)\*\*$/);
     if (bold) {
-      return (
-        <strong key={`${keyPrefix}-b-${i}`} className="font-semibold text-foreground">
+      nodes.push(
+        <strong
+          key={`${keyPrefix}-b-${i}`}
+          className="font-semibold text-foreground"
+        >
           {bold[1]}
-        </strong>
+        </strong>,
       );
+      return;
     }
-    return <Fragment key={`${keyPrefix}-t-${i}`}>{part}</Fragment>;
+
+    const parts = chunk.split(URL_PATTERN);
+    parts.forEach((part, j) => {
+      if (!part) return;
+      if (isLinkToken(part)) {
+        const href = hrefFor(part);
+        const isRegister = REGISTER_PATH.test(part);
+        nodes.push(
+          <a
+            key={`${keyPrefix}-a-${i}-${j}`}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary",
+              isRegister &&
+                registerCta &&
+                "mt-1 inline-flex w-full items-center justify-center rounded-xl bg-primary px-3 py-2 text-center text-[13px] font-semibold text-primary-foreground no-underline shadow-sm hover:bg-primary/90 hover:text-primary-foreground",
+            )}
+          >
+            {isRegister && registerCta
+              ? registerCta
+              : part.replace(/^https?:\/\//i, "")}
+          </a>,
+        );
+        return;
+      }
+      nodes.push(
+        <Fragment key={`${keyPrefix}-t-${i}-${j}`}>{part}</Fragment>,
+      );
+    });
   });
+
+  return nodes;
 }
 
 type Block =
   | { type: "p"; text: string }
   | { type: "ul"; items: string[] }
-  | { type: "ol"; items: string[] };
+  | { type: "ol"; items: string[] }
+  | { type: "cta"; href: string };
 
 /** Peel a follow-up sentence stuck to the end of a list item. */
 function peelTrailingProse(item: string): { item: string; prose?: string } {
@@ -47,7 +121,7 @@ function peelTrailingProse(item: string): { item: string; prose?: string } {
 }
 
 function parseBlocks(text: string): Block[] {
-  const lines = normalizeListBreaks(text).split(/\n/);
+  const lines = softParagraphBreaks(normalizeListBreaks(text)).split(/\n/);
   const blocks: Block[] = [];
   let paragraph: string[] = [];
   let listItems: string[] = [];
@@ -56,7 +130,18 @@ function parseBlocks(text: string): Block[] {
 
   const flushParagraph = () => {
     const joined = paragraph.join(" ").trim();
-    if (joined) blocks.push({ type: "p", text: joined });
+    if (!joined) {
+      paragraph = [];
+      return;
+    }
+    const onlyUrl = joined.match(
+      /^((?:https?:\/\/)?(?:www\.)?(?:bot\.)?tavswebs\.com\/[^\s]+)$/i,
+    );
+    if (onlyUrl && REGISTER_PATH.test(onlyUrl[1])) {
+      blocks.push({ type: "cta", href: hrefFor(onlyUrl[1]) });
+    } else {
+      blocks.push({ type: "p", text: joined });
+    }
     paragraph = [];
   };
 
@@ -132,17 +217,33 @@ function ListItem({
 export function FormattedChatMessage({
   content,
   className,
+  registerCta,
 }: {
   content: string;
   className?: string;
+  /** Label for register URL CTA button when present in the message. */
+  registerCta?: string;
 }) {
   const blocks = parseBlocks(content);
 
   if (blocks.length === 0) return null;
 
   return (
-    <div className={cn("space-y-2 text-[13px] leading-relaxed sm:text-sm", className)}>
+    <div className={cn("space-y-2.5 text-[13px] leading-relaxed sm:text-sm", className)}>
       {blocks.map((block, i) => {
+        if (block.type === "cta") {
+          return (
+            <a
+              key={`cta-${i}`}
+              href={block.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-3 py-2.5 text-center text-[13px] font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+            >
+              {registerCta ?? block.href.replace(/^https?:\/\//i, "")}
+            </a>
+          );
+        }
         if (block.type === "ul" || block.type === "ol") {
           const ListTag = block.type === "ol" ? "ol" : "ul";
           return (
@@ -156,7 +257,7 @@ export function FormattedChatMessage({
                   index={j}
                   ordered={block.type === "ol"}
                 >
-                  {renderInline(item, `li-${i}-${j}`)}
+                  {renderInline(item, `li-${i}-${j}`, registerCta)}
                 </ListItem>
               ))}
             </ListTag>
@@ -164,7 +265,7 @@ export function FormattedChatMessage({
         }
         return (
           <p key={`p-${i}`} className="text-pretty">
-            {renderInline(block.text, `p-${i}`)}
+            {renderInline(block.text, `p-${i}`, registerCta)}
           </p>
         );
       })}
