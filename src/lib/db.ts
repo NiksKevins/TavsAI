@@ -4,6 +4,39 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+/**
+ * Neon Marketplace on Vercel often prefixes vars (`storage_*`).
+ * Prefer a real remote URL over a leftover localhost DATABASE_URL.
+ */
+function resolveDatabaseUrl(): string | undefined {
+  const candidates = [
+    process.env.DATABASE_URL,
+    process.env.storage_POSTGRES_PRISMA_URL,
+    process.env.POSTGRES_PRISMA_URL,
+    process.env.storage_DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.storage_POSTGRES_URL,
+    process.env.storage_DATABASE_URL_UNPOOLED,
+    process.env.storage_POSTGRES_URL_NON_POOLING,
+  ];
+
+  const remote = candidates.find(
+    (url) =>
+      Boolean(url) &&
+      url !== "[SENSITIVE]" &&
+      !/localhost|127\.0\.0\.1/i.test(url!),
+  );
+  if (remote) return remote;
+
+  // Local docker / dev fallback
+  return candidates.find((url) => Boolean(url) && url !== "[SENSITIVE]");
+}
+
+const resolved = resolveDatabaseUrl();
+if (resolved) {
+  process.env.DATABASE_URL = resolved;
+}
+
 function createPrismaClient() {
   return new PrismaClient({
     log:
