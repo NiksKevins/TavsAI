@@ -14,7 +14,10 @@
     "demo": "Demo",
     "how": "How it works",
     "industries": "Industries",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "menuTitle": "Menu"
   },
   "home": {
     "brand": "TavsWebs Bot",

@@ -14,7 +14,10 @@
     "demo": "Demo",
     "how": "Kā tas strādā",
     "industries": "Nozares",
-    "faq": "BUJ"
+    "faq": "BUJ",
+    "menuOpen": "Atvērt izvēlni",
+    "menuClose": "Aizvērt izvēlni",
+    "menuTitle": "Izvēlne"
   },
   "home": {
     "brand": "TavsWebs Bot",
