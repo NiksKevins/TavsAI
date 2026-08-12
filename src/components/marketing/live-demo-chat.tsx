@@ -7,6 +7,7 @@ import {
   DEMO_INDUSTRIES,
   type DemoIndustryId,
 } from "@/config/demo-industries";
+import { FormattedChatMessage } from "@/components/chat/formatted-chat-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -302,7 +303,11 @@ export function LiveDemoChat({
                 : "rounded-bl-md border border-border/50 bg-white text-foreground shadow-sm",
             )}
           >
-            {m.content}
+            {m.role === "assistant" ? (
+              <FormattedChatMessage content={m.content} />
+            ) : (
+              m.content
+            )}
           </div>
         ))}
         {pending ? (

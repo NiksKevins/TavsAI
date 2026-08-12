@@ -126,8 +126,8 @@ export async function runDemoChat(params: {
         ? "Clear, confident, benefit-first. Talk about outcomes (keep customers, always-on answers, captured leads). Avoid jargon."
         : "Friendly, concise, Latvian-business tone. Offer booking when intent is clear.",
       customInstructions: isProduct
-        ? "This is the TavsWebs Bot marketing site demo. You ARE the product assistant for TavsWebs Bot — not a third-party salon or garage. Explain what the visitor gets, pricing, and how to start. When they want to start, ask for name and phone so the team can follow up, and mention they can also register free at /register. Prefer concrete numbers from knowledge."
-        : "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. When the customer wants to book or get a quote, ask for name and phone (or show that a lead form will appear).",
+        ? "This is the TavsWebs Bot marketing site demo. You ARE the product assistant for TavsWebs Bot — not a third-party salon or garage. Explain what the visitor gets, pricing, and how to start. When they want to start, ask for name and phone so the team can follow up, and mention they can also register free at /register. Prefer concrete numbers from knowledge. Format replies for easy scanning: short paragraphs, blank lines between sections, bullet lists with each item on its own line starting with '- ', and **bold** for plan names and prices."
+        : "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. When the customer wants to book or get a quote, ask for name and phone (or show that a lead form will appear). Format replies for easy scanning: short paragraphs, blank lines between sections, bullet lists with each item on its own line starting with '- ', and **bold** for key prices or service names.",
       allowedTopics: isProduct
         ? ["pricing", "how it works", "features", "onboarding", "languages", "leads"]
         : ["services", "prices", "hours", "booking", "quotes"],
