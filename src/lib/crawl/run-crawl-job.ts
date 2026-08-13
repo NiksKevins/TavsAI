@@ -37,18 +37,26 @@ export async function runCrawlJob(jobId: string): Promise<void> {
   if (!job || job.status === "CANCELED") return;
   if (["COMPLETED", "FAILED"].includes(job.status)) return;
 
-  const failures: PageFailure[] = [];
-  const pageLimit = job.pageLimit;
-
-  try {
-    await prisma.crawlJob.update({
-      where: { id: jobId },
+  // Claim the job so Inngest + after() cannot crawl the same QUEUED row twice.
+  if (job.status === "QUEUED") {
+    const claimed = await prisma.crawlJob.updateMany({
+      where: { id: jobId, status: "QUEUED" },
       data: {
         status: "CRAWLING",
         startedAt: job.startedAt ?? new Date(),
         errorMessage: null,
       },
     });
+    if (claimed.count === 0) return;
+  } else if (job.status === "CRAWLING" || job.status === "PROCESSING") {
+    // Another worker already owns this job.
+    return;
+  }
+
+  const failures: PageFailure[] = [];
+  const pageLimit = job.pageLimit;
+
+  try {
     await prisma.website.update({
       where: { id: job.websiteId },
       data: { status: "CRAWLING" },

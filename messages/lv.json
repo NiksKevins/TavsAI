@@ -593,7 +593,28 @@
       "noWebsite": "Mājaslapa vēl nav pievienota.",
       "discovered": "Atrastās lapas",
       "processed": "Apstrādātās lapas",
-      "limit": "Limits"
+      "limit": "Limits",
+      "progressPercent": "{percent}%",
+      "progressWaiting": "Sākam…",
+      "elapsed": "{seconds}s",
+      "phaseQueued": "Rindā — gatavojas sākt indeksāciju",
+      "phaseCrawling": "Indeksējam mājaslapu",
+      "phaseProcessing": "Apstrādājam saturu",
+      "phaseCompleted": "Indeksācija pabeigta",
+      "phaseFailed": "Indeksācija neizdevās",
+      "phaseCanceled": "Indeksācija atcelta",
+      "jobStatus": {
+        "QUEUED": "Rindā",
+        "CRAWLING": "Indeksē",
+        "PROCESSING": "Apstrādā",
+        "COMPLETED": "Pabeigts",
+        "FAILED": "Neizdevās",
+        "CANCELED": "Atcelts",
+        "PENDING": "Gaida",
+        "READY": "Gatavs",
+        "ACTIVE": "Aktīvs",
+        "PAUSED": "Pauzēts"
+      }
     },
     "stats": {
       "website": "Mājaslapa",

@@ -78,6 +78,15 @@
   }
 }
 
+@keyframes crawl-indeterminate {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(420%);
+  }
+}
+
 * {
   border-color: var(--border);
 }

@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import {
   ONBOARDING_INDUSTRY_CARDS,
   ONBOARDING_TOTAL_STEPS,
@@ -350,6 +351,42 @@ export function OnboardingWizard({
                     ? t("steps.crawl.done")
                     : t("steps.crawl.finishedWithIssues")}
               </p>
+
+              {(() => {
+                const limit = Math.max(crawl.pageLimit || 10, 1);
+                const indeterminate =
+                  !crawl.done &&
+                  crawl.pagesDiscovered === 0 &&
+                  crawl.pagesProcessed === 0;
+                const percent = crawl.done
+                  ? 100
+                  : Math.round(
+                      Math.min(
+                        99,
+                        Math.max(
+                          (Math.min(crawl.pagesDiscovered, limit) / limit) * 35,
+                          (Math.min(crawl.pagesProcessed, limit) / limit) * 100,
+                        ),
+                      ),
+                    );
+                return (
+                  <div className="space-y-2 rounded-md border border-border bg-card p-3">
+                    <div className="flex items-baseline justify-between gap-2 text-xs text-muted-foreground">
+                      <span>
+                        {crawl.pagesProcessed} / {limit}
+                      </span>
+                      <span className="tabular-nums">
+                        {indeterminate ? "…" : `${percent}%`}
+                      </span>
+                    </div>
+                    <Progress
+                      value={percent}
+                      indeterminate={indeterminate}
+                      className="h-2"
+                    />
+                  </div>
+                );
+              })()}
 
               <ProgressLine
                 done={crawl.pagesDiscovered > 0 || crawl.done}

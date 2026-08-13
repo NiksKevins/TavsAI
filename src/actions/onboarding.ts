@@ -1,7 +1,6 @@
 "use server";
 
 import { IndustryTemplate } from "@prisma/client";
-import { after } from "next/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -12,15 +11,14 @@ import {
   ONBOARDING_INDUSTRY_CARDS,
   ONBOARDING_TOTAL_STEPS,
 } from "@/config/onboarding-templates";
-import { CRAWL_WEBSITE_EVENT, inngest } from "@/inngest/client";
 import { requireWorkspace } from "@/lib/authz";
 import { writeAuditLog } from "@/lib/audit";
+import { enqueueCrawlJob } from "@/lib/crawl/enqueue";
 import {
   assertSafePublicUrl,
   normalizeWebsiteUrl,
   UnsafeUrlError,
 } from "@/lib/crawl/url-safety";
-import { runCrawlJob } from "@/lib/crawl/run-crawl-job";
 import { prisma } from "@/lib/db";
 import { uniqueWorkspaceSlug } from "@/lib/slug";
 import { generateAssistantReply } from "@/services/ai/ai-service";
@@ -54,28 +52,7 @@ async function enqueueCrawl(
   workspaceId: string,
   websiteId: string,
 ) {
-  try {
-    await inngest.send({
-      name: CRAWL_WEBSITE_EVENT,
-      data: { crawlJobId, workspaceId, websiteId },
-    });
-  } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn(
-        "[onboarding/crawl] Inngest send failed — after() fallback",
-        error,
-      );
-      after(async () => {
-        try {
-          await runCrawlJob(crawlJobId);
-        } catch (err) {
-          console.error("[onboarding/crawl] fallback failed", err);
-        }
-      });
-      return;
-    }
-    throw error;
-  }
+  await enqueueCrawlJob({ crawlJobId, workspaceId, websiteId });
 }
 
 export async function saveOnboardingStep(

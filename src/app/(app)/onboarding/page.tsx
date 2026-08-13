@@ -5,6 +5,8 @@ import { prisma } from "@/lib/db";
 import type { OnboardingCrawlStatus } from "@/actions/onboarding";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 
+export const maxDuration = 300;
+
 export default async function OnboardingPage() {
   const { workspace } = await requireWorkspace();
 

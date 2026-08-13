@@ -1,47 +1,37 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { after } from "next/server";
 
 import { getCrawlPageLimit } from "@/config/crawl";
-import { CRAWL_WEBSITE_EVENT, inngest } from "@/inngest/client";
 import { requireWorkspaceRole } from "@/lib/authz";
+import { enqueueCrawlJob } from "@/lib/crawl/enqueue";
 import {
   assertSafePublicUrl,
   normalizeWebsiteUrl,
   UnsafeUrlError,
 } from "@/lib/crawl/url-safety";
-import { runCrawlJob } from "@/lib/crawl/run-crawl-job";
 import { prisma } from "@/lib/db";
 
 export type CrawlActionResult =
   | { ok: true; crawlJobId?: string; websiteId?: string }
   | { ok: false; error: string };
 
-async function enqueueCrawl(crawlJobId: string, workspaceId: string, websiteId: string) {
-  try {
-    await inngest.send({
-      name: CRAWL_WEBSITE_EVENT,
-      data: { crawlJobId, workspaceId, websiteId },
-    });
-  } catch (error) {
-    // Local fallback when Inngest Dev Server is not running.
-    if (process.env.NODE_ENV === "development") {
-      console.warn(
-        "[crawl] Inngest send failed — running crawl via after() fallback",
-        error,
-      );
-      after(async () => {
-        try {
-          await runCrawlJob(crawlJobId);
-        } catch (err) {
-          console.error("[crawl] fallback failed", err);
-        }
-      });
-      return;
-    }
-    throw error;
-  }
+/** Fail stale queued jobs so a dead Inngest event cannot block retries forever. */
+async function clearStaleQueuedJobs(workspaceId: string, websiteId?: string) {
+  const cutoff = new Date(Date.now() - 45 * 1000);
+  await prisma.crawlJob.updateMany({
+    where: {
+      workspaceId,
+      ...(websiteId ? { websiteId } : {}),
+      status: "QUEUED",
+      createdAt: { lt: cutoff },
+    },
+    data: {
+      status: "FAILED",
+      completedAt: new Date(),
+      errorMessage: "stale_queued_timeout",
+    },
+  });
 }
 
 export async function saveWebsiteAndCrawlAction(
@@ -68,6 +58,8 @@ export async function saveWebsiteAndCrawlAction(
     where: { workspaceId: workspace.id },
   });
   const pageLimit = getCrawlPageLimit(subscription?.plan ?? "FREE");
+
+  await clearStaleQueuedJobs(workspace.id);
 
   const active = await prisma.crawlJob.findFirst({
     where: {
@@ -120,7 +112,11 @@ export async function saveWebsiteAndCrawlAction(
     },
   });
 
-  await enqueueCrawl(crawlJob.id, workspace.id, website.id);
+  await enqueueCrawlJob({
+    crawlJobId: crawlJob.id,
+    workspaceId: workspace.id,
+    websiteId: website.id,
+  });
 
   revalidatePath("/dashboard/knowledge");
   revalidatePath("/dashboard/knowledge/website");
@@ -155,6 +151,8 @@ export async function startCrawlAction(
     return { ok: false, error: "invalid_url" };
   }
 
+  await clearStaleQueuedJobs(workspace.id, website.id);
+
   const active = await prisma.crawlJob.findFirst({
     where: {
       workspaceId: workspace.id,
@@ -186,7 +184,11 @@ export async function startCrawlAction(
     });
   });
 
-  await enqueueCrawl(crawlJob.id, workspace.id, website.id);
+  await enqueueCrawlJob({
+    crawlJobId: crawlJob.id,
+    workspaceId: workspace.id,
+    websiteId: website.id,
+  });
 
   revalidatePath("/dashboard/knowledge");
   revalidatePath("/dashboard/knowledge/website");
@@ -225,13 +227,16 @@ export async function cancelCrawlAction(
     data: { status: "READY" },
   });
 
-  try {
-    await inngest.send({
-      name: "crawl/website.canceled",
-      data: { crawlJobId: job.id },
-    });
-  } catch {
-    // Cancellation is already persisted; Inngest cancel is best-effort.
+  if (process.env.INNGEST_EVENT_KEY) {
+    try {
+      const { inngest } = await import("@/inngest/client");
+      await inngest.send({
+        name: "crawl/website.canceled",
+        data: { crawlJobId: job.id },
+      });
+    } catch {
+      // Cancellation is already persisted; Inngest cancel is best-effort.
+    }
   }
 
   revalidatePath("/dashboard/knowledge");

@@ -5,6 +5,8 @@ import { DocumentExplorer } from "@/components/knowledge/document-explorer";
 import { requireWorkspace } from "@/lib/authz";
 import { getKnowledgeOverview } from "@/lib/knowledge/queries";
 
+export const maxDuration = 300;
+
 export default async function KnowledgeWebsitePage() {
   const t = await getTranslations("knowledge");
   const { workspace } = await requireWorkspace();

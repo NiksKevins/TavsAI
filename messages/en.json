@@ -593,7 +593,28 @@
       "noWebsite": "No website added yet.",
       "discovered": "Pages discovered",
       "processed": "Pages processed",
-      "limit": "Limit"
+      "limit": "Limit",
+      "progressPercent": "{percent}%",
+      "progressWaiting": "Starting…",
+      "elapsed": "{seconds}s",
+      "phaseQueued": "Queued — preparing to index",
+      "phaseCrawling": "Indexing your website",
+      "phaseProcessing": "Processing content",
+      "phaseCompleted": "Indexing complete",
+      "phaseFailed": "Indexing failed",
+      "phaseCanceled": "Indexing canceled",
+      "jobStatus": {
+        "QUEUED": "Queued",
+        "CRAWLING": "Crawling",
+        "PROCESSING": "Processing",
+        "COMPLETED": "Completed",
+        "FAILED": "Failed",
+        "CANCELED": "Canceled",
+        "PENDING": "Pending",
+        "READY": "Ready",
+        "ACTIVE": "Active",
+        "PAUSED": "Paused"
+      }
     },
     "stats": {
       "website": "Website",
