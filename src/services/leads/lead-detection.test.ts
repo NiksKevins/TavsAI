@@ -42,28 +42,29 @@ describe("lead detection heuristics", () => {
     );
   });
 
-  it("extracts automotive details without inventing missing fields", () => {
+  it("extracts name email phone from a combined contact dump", () => {
     const extraction = heuristicExtract({
       messages: [
         {
           role: "user",
+          content: "Vajag jaunu mājaslapu",
+        },
+        {
+          role: "user",
           content:
-            "I have a 2018 BMW 320d and the suspension makes noise. Call me +371 20000000",
+            "niks kevins markitāns, nikskevinsm@gmail.com, 25547113",
         },
       ],
-      questions: [
-        { key: "car_model", labelLv: "Modelis", labelEn: "Model", required: true },
-        { key: "year", labelLv: "Gads", labelEn: "Year", required: true },
-        { key: "problem", labelLv: "Problēma", labelEn: "Problem", required: true },
-      ],
-      locale: "en",
+      questions: [],
+      locale: "lv",
     });
 
     expect(extraction.hasPurchaseIntent).toBe(true);
-    expect(extraction.fields.year).toBe("2018");
-    expect(extraction.fields.car_model?.toLowerCase()).toContain("bmw");
-    expect(extraction.phone).toContain("20000000");
-    expect(extraction.fields.problem).toBeUndefined();
-    expect(meetsLeadCriteria(extraction, DEFAULT_MIN_LEAD_CRITERIA)).toBe(true);
+    expect(extraction.name?.toLowerCase()).toContain("niks");
+    expect(extraction.email).toBe("nikskevinsm@gmail.com");
+    expect(extraction.phone).toContain("25547113");
+    expect(meetsLeadCriteria(extraction, DEFAULT_MIN_LEAD_CRITERIA)).toBe(
+      true,
+    );
   });
 });

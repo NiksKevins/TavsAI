@@ -438,6 +438,14 @@
       "settings": "Settings",
       "partner": "Partner portal"
     },
+    "whatsNew": {
+      "badge": "What's new",
+      "button": "Update",
+      "readAll": "View full changelog",
+      "dismiss": "Dismiss",
+      "logTitle": "Changelog",
+      "logSubtitle": "Latest changes in the TavsWebs Bot dashboard — newest first."
+    },
     "overview": {
       "title": "Overview",
       "subtitle": "Welcome, {workspace}.",

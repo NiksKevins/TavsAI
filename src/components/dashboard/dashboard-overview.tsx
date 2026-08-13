@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { TimeSeriesChart } from "@/components/analytics/charts";
+import { WhatsNewBanner } from "@/components/dashboard/whats-new";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -220,6 +221,8 @@ export function DashboardOverviewView({
           </Button>
         </div>
       </div>
+
+      <WhatsNewBanner />
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
         <MetricCard

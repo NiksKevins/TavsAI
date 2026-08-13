@@ -438,6 +438,14 @@
       "settings": "Iestatījumi",
       "partner": "Partneru portāls"
     },
+    "whatsNew": {
+      "badge": "Jaunumi",
+      "button": "Atjaunināt",
+      "readAll": "Skatīt visu žurnālu",
+      "dismiss": "Aizvērt",
+      "logTitle": "Izmaiņu žurnāls",
+      "logSubtitle": "Jaunākās izmaiņas TavsWebs Bot panelī — no jaunākās līdz vecākajai."
+    },
     "overview": {
       "title": "Pārskats",
       "subtitle": "Sveicināti, {workspace}.",

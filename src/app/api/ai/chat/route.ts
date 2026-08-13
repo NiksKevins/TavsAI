@@ -196,17 +196,25 @@ export async function POST(request: Request) {
 
   if (contactHint && !handoff) {
     try {
-      const result = await handleContactCaptureReply(payload);
+      const hasContact =
+        Boolean(contactHint.email) || Boolean(contactHint.phone);
+      const result = await handleContactCaptureReply({
+        ...payload,
+        contactHint,
+      });
       await maybeProcessLeadAfterChat({
         workspaceId: resolved.workspaceId,
         conversationId: result.conversationId,
         locale: payload.locale,
         source: "contact_hint",
+        contactOverride: contactHint,
       });
+      // Ask for the form only when we still need confirmation / missing fields.
+      const showLeadForm = !hasContact || !contactHint.name;
       const body = {
         ...result,
         handoff: false,
-        showLeadForm: true,
+        showLeadForm,
         contactHint,
       };
       if (!parsed.data.stream) {
@@ -216,7 +224,7 @@ export async function POST(request: Request) {
         handoff: false,
         answer: result.answer,
         conversationId: result.conversationId,
-        showLeadForm: true,
+        showLeadForm,
         contactHint,
       });
     } catch (error) {
@@ -399,7 +407,7 @@ function sseReply(
     answer: string;
     conversationId: string;
     showLeadForm: boolean;
-    contactHint?: { phone?: string; email?: string };
+    contactHint?: { name?: string; phone?: string; email?: string };
   },
 ) {
   const encoder = new TextEncoder();
@@ -443,16 +451,34 @@ async function handleContactCaptureReply(payload: {
   conversationId?: string | null;
   visitorId?: string | null;
   locale?: "lv" | "en";
+  contactHint?: { name?: string; phone?: string; email?: string };
 }) {
   const { getOrCreateConversation, appendMessage } = await import(
     "@/services/conversation/conversation-service"
   );
 
   const locale = payload.locale ?? "lv";
-  const answer =
-    locale === "en"
-      ? "Thanks — please confirm your details below and the team will get back to you."
-      : "Paldies — lūdzu, apstipriniet kontaktus zemāk, un komanda sazināsies ar jums.";
+  const hint = payload.contactHint;
+  const hasContact = Boolean(hint?.email || hint?.phone);
+  const firstName = hint?.name?.trim().split(/\s+/)[0];
+
+  let answer: string;
+  if (hasContact && hint?.name) {
+    answer =
+      locale === "en"
+        ? `Thanks${firstName ? `, ${firstName}` : ""}! We'll be in touch soon to go over the details.`
+        : `Paldies${firstName ? `, ${firstName}` : ""}! Drīzumā sazināsimies, lai precizētu detaļas.`;
+  } else if (hasContact) {
+    answer =
+      locale === "en"
+        ? "Thanks — please confirm your name below so the team can get back to you."
+        : "Paldies — lūdzu, apstipriniet vārdu zemāk, un komanda sazināsies ar jums.";
+  } else {
+    answer =
+      locale === "en"
+        ? "Thanks — please confirm your details below and the team will get back to you."
+        : "Paldies — lūdzu, apstipriniet kontaktus zemāk, un komanda sazināsies ar jums.";
+  }
 
   const conversation = await getOrCreateConversation({
     workspaceId: payload.workspaceId,

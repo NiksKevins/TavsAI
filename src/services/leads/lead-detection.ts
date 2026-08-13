@@ -156,14 +156,47 @@ export function meetsLeadCriteria(
   return true;
 }
 
-function extractContactFromText(text: string) {
+function extractContactFromText(text: string): {
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+} {
   const email =
     text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] ?? null;
-  const phoneMatch = text.match(
-    /(?:\+?\d[\d\s()-]{6,}\d)/,
-  );
+  const phoneMatch = text.match(/(?:\+?\d[\d\s()-]{5,}\d)/);
   const phone = phoneMatch?.[0]?.trim() ?? null;
-  return { email, phone };
+
+  let name: string | null = null;
+  const lines = text
+    .split(/\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const candidates = [...lines].reverse();
+  for (const line of candidates) {
+    if (!email && !phone) break;
+    if (email && line === email) continue;
+    if (phone && line.replace(/\s/g, "") === phone.replace(/\s/g, "")) continue;
+
+    let part = line;
+    if (email) part = part.replace(email, " ");
+    if (phone) part = part.replace(phone, " ");
+    part = part.replace(/[,;|/]+/g, " ").replace(/\s+/g, " ").trim();
+    const words = part ? part.split(/\s+/).length : 0;
+    if (
+      part.length >= 2 &&
+      part.length <= 80 &&
+      words >= 1 &&
+      words <= 6 &&
+      /[a-zA-Zāčēģīķļņšūž]/i.test(part) &&
+      !/\?$/.test(part) &&
+      !/^(jā|ja|yes|ok|labi|sveiki|hello)\b/i.test(part)
+    ) {
+      name = part;
+      break;
+    }
+  }
+
+  return { name, email, phone };
 }
 
 export function heuristicExtract(params: {
@@ -178,7 +211,11 @@ export function heuristicExtract(params: {
 
   const isSpam = heuristicSpam(visitorText);
   const hasPurchaseIntent = !isSpam && heuristicIntent(visitorText);
-  const { email, phone } = extractContactFromText(visitorText);
+  const { email, phone, name } = extractContactFromText(visitorText);
+  // Providing contacts after a sales conversation is enough intent signal.
+  const contactProvided = Boolean(email || phone);
+  const intent =
+    hasPurchaseIntent || (!isSpam && contactProvided && visitorText.length > 0);
 
   const fields: Record<string, string> = {};
   for (const q of params.questions) {
@@ -210,23 +247,23 @@ export function heuristicExtract(params: {
   }
 
   return {
-    hasPurchaseIntent,
+    hasPurchaseIntent: intent,
     isSpam,
-    intent: hasPurchaseIntent
+    intent: intent
       ? params.locale === "en"
         ? "Purchase / booking intent"
         : "Pirkuma / pieraksta nodoms"
       : null,
     service,
-    summary: hasPurchaseIntent
+    summary: intent
       ? visitorText.split("\n").filter(Boolean).slice(-3).join(" ").slice(0, 400)
       : null,
-    name: null,
+    name,
     email,
     phone,
     fields,
     missingQuestions,
-    confidence: hasPurchaseIntent ? 0.55 : 0.2,
+    confidence: intent ? 0.55 : 0.2,
   };
 }
 
@@ -283,8 +320,11 @@ export async function extractLeadFromConversation(params: {
     return {
       ...parsed.data,
       // Prefer model output but keep contacts if model missed them.
+      name: parsed.data.name || fallback.name,
       email: parsed.data.email || fallback.email,
       phone: parsed.data.phone || fallback.phone,
+      hasPurchaseIntent:
+        parsed.data.hasPurchaseIntent || fallback.hasPurchaseIntent,
       fields: { ...fallback.fields, ...parsed.data.fields },
     };
   } catch (error) {

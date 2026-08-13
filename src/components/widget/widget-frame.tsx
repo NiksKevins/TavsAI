@@ -249,7 +249,7 @@ export function WidgetFrame({
             showLeadForm?: boolean;
             handoff?: boolean;
             usedFallback?: boolean;
-            contactHint?: { phone?: string; email?: string };
+            contactHint?: { name?: string; phone?: string; email?: string };
             error?: string;
           };
 
@@ -274,9 +274,14 @@ export function WidgetFrame({
               (data.showLeadForm || data.usedFallback) &&
               config.leadFormEnabled
             ) {
-              if (data.contactHint?.phone || data.contactHint?.email) {
+              if (
+                data.contactHint?.phone ||
+                data.contactHint?.email ||
+                data.contactHint?.name
+              ) {
                 setLeadForm((prev) => ({
                   ...prev,
+                  name: data.contactHint?.name || prev.name,
                   phone: data.contactHint?.phone || prev.phone,
                   email: data.contactHint?.email || prev.email,
                 }));

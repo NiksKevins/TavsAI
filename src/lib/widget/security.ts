@@ -64,24 +64,58 @@ export function isHandoffRequest(message: string): boolean {
   return HANDOFF_PATTERNS.some((pattern) => pattern.test(message));
 }
 
-/** Detect when a visitor is leaving contact info as a short free-text message. */
+/** Detect when a visitor is leaving contact info as a free-text message. */
 export function extractContactHint(message: string): {
+  name?: string;
   phone?: string;
   email?: string;
 } | null {
   const trimmed = message.trim();
-  if (!trimmed || trimmed.length > 80) return null;
+  if (!trimmed || trimmed.length > 240) return null;
 
-  const emailMatch = trimmed.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/i);
-  if (emailMatch) return { email: emailMatch[0] };
+  const email =
+    trimmed.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] ?? undefined;
+  const phoneMatch = trimmed.match(/(?:\+?\d[\d\s()-]{5,}\d)/);
+  const phone = phoneMatch?.[0]?.trim() || undefined;
 
-  const digits = trimmed.replace(/[^\d+]/g, "");
-  const phoneLike =
+  // Pure email / phone only.
+  if (email && trimmed === email) return { email };
+  const digitsOnly = trimmed.replace(/[^\d+]/g, "");
+  if (
+    !email &&
+    phone &&
     /^[+\d][\d\s()-]{5,}$/.test(trimmed) &&
-    digits.replace(/\D/g, "").length >= 7 &&
-    digits.replace(/\D/g, "").length <= 15;
+    digitsOnly.replace(/\D/g, "").length >= 7 &&
+    digitsOnly.replace(/\D/g, "").length <= 15
+  ) {
+    return { phone: trimmed };
+  }
 
-  if (phoneLike) return { phone: trimmed };
+  // Combined dumps like: "Niks Kevins, niks@x.com, 25547113"
+  if (!email && !phone) return null;
 
-  return null;
+  let namePart = trimmed;
+  if (email) namePart = namePart.replace(email, " ");
+  if (phone) namePart = namePart.replace(phone, " ");
+  namePart = namePart
+    .replace(/[,;|/]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // Avoid treating full sentences as a name.
+  const wordCount = namePart ? namePart.split(/\s+/).length : 0;
+  const name =
+    namePart.length >= 2 &&
+    namePart.length <= 80 &&
+    wordCount <= 6 &&
+    /[a-zA-Zāčēģīķļņšūž]/i.test(namePart) &&
+    !/\?$/.test(namePart)
+      ? namePart
+      : undefined;
+
+  return {
+    ...(name ? { name } : {}),
+    ...(email ? { email } : {}),
+    ...(phone ? { phone } : {}),
+  };
 }

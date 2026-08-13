@@ -7,6 +7,11 @@ export async function maybeProcessLeadAfterChat(params: {
   locale?: "lv" | "en";
   forceHandoff?: boolean;
   source?: string;
+  contactOverride?: {
+    name?: string | null;
+    email?: string | null;
+    phone?: string | null;
+  };
 }) {
   try {
     return await evaluateConversationForLead(params);

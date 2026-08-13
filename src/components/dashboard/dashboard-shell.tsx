@@ -21,6 +21,10 @@ import {
 } from "lucide-react";
 
 import { logoutAction } from "@/actions/auth";
+import {
+  WhatsNewHeaderButton,
+  WhatsNewProvider,
+} from "@/components/dashboard/whats-new";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -58,6 +62,7 @@ export function DashboardShell({
   const [open, setOpen] = useState(false);
 
   return (
+    <WhatsNewProvider>
     <div className="min-h-dvh bg-background lg:grid lg:grid-cols-[240px_1fr]">
       <aside
         className={cn(
@@ -141,6 +146,7 @@ export function DashboardShell({
             <Menu className="h-4 w-4" />
           </Button>
           <div className="ml-auto flex items-center gap-3">
+            <WhatsNewHeaderButton />
             <div className="hidden text-right sm:block">
               <p className="text-sm font-medium leading-none">
                 {user.name ?? user.email}
@@ -159,5 +165,6 @@ export function DashboardShell({
         <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
     </div>
+    </WhatsNewProvider>
   );
 }

@@ -378,11 +378,14 @@ export async function maybeHandleBookingTurn(params: {
     const hint = extractContactHint(params.message);
     if (hint?.email) state.customerEmail = hint.email;
     if (hint?.phone) state.customerPhone = hint.phone;
+    if (hint?.name) state.customerName = hint.name;
     const nameMatch = params.message.match(
       /(?:mani sauc|my name is|vārds)\s*[:\-]?\s*([A-Za-zĀ-žā-ž][A-Za-zĀ-žā-ž\s'-]{1,60})/i,
     );
-    if (nameMatch?.[1]) state.customerName = nameMatch[1].trim();
-    else if (
+    if (!state.customerName && nameMatch?.[1]) {
+      state.customerName = nameMatch[1].trim();
+    } else if (
+      !state.customerName &&
       !hint?.email &&
       !hint?.phone &&
       params.message.trim().split(/\s+/).length <= 4 &&

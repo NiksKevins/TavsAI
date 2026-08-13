@@ -217,6 +217,11 @@ export async function evaluateConversationForLead(params: {
   locale?: "lv" | "en";
   source?: string;
   forceHandoff?: boolean;
+  contactOverride?: {
+    name?: string | null;
+    email?: string | null;
+    phone?: string | null;
+  };
 }): Promise<{
   created: boolean;
   leadId?: string;
@@ -287,6 +292,20 @@ export async function evaluateConversationForLead(params: {
     industry: workspace?.industry,
   });
 
+  if (params.contactOverride) {
+    const o = params.contactOverride;
+    if (o.name?.trim()) extraction.name = o.name.trim();
+    if (o.email?.trim()) extraction.email = o.email.trim();
+    if (o.phone?.trim()) extraction.phone = o.phone.trim();
+    if (o.email?.trim() || o.phone?.trim()) {
+      extraction.hasPurchaseIntent = true;
+      if (!extraction.intent) {
+        extraction.intent =
+          locale === "en" ? "Contact shared in chat" : "Kontakti no čata";
+      }
+    }
+  }
+
   if (params.forceHandoff && assistant.handoffCreatesLead) {
     extraction.hasPurchaseIntent = true;
     if (!extraction.intent) {
@@ -331,7 +350,9 @@ export async function evaluateConversationForLead(params: {
     workspaceId: params.workspaceId,
     conversationId: params.conversationId,
     source: params.source || (params.forceHandoff ? "handoff" : "ai_intent"),
-    status: params.forceHandoff ? "QUALIFIED" : "NEW",
+    status: params.forceHandoff
+      ? "QUALIFIED"
+      : existingLead?.status ?? "NEW",
     name: extraction.name,
     email: extraction.email,
     phone: extraction.phone,
