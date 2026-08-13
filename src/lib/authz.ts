@@ -52,6 +52,11 @@ export async function requireUser(): Promise<User> {
     redirect("/login");
   }
 
+  const { ensureFounderEntitlements } = await import(
+    "@/lib/billing/founder-entitlements"
+  );
+  await ensureFounderEntitlements(user);
+
   return user;
 }
 
@@ -127,6 +132,7 @@ export async function createWorkspaceForUser(params: {
   locale?: Locale;
 }) {
   const { uniqueWorkspaceSlug } = await import("@/lib/slug");
+  const { isFounderEmail } = await import("@/lib/billing/founder");
 
   const slug = await uniqueWorkspaceSlug(params.name, async (candidate) => {
     const existing = await prisma.workspace.findUnique({
@@ -135,6 +141,10 @@ export async function createWorkspaceForUser(params: {
     });
     return Boolean(existing);
   });
+
+  const founder = isFounderEmail(params.email);
+  const now = new Date();
+  const farFuture = new Date(now.getTime() + 10 * 365 * 24 * 60 * 60 * 1000);
 
   return prisma.$transaction(async (tx) => {
     const workspace = await tx.workspace.create({
@@ -151,8 +161,14 @@ export async function createWorkspaceForUser(params: {
         },
         subscription: {
           create: {
-            plan: "FREE",
+            plan: founder ? "PRO" : "FREE",
             status: "ACTIVE",
+            ...(founder
+              ? {
+                  currentPeriodStart: now,
+                  currentPeriodEnd: farFuture,
+                }
+              : {}),
           },
         },
         businessInformation: {

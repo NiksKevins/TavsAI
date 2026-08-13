@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { isSafeTone, temperatureForTone } from "@/config/assistant";
-import { getCrawlPageLimit } from "@/config/crawl";
 import {
   buildOnboardingAssistantDraft,
   ONBOARDING_INDUSTRY_CARDS,
@@ -13,6 +12,7 @@ import {
 } from "@/config/onboarding-templates";
 import { requireWorkspace } from "@/lib/authz";
 import { writeAuditLog } from "@/lib/audit";
+import { crawlPageLimitForEmail } from "@/lib/billing/founder-entitlements";
 import { enqueueCrawlJob } from "@/lib/crawl/enqueue";
 import {
   assertSafePublicUrl,
@@ -166,7 +166,10 @@ export async function saveOnboardingStep(
       });
 
       // Auto-start crawl for step 4
-      const crawl = await startOnboardingCrawlInternal(workspace.id);
+      const crawl = await startOnboardingCrawlInternal(
+        workspace.id,
+        user.email,
+      );
       return { ok: true, data: { crawlJobId: crawl.crawlJobId } };
     }
     case 5: {
@@ -277,7 +280,10 @@ export async function saveOnboardingStep(
   return { ok: true };
 }
 
-async function startOnboardingCrawlInternal(workspaceId: string) {
+async function startOnboardingCrawlInternal(
+  workspaceId: string,
+  ownerEmail: string,
+) {
   const website = await prisma.website.findFirst({
     where: { workspaceId },
     orderBy: { createdAt: "asc" },
@@ -314,8 +320,10 @@ async function startOnboardingCrawlInternal(workspaceId: string) {
   const subscription = await prisma.subscription.findUnique({
     where: { workspaceId },
   });
-  const pageLimit = getCrawlPageLimit(subscription?.plan ?? "FREE");
-
+  const pageLimit = crawlPageLimitForEmail(
+    subscription?.plan ?? "FREE",
+    ownerEmail,
+  );
   const crawlJob = await prisma.$transaction(async (tx) => {
     await tx.website.update({
       where: { id: website.id },
@@ -485,8 +493,8 @@ export async function onboardingPreviewChatAction(
 }
 
 export async function restartOnboardingCrawlAction(): Promise<OnboardingResult> {
-  const { workspace } = await requireWorkspace();
-  const result = await startOnboardingCrawlInternal(workspace.id);
+  const { workspace, user } = await requireWorkspace();
+  const result = await startOnboardingCrawlInternal(workspace.id, user.email);
   if (!result.crawlJobId) {
     return { ok: false, error: "crawl_start_failed" };
   }

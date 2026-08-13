@@ -2,9 +2,9 @@ import type { Subscription, SubscriptionStatus } from "@prisma/client";
 
 import {
   USAGE_METRIC_CONVERSATIONS,
-  conversationLimitForPlan,
   type PlanId,
 } from "@/config/plans";
+import { conversationLimitForWorkspace } from "@/lib/billing/founder-entitlements";
 import { prisma } from "@/lib/db";
 
 export type BillingPeriod = {
@@ -65,7 +65,7 @@ export async function getUsageSnapshot(
     },
   });
   const used = record?.quantity ?? 0;
-  const limit = conversationLimitForPlan(plan);
+  const limit = await conversationLimitForWorkspace(workspaceId, plan);
   return {
     plan,
     status: subscription?.status ?? "ACTIVE",
@@ -117,7 +117,10 @@ export async function gateConversationUsage(params: {
     });
     const plan = (subscription?.plan ?? "FREE") as PlanId;
     const period = resolveBillingPeriod(subscription);
-    const limit = conversationLimitForPlan(plan);
+    const limit = await conversationLimitForWorkspace(
+      params.workspaceId,
+      plan,
+    );
     const record = await prisma.usageRecord.findUnique({
       where: {
         workspaceId_metric_periodStart_periodEnd: {
@@ -154,7 +157,10 @@ export async function gateConversationUsage(params: {
     const plan = (subscription?.plan ?? "FREE") as PlanId;
     const status = subscription?.status ?? "ACTIVE";
     const period = resolveBillingPeriod(subscription);
-    const limit = conversationLimitForPlan(plan);
+    const limit = await conversationLimitForWorkspace(
+      params.workspaceId,
+      plan,
+    );
 
     if (status === "INCOMPLETE" || status === "CANCELED") {
       // Canceled/incomplete workspaces fall back to FREE limits for the period.

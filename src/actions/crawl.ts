@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-import { getCrawlPageLimit } from "@/config/crawl";
 import { requireWorkspaceRole } from "@/lib/authz";
+import { crawlPageLimitForEmail } from "@/lib/billing/founder-entitlements";
 import { enqueueCrawlJob } from "@/lib/crawl/enqueue";
 import {
   assertSafePublicUrl,
@@ -38,7 +38,7 @@ export async function saveWebsiteAndCrawlAction(
   _prev: CrawlActionResult | null,
   formData: FormData,
 ): Promise<CrawlActionResult> {
-  const { workspace, membership } = await requireWorkspaceRole("ADMIN");
+  const { workspace, membership, user } = await requireWorkspaceRole("ADMIN");
   void membership;
 
   const rawUrl = String(formData.get("websiteUrl") ?? "");
@@ -57,7 +57,10 @@ export async function saveWebsiteAndCrawlAction(
   const subscription = await prisma.subscription.findUnique({
     where: { workspaceId: workspace.id },
   });
-  const pageLimit = getCrawlPageLimit(subscription?.plan ?? "FREE");
+  const pageLimit = crawlPageLimitForEmail(
+    subscription?.plan ?? "FREE",
+    user.email,
+  );
 
   await clearStaleQueuedJobs(workspace.id);
 
@@ -127,7 +130,7 @@ export async function saveWebsiteAndCrawlAction(
 export async function startCrawlAction(
   websiteId?: string,
 ): Promise<CrawlActionResult> {
-  const { workspace } = await requireWorkspaceRole("ADMIN");
+  const { workspace, user } = await requireWorkspaceRole("ADMIN");
 
   const website = websiteId
     ? await prisma.website.findFirst({
@@ -167,7 +170,10 @@ export async function startCrawlAction(
   const subscription = await prisma.subscription.findUnique({
     where: { workspaceId: workspace.id },
   });
-  const pageLimit = getCrawlPageLimit(subscription?.plan ?? "FREE");
+  const pageLimit = crawlPageLimitForEmail(
+    subscription?.plan ?? "FREE",
+    user.email,
+  );
 
   const crawlJob = await prisma.$transaction(async (tx) => {
     await tx.website.update({
