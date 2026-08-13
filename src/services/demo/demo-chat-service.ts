@@ -4,6 +4,7 @@ import {
   getDemoIndustry,
   type DemoIndustryId,
 } from "@/config/demo-industries";
+import { shouldShowLeadForm } from "@/lib/chat/lead-form-intent";
 import {
   buildChatMessages,
   buildSystemPrompt,
@@ -17,9 +18,6 @@ export type DemoChatResult = {
   showLeadForm: boolean;
   usedAi: boolean;
 };
-
-const LEAD_INTENT =
-  /pieteikt|pierakst|vizīt|tām[ei]|vēlos|jā[,.]?\s*vēl|book|appoint|quote|yes[,.]?\s*i('d| would)? like|sākt|start free|try for free|reģistr|register|bez maksas/i;
 
 function knowledgeAsChunks(
   industryId: DemoIndustryId,
@@ -38,29 +36,12 @@ function knowledgeAsChunks(
   }));
 }
 
-function wantsLead(
-  message: string,
-  history: PromptHistoryItem[],
-): boolean {
-  if (LEAD_INTENT.test(message)) return true;
-  const lastAssistant = [...history]
-    .reverse()
-    .find((m) => m.role === "assistant");
-  if (
-    lastAssistant &&
-    /pieteikt|pierakst|vizīt|tāmi|book|appoint/i.test(lastAssistant.content) &&
-    /^(jā|ja|yes|ok|labi|vēlos)\b/i.test(message.trim())
-  ) {
-    return true;
-  }
-  return false;
-}
-
 /** Lightweight keyword fallback when OpenAI is not configured. */
 function offlineAnswer(
   industryId: DemoIndustryId,
   message: string,
   locale: "lv" | "en",
+  showLeadForm: boolean,
 ): string {
   const industry = getDemoIndustry(industryId)!;
   const lower = message.toLowerCase();
@@ -71,12 +52,20 @@ function offlineAnswer(
       .some((w) => w.length > 4 && lower.includes(w)),
   );
   if (hit) {
-    const offer =
-      locale === "en"
-        ? " If you’d like, I can help you book a visit — just share your name and phone."
-        : " Ja vēlaties, varu palīdzēt pieteikt vizīti — atstājiet vārdu un tālruni.";
+    const offer = showLeadForm
+      ? locale === "en"
+        ? " Fill in the short form below with your name and phone — we’ll follow up."
+        : " Aizpildiet īso formu zemāk ar vārdu un tālruni — sazināsimies."
+      : locale === "en"
+        ? " If you’d like, I can help you book a visit."
+        : " Ja vēlaties, varu palīdzēt pieteikt vizīti.";
     const firstSentence = hit.content.split(". ")[0] + ".";
     return firstSentence + offer;
+  }
+  if (showLeadForm) {
+    return locale === "en"
+      ? "Please fill in the form below with your name, email, and phone — that way it’s easier than typing in chat."
+      : "Lūdzu, aizpildiet formu zemāk ar vārdu, e-pastu un tālruni — tā ir ērtāk nekā rakstīt čatā.";
   }
   return locale === "en" ? DEFAULT_FALLBACK_EN : DEFAULT_FALLBACK_LV;
 }
@@ -94,12 +83,20 @@ export async function runDemoChat(params: {
 
   const locale = demoLocale(params.locale);
   const history = (params.history ?? []).slice(-8);
-  const showLeadForm = wantsLead(params.message, history);
+  let showLeadForm = shouldShowLeadForm({
+    message: params.message,
+    history,
+  });
   const knowledge = knowledgeAsChunks(params.industryId);
 
   if (!hasOpenAIKey()) {
     return {
-      answer: offlineAnswer(params.industryId, params.message, locale),
+      answer: offlineAnswer(
+        params.industryId,
+        params.message,
+        locale,
+        showLeadForm,
+      ),
       showLeadForm,
       usedAi: false,
     };
@@ -126,8 +123,8 @@ export async function runDemoChat(params: {
         ? "Clear, confident, benefit-first. Talk about outcomes (keep customers, always-on answers, captured leads). Avoid jargon."
         : "Friendly, concise, Latvian-business tone. Offer booking when intent is clear.",
       customInstructions: isProduct
-        ? "This is the TavsWebs Bot marketing site demo. You ARE the product assistant for TavsWebs Bot — not a third-party salon or garage. Explain what the visitor gets, pricing, and how to start. When they want to start, ask for name and phone so the team can follow up, and mention they can also register free at /register. Prefer concrete numbers from knowledge. CRITICAL formatting rules: never put lists in one paragraph. Use real line breaks. Structure as: (1) one short intro sentence (2) blank line (3) numbered steps as separate lines '1. ' '2. ' OR pricing as separate lines '- **Plan**: price' (4) blank line (5) optional follow-up. Section labels like 'Cenas:' or 'Kā sākt:' must be on their own line before the list. After collecting name/phone: short paragraphs + https://bot.tavswebs.com/register alone on its own line."
-        : "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. When the customer wants to book or get a quote, ask for name and phone (or show that a lead form will appear). CRITICAL formatting: never one dense paragraph. Use line breaks; steps as '1. ' '2. ' lines; prices as '- **Name**: price' lines; **bold** key prices.",
+        ? "This is the TavsWebs Bot marketing site demo. You ARE the product assistant for TavsWebs Bot — not a third-party salon or garage. Explain what the visitor gets, pricing, and how to start. CONTACT CAPTURE: when you need name/email/phone, write ONE short sentence telling them to fill the form below — never ask them to type those fields in chat, never list the fields as a question. A contact form UI will appear automatically. Prefer concrete numbers from knowledge. CRITICAL formatting rules: never put lists in one paragraph. Use real line breaks. Structure as: (1) one short intro sentence (2) blank line (3) numbered steps as separate lines '1. ' '2. ' OR pricing as separate lines '- **Plan**: price' (4) blank line (5) optional follow-up. Section labels like 'Cenas:' or 'Kā sākt:' must be on their own line before the list. After a lead is submitted: short paragraphs + https://bot.tavswebs.com/register alone on its own line."
+        : "This is a public marketing demo. Stay in character for the selected business. Prefer concrete prices from knowledge. CONTACT CAPTURE: when booking/quote needs contacts, write ONE short sentence to fill the form below — do not ask them to type name/phone/email in the chat. A form UI appears automatically. CRITICAL formatting: never one dense paragraph. Use line breaks; steps as '1. ' '2. ' lines; prices as '- **Name**: price' lines; **bold** key prices.",
       allowedTopics: isProduct
         ? ["pricing", "how it works", "features", "onboarding", "languages", "leads"]
         : ["services", "prices", "hours", "booking", "quotes"],
@@ -166,6 +163,12 @@ export async function runDemoChat(params: {
   const answer =
     completion.choices[0]?.message?.content?.trim() ||
     (locale === "en" ? DEFAULT_FALLBACK_EN : DEFAULT_FALLBACK_LV);
+
+  showLeadForm = shouldShowLeadForm({
+    message: params.message,
+    history,
+    answer,
+  });
 
   return { answer, showLeadForm, usedAi: true };
 }

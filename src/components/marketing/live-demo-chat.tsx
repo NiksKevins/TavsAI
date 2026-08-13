@@ -327,6 +327,57 @@ export function LiveDemoChat({
             {t("typing")}
           </div>
         ) : null}
+
+        {showLead ? (
+          <form
+            className="ml-0 w-full max-w-[95%] space-y-3 rounded-2xl rounded-bl-md border border-primary/20 bg-accent/40 px-3.5 py-3 shadow-sm"
+            action={(fd) => submitLead(fd)}
+          >
+            <p className="text-sm font-medium text-foreground">{t("leadTitle")}</p>
+            <div className="grid gap-2">
+              <div className="space-y-1">
+                <Label htmlFor="demo-name" className="text-xs">
+                  {t("name")}
+                </Label>
+                <Input
+                  id="demo-name"
+                  name="name"
+                  required
+                  minLength={2}
+                  autoComplete="name"
+                  className="h-9 bg-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="demo-phone" className="text-xs">
+                  {t("phone")}
+                </Label>
+                <Input
+                  id="demo-phone"
+                  name="phone"
+                  required
+                  autoComplete="tel"
+                  className="h-9 bg-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="demo-email" className="text-xs">
+                  {t("email")}
+                </Label>
+                <Input
+                  id="demo-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  className="h-9 bg-white"
+                />
+              </div>
+            </div>
+            <Button type="submit" disabled={leadPending} size="sm" className="w-full">
+              {leadPending ? t("sending") : t("submitLead")}
+            </Button>
+          </form>
+        ) : null}
       </div>
 
       {!showLead && !leadDone ? (
@@ -345,32 +396,7 @@ export function LiveDemoChat({
         </div>
       ) : null}
 
-      {showLead ? (
-        <form
-          className="space-y-3 border-t border-border/80 bg-[#f7f6f3] px-3 py-3"
-          action={(fd) => submitLead(fd)}
-        >
-          <p className="text-sm font-medium text-foreground">{t("leadTitle")}</p>
-          <div className="grid gap-2 sm:grid-cols-2">
-            <div className="space-y-1">
-              <Label htmlFor="demo-name" className="text-xs">
-                {t("name")}
-              </Label>
-              <Input id="demo-name" name="name" required minLength={2} />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="demo-phone" className="text-xs">
-                {t("phone")}
-              </Label>
-              <Input id="demo-phone" name="phone" required />
-            </div>
-          </div>
-          <Input id="demo-email" name="email" type="email" placeholder={t("email")} />
-          <Button type="submit" disabled={leadPending} size="sm">
-            {leadPending ? t("sending") : t("submitLead")}
-          </Button>
-        </form>
-      ) : (
+      {!showLead ? (
         <form
           className="flex gap-2 border-t border-border/80 bg-white px-3 py-2.5"
           onSubmit={(e) => {
@@ -389,6 +415,10 @@ export function LiveDemoChat({
             {t("send")}
           </Button>
         </form>
+      ) : (
+        <p className="border-t border-border/80 bg-[#f7f6f3] px-3 py-2 text-center text-[11px] text-muted-foreground">
+          {t("leadFormHint")}
+        </p>
       )}
 
       {error ? (

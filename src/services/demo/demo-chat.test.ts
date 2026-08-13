@@ -48,4 +48,27 @@ describe("marketing demo chat", () => {
       if (prev !== undefined) process.env.OPENAI_API_KEY = prev;
     }
   });
+
+  it("flags lead form when visitor asks what contacts are needed", async () => {
+    const prev = process.env.OPENAI_API_KEY;
+    delete process.env.OPENAI_API_KEY;
+    try {
+      const result = await runDemoChat({
+        industryId: "tavswebs",
+        message: "kādu kontaktinformāciju vajag ?",
+        locale: "lv",
+        history: [
+          {
+            role: "assistant",
+            content:
+              "Paldies! Lai turpinātu, lūdzu, norādiet savu kontaktinformāciju.",
+          },
+        ],
+      });
+      expect(result.showLeadForm).toBe(true);
+      expect(result.answer.toLowerCase()).toMatch(/formu|form/);
+    } finally {
+      if (prev !== undefined) process.env.OPENAI_API_KEY = prev;
+    }
+  });
 });

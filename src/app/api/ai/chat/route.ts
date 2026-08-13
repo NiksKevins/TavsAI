@@ -6,6 +6,7 @@ import {
   matchesCustomHandoffRules,
   parseHandoffTriggers,
 } from "@/config/assistant";
+import { assistantAnswerRequestsContact } from "@/lib/chat/lead-form-intent";
 import { prisma } from "@/lib/db";
 import { getRequestId, logInfo } from "@/lib/logging";
 import { clientIp, checkRateLimit } from "@/lib/rate-limit";
@@ -302,7 +303,8 @@ export async function POST(request: Request) {
           showLeadForm:
             Boolean(result.usedFallback) ||
             Boolean(leadResult?.extraction.hasPurchaseIntent) ||
-            shouldHandoffFallback,
+            shouldHandoffFallback ||
+            assistantAnswerRequestsContact(result.answer),
           leadId: leadResult?.leadId,
         },
         { headers: cors },
@@ -367,7 +369,8 @@ export async function POST(request: Request) {
           showLeadForm:
             Boolean(result.usedFallback) ||
             Boolean(leadResult?.extraction.hasPurchaseIntent) ||
-            shouldHandoffFallback,
+            shouldHandoffFallback ||
+            assistantAnswerRequestsContact(result.answer),
           leadId: leadResult?.leadId,
         });
       } catch (error) {

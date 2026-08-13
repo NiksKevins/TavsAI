@@ -50,6 +50,7 @@
       "error": "Neizdevās saņemt atbildi. Mēģiniet vēlreiz.",
       "rateLimited": "Pārāk daudz pieprasījumu. Uzgaidiet brīdi.",
       "leadTitle": "Atstājiet kontaktus — komanda sazināsies",
+      "leadFormHint": "Aizpildiet formu čatā — nav jāraksta kontakti ziņā.",
       "name": "Vārds",
       "phone": "Tālrunis",
       "email": "E-pasts (neobligāti)",

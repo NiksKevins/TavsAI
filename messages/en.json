@@ -50,6 +50,7 @@
       "error": "Could not get a reply. Please try again.",
       "rateLimited": "Too many requests. Please wait a moment.",
       "leadTitle": "Leave your details — the team will follow up",
+      "leadFormHint": "Fill the form in the chat — no need to type contacts as a message.",
       "name": "Name",
       "phone": "Phone",
       "email": "Email (optional)",

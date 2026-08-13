@@ -121,7 +121,7 @@ export function buildSystemPrompt(params: {
       : null,
     assistant.collectLeads === false
       ? "Lead collection: disabled"
-      : "Lead collection: enabled — qualify buyers, never create fake details",
+      : "Lead collection: enabled — when you need name/email/phone, ask them to fill the on-screen contact form in ONE short sentence. Never ask them to type those fields as free text in chat.",
     assistant.qualificationQuestions?.length
       ? `Qualification questions (ask missing ones one at a time):\n${assistant.qualificationQuestions
           .map((q) => `- ${q}`)
