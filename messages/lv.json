@@ -190,12 +190,12 @@
       "features": {
         "FREE": {
           "0": "Widget un pamata asistents",
-          "1": "Mājaslapas crawl",
+          "1": "Mājaslapas indeksācija",
           "2": "Leadu ievākšana"
         },
         "STARTER": {
           "0": "Viss Free plānā",
-          "1": "Vairāk crawl lapu",
+          "1": "Vairāk indeksējamu lapu",
           "2": "E-pasta paziņojumi par leadiem"
         },
         "BUSINESS": {
@@ -222,7 +222,7 @@
         },
         "1": {
           "q": "Cik ātri varu to uzstādīt?",
-          "a": "Pirmā versija parasti ir gatava tajā pašā dienā: reģistrācija, crawl un widget kods aizņem minūtes, ne nedēļas."
+          "a": "Pirmā versija parasti ir gatava tajā pašā dienā: reģistrācija, indeksācija un widget kods aizņem minūtes, ne nedēļas."
         },
         "2": {
           "q": "Vai AI runā latviski?",
@@ -359,10 +359,10 @@
       },
       "crawl": {
         "title": "Analizējam jūsu mājaslapu",
-        "subtitle": "Tas aizņem brīdi. Skaitļi nāk no reāla crawl — nevis no demonstrācijas.",
+        "subtitle": "Tas aizņem brīdi. Skaitļi nāk no reālas indeksācijas — nevis no demonstrācijas.",
         "analyzing": "Analizējam jūsu mājaslapu...",
         "done": "Mājaslapa apstrādāta.",
-        "finishedWithIssues": "Crawl beidzās ar brīdinājumiem — varat turpināt vai mēģināt vēlreiz.",
+        "finishedWithIssues": "Indeksācija beidzās ar brīdinājumiem — varat turpināt vai mēģināt vēlreiz.",
         "finding": "Meklējam lapas…",
         "found": "Atrastas {count} lapas",
         "processing": "Apstrādājam saturu…",
@@ -417,7 +417,7 @@
       "invalid_locale": "Izvēlieties valodu.",
       "invalid_question": "Ievadiet īsu jautājumu.",
       "preview_failed": "Neizdevās saņemt atbildi.",
-      "crawl_start_failed": "Neizdevās sākt crawl.",
+      "crawl_start_failed": "Neizdevās sākt indeksāciju.",
       "copy_failed": "Neizdevās nokopēt."
     }
   },
@@ -448,7 +448,7 @@
       "plan": "Plāns",
       "planLimit": "{count} sarunas / mēnesī",
       "next": "Nākamie soļi",
-      "nextHint": "Nākamais: pievienojiet mājaslapu sadaļā Zināšanas un palaidiet crawlu.",
+      "nextHint": "Nākamais: pievienojiet mājaslapu sadaļā Zināšanas un palaidiet indeksāciju.",
       "metrics": {
         "conversations": "Sarunas",
         "leads": "Leadi",
@@ -521,7 +521,7 @@
         "services": "Pakalpojumi",
         "documents": "Augšupielādētie faili",
         "chunks": "Meklējami fragmenti",
-        "crawlStatus": "Crawl statuss",
+        "crawlStatus": "Indeksācijas statuss",
         "noWebsite": "Nav pievienota"
       },
       "conversationStatuses": {
@@ -578,33 +578,33 @@
     "title": "Zināšanas",
     "subtitle": "Mājaslapas saturs, ko asistents izmantos atbildēm.",
     "links": {
-      "website": "Mājaslapas crawls"
+      "website": "Mājaslapas indeksācija"
     },
     "fields": {
       "websiteUrl": "Mājaslapas adrese"
     },
     "actions": {
-      "scan": "Skenēt mājaslapu",
-      "rescan": "Skenēt vēlreiz",
+      "scan": "Palaist indeksāciju",
+      "rescan": "Indeksēt vēlreiz",
       "cancel": "Atcelt"
     },
     "status": {
-      "title": "Crawl statuss",
+      "title": "Indeksācijas statuss",
       "noWebsite": "Mājaslapa vēl nav pievienota.",
       "discovered": "Atrastās lapas",
       "processed": "Apstrādātās lapas",
-      "limit": "Limite"
+      "limit": "Limits"
     },
     "stats": {
       "website": "Mājaslapa",
-      "lastCrawl": "Pēdējais crawls",
+      "lastCrawl": "Pēdējā indeksācija",
       "documents": "Dokumenti",
       "chunks": "Gabali"
     },
     "explorer": {
       "heading": "Lapu pārlūks",
       "subtitle": "Grupēts pēc lapas tipa. Atveriet lapu, lai redzētu saturu.",
-      "empty": "Vēl nav ielādētu lapu. Palaižiet crawlu.",
+      "empty": "Vēl nav ielādētu lapu. Palaidiet indeksāciju.",
       "title": "Virsraksts",
       "url": "URL",
       "status": "Statuss",
@@ -620,8 +620,8 @@
     },
     "websitePage": {
       "title": "Mājaslapa",
-      "subtitle": "Crawl kā viens no zināšanu avotiem — ne vienīgais.",
-      "note": "Crawl notiek fonā. Pēc skenēšanas saturs tiek chunkots un iegults."
+      "subtitle": "Indeksācija ir viens no zināšanu avotiem — ne vienīgais.",
+      "note": "Indeksācija notiek fonā. Pēc skenēšanas saturs tiek sadalīts un iegults."
     },
     "document": {
       "updated": "Atjaunināts",
@@ -755,9 +755,9 @@
       "blocked_hostname": "Šī adrese nav atļauta.",
       "private_ip": "Privātās/iekšējās adreses ir aizliegtas.",
       "dns_failed": "Neizdevās atrisināt DNS.",
-      "crawl_in_progress": "Crawl jau notiek.",
+      "crawl_in_progress": "Indeksācija jau notiek.",
       "website_missing": "Vispirms pievienojiet mājaslapu.",
-      "crawl_not_active": "Nav aktīva crawla, ko atcelt."
+      "crawl_not_active": "Nav aktīvas indeksācijas, ko atcelt."
     }
   },
   "widgetAdmin": {

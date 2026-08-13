@@ -45,11 +45,12 @@
     }
   }
 
-  function applyClosedPosition(host) {
+  function applyClosedPosition(host, launcherExpanded) {
     host.style.top = "auto";
     host.style.bottom = "20px";
-    // 60px button + 8px padding + pulse ring — 72px clipped the launcher icon.
-    host.style.width = "88px";
+    // 60px button + padding + pulse ring. Wider while hover label is shown
+    // so “Sarakste” / custom launcher text is not clipped by the iframe.
+    host.style.width = launcherExpanded ? "240px" : "88px";
     host.style.height = "88px";
     if (POSITION.indexOf("left") >= 0) {
       host.style.left = "20px";
@@ -132,12 +133,12 @@
 
       if (data.type === "config" && data.position) {
         POSITION = data.position;
-        applyClosedPosition(host);
+        applyClosedPosition(host, false);
       }
 
       if (data.type === "resize") {
         if (data.open) applyOpenPosition(host);
-        else applyClosedPosition(host);
+        else applyClosedPosition(host, !!data.launcherExpanded);
       }
     });
   }

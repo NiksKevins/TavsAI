@@ -78,6 +78,7 @@ export function WidgetFrame({
   const [leadError, setLeadError] = useState<string | null>(null);
   const [leadSent, setLeadSent] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [launcherExpanded, setLauncherExpanded] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -101,8 +102,12 @@ export function WidgetFrame({
   );
 
   useEffect(() => {
-    postParent({ type: "resize", open });
-  }, [open, postParent]);
+    postParent({
+      type: "resize",
+      open,
+      launcherExpanded: !open && launcherExpanded,
+    });
+  }, [open, launcherExpanded, postParent]);
 
   useEffect(() => {
     if (!publicKey) {
@@ -412,6 +417,8 @@ export function WidgetFrame({
     );
   }
 
+  const pinLeft = (config.position || "").includes("left");
+
   return (
     <div
       style={{
@@ -420,7 +427,7 @@ export function WidgetFrame({
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
-        alignItems: "flex-end",
+        alignItems: pinLeft ? "flex-start" : "flex-end",
         boxSizing: "border-box",
         padding: open ? 0 : 4,
         fontFamily:
@@ -743,6 +750,7 @@ export function WidgetFrame({
           label={config.launcherText}
           primary={theme.primary}
           onClick={() => setOpen(true)}
+          onExpandChange={setLauncherExpanded}
         />
       )}
     </div>
@@ -780,17 +788,24 @@ function LauncherButton({
   primary,
   onClick,
   loading,
+  onExpandChange,
 }: {
   label: string;
   primary: string;
   onClick?: () => void;
   loading?: boolean;
+  onExpandChange?: (expanded: boolean) => void;
 }) {
   const [hovered, setHovered] = useState(false);
   const expanded = hovered && !loading;
   const shadow = expanded
     ? `0 14px 34px ${hexToRgba(primary, 0.38)}, 0 4px 10px rgba(20,32,28,0.12)`
     : `0 10px 28px ${hexToRgba(primary, 0.28)}, 0 2px 6px rgba(20,32,28,0.08)`;
+
+  useEffect(() => {
+    onExpandChange?.(expanded);
+    return () => onExpandChange?.(false);
+  }, [expanded, onExpandChange]);
 
   return (
     <button

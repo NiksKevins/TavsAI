@@ -578,18 +578,18 @@
     "title": "Knowledge",
     "subtitle": "Website content your assistant will use for answers.",
     "links": {
-      "website": "Website crawl"
+      "website": "Website indexing"
     },
     "fields": {
       "websiteUrl": "Website URL"
     },
     "actions": {
-      "scan": "Scan website",
-      "rescan": "Rescan",
+      "scan": "Start indexing",
+      "rescan": "Index again",
       "cancel": "Cancel"
     },
     "status": {
-      "title": "Crawl status",
+      "title": "Indexing status",
       "noWebsite": "No website added yet.",
       "discovered": "Pages discovered",
       "processed": "Pages processed",
@@ -597,14 +597,14 @@
     },
     "stats": {
       "website": "Website",
-      "lastCrawl": "Last crawl",
+      "lastCrawl": "Last indexed",
       "documents": "Documents",
       "chunks": "Chunks"
     },
     "explorer": {
       "heading": "Page explorer",
       "subtitle": "Grouped by page type. Open a page to inspect content.",
-      "empty": "No pages ingested yet. Start a crawl.",
+      "empty": "No pages loaded yet. Start indexing.",
       "title": "Title",
       "url": "URL",
       "status": "Status",
@@ -620,8 +620,8 @@
     },
     "websitePage": {
       "title": "Website",
-      "subtitle": "Crawl is one knowledge source — not the only one.",
-      "note": "Crawl runs in the background. After scanning, content is chunked and embedded."
+      "subtitle": "Indexing is one knowledge source — not the only one.",
+      "note": "Indexing runs in the background. After scanning, content is chunked and embedded."
     },
     "document": {
       "updated": "Updated",

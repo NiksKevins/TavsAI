@@ -543,29 +543,36 @@ export function OnboardingWizard({
               title={t("steps.preview.title")}
               subtitle={t("steps.preview.subtitle")}
             />
-            <div className="overflow-hidden border border-border bg-[#101814] text-[#e8efe9]">
-              <div className="border-b border-white/10 px-4 py-3">
-                <p className="font-display text-sm font-semibold">
-                  {assistantName}
-                </p>
-                <p className="text-xs text-white/50">{businessName}</p>
+            <div className="overflow-hidden rounded-2xl border border-border bg-white text-foreground shadow-sm">
+              <div className="flex items-center gap-3 border-b border-border bg-[linear-gradient(180deg,#fbfaf8_0%,#f4f6f4_100%)] px-4 py-3.5">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                  {(assistantName || "AI").slice(0, 1).toUpperCase()}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate font-display text-sm font-semibold text-foreground">
+                    {assistantName}
+                  </p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {businessName}
+                  </p>
+                </div>
               </div>
-              <div className="flex max-h-[320px] flex-col gap-2 overflow-y-auto px-4 py-4">
+              <div className="flex max-h-[320px] flex-col gap-2.5 overflow-y-auto bg-[#f7f6f3] px-4 py-4">
                 {previewMessages.map((m, i) => (
                   <div
                     key={`${i}-${m.role}`}
                     className={cn(
-                      "max-w-[90%] px-3 py-2 text-sm",
+                      "max-w-[90%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm",
                       m.role === "user"
-                        ? "ml-auto bg-primary text-primary-foreground"
-                        : "bg-white/[0.08]",
+                        ? "ml-auto rounded-br-md bg-primary text-primary-foreground"
+                        : "rounded-bl-md border border-border/80 bg-white text-foreground",
                     )}
                   >
                     {m.content}
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2 border-t border-white/10 px-4 py-3">
+              <div className="flex flex-wrap gap-2 border-t border-border bg-white px-4 py-3">
                 {(
                   suggestedQuestions.split("\n").filter(Boolean).slice(0, 3) ||
                   []
@@ -573,7 +580,7 @@ export function OnboardingWizard({
                   <button
                     key={q}
                     type="button"
-                    className="border border-white/15 px-2 py-1 text-xs text-white/80 hover:bg-white/10"
+                    className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-primary/40 hover:bg-primary/5"
                     onClick={() => sendPreview(q)}
                   >
                     {q}
@@ -581,7 +588,7 @@ export function OnboardingWizard({
                 ))}
               </div>
               <form
-                className="flex gap-2 border-t border-white/10 px-4 py-3"
+                className="flex gap-2 border-t border-border bg-white px-4 py-3"
                 onSubmit={(e) => {
                   e.preventDefault();
                   sendPreview(previewInput);
@@ -591,7 +598,7 @@ export function OnboardingWizard({
                   value={previewInput}
                   onChange={(e) => setPreviewInput(e.target.value)}
                   placeholder={t("steps.preview.placeholder")}
-                  className="border-white/15 bg-white/5 text-white placeholder:text-white/35"
+                  className="border-border bg-background text-foreground placeholder:text-muted-foreground"
                 />
                 <Button type="submit" disabled={pending}>
                   {t("steps.preview.send")}
@@ -619,7 +626,7 @@ export function OnboardingWizard({
               title={t("steps.install.title")}
               subtitle={t("steps.install.subtitle")}
             />
-            <pre className="overflow-x-auto border border-border bg-[#101814] p-4 text-xs leading-relaxed text-[#d5e0d9]">
+            <pre className="overflow-x-auto rounded-xl border border-border bg-[#f7f6f3] p-4 text-xs leading-relaxed text-foreground">
               {installSnippet}
             </pre>
             <div className="flex flex-wrap gap-2">
