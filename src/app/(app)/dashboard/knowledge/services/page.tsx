@@ -4,6 +4,8 @@ import { ServiceManager } from "@/components/knowledge/service-manager";
 import { requireWorkspace } from "@/lib/authz";
 import { prisma } from "@/lib/db";
 
+export const maxDuration = 300;
+
 export default async function KnowledgeServicesPage() {
   const t = await getTranslations("knowledge.services");
   const { workspace } = await requireWorkspace();

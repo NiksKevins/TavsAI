@@ -690,7 +690,7 @@
     },
     "services": {
       "title": "Pakalpojumi",
-      "subtitle": "Manuāli kontrolējiet, ko AI zina par jūsu piedāvājumu. Cena nav obligāta.",
+      "subtitle": "Indeksācija aizpilda sarakstu no mājaslapas; šeit varat labot un papildināt. Cena nav obligāta.",
       "create": "Jauns pakalpojums",
       "edit": "Rediģēt",
       "cancel": "Atcelt",
@@ -698,7 +698,11 @@
       "saved": "Saglabāts.",
       "error": "Neizdevās saglabāt.",
       "delete": "Dzēst",
-      "empty": "Vēl nav pakalpojumu.",
+      "empty": "Vēl nav pakalpojumu. Palaidiet indeksāciju Mājaslapā, tad spiediet “Importēt no mājaslapas”.",
+      "listHint": "Saraksts no indeksācijas un manuāliem ierakstiem.",
+      "importFromWebsite": "Importēt no mājaslapas",
+      "importing": "Importē…",
+      "importDone": "Pievienoti {created}, atjaunināti {updated}.",
       "available": "Pieejams",
       "unavailable": "Nepieejams",
       "fields": {
@@ -710,6 +714,9 @@
         "category": "Kategorija",
         "notes": "Piezīmes",
         "available": "Pieejams"
+      },
+      "errors": {
+        "no_website_pages": "Vispirms indeksējiet mājaslapu sadaļā Mājaslapa."
       }
     },
     "faqs": {

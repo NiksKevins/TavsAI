@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useActionState, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 
 import {
   deleteServiceAction,
+  importFromWebsiteAction,
   saveServiceAction,
   type KnowledgeActionResult,
 } from "@/actions/knowledge";
@@ -27,12 +29,15 @@ type ServiceItem = {
 
 export function ServiceManager({ services }: { services: ServiceItem[] }) {
   const t = useTranslations("knowledge.services");
+  const router = useRouter();
   const [editing, setEditing] = useState<ServiceItem | null>(null);
+  const [importMessage, setImportMessage] = useState<string | null>(null);
   const [state, action, pending] = useActionState<
     KnowledgeActionResult | null,
     FormData
   >(saveServiceAction, null);
   const [deleting, startDelete] = useTransition();
+  const [importing, startImport] = useTransition();
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
@@ -47,7 +52,12 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
         {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
         <div className="space-y-2">
           <Label htmlFor="nameLv">{t("fields.name")}</Label>
-          <Input id="nameLv" name="nameLv" required defaultValue={editing?.nameLv ?? ""} />
+          <Input
+            id="nameLv"
+            name="nameLv"
+            required
+            defaultValue={editing?.nameLv ?? ""}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="descriptionLv">{t("fields.description")}</Label>
@@ -80,11 +90,20 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="category">{t("fields.category")}</Label>
-          <Input id="category" name="category" defaultValue={editing?.category ?? ""} />
+          <Input
+            id="category"
+            name="category"
+            defaultValue={editing?.category ?? ""}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="notes">{t("fields.notes")}</Label>
-          <Textarea id="notes" name="notes" rows={2} defaultValue={editing?.notes ?? ""} />
+          <Textarea
+            id="notes"
+            name="notes"
+            rows={2}
+            defaultValue={editing?.notes ?? ""}
+          />
         </div>
         <label className="flex items-center gap-2 text-sm">
           <input
@@ -103,7 +122,11 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
             {t("save")}
           </Button>
           {editing ? (
-            <Button type="button" variant="outline" onClick={() => setEditing(null)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setEditing(null)}
+            >
               {t("cancel")}
             </Button>
           ) : null}
@@ -111,6 +134,41 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
       </form>
 
       <div className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm text-muted-foreground">{t("listHint")}</p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={importing}
+            onClick={() =>
+              startImport(async () => {
+                setImportMessage(null);
+                const result = await importFromWebsiteAction();
+                if (!result.ok) {
+                  setImportMessage(t(`errors.${result.error}`));
+                  return;
+                }
+                const data = result.data as {
+                  servicesCreated: number;
+                  servicesUpdated: number;
+                };
+                setImportMessage(
+                  t("importDone", {
+                    created: data.servicesCreated,
+                    updated: data.servicesUpdated,
+                  }),
+                );
+                router.refresh();
+              })
+            }
+          >
+            {importing ? t("importing") : t("importFromWebsite")}
+          </Button>
+        </div>
+        {importMessage ? (
+          <p className="text-sm text-muted-foreground">{importMessage}</p>
+        ) : null}
         {services.length === 0 ? (
           <p className="text-sm text-muted-foreground">{t("empty")}</p>
         ) : (
@@ -123,7 +181,11 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
                 <div>
                   <div className="font-medium">{service.nameLv}</div>
                   <div className="mt-1 text-sm text-muted-foreground">
-                    {[service.category, service.duration, service.priceFrom ? `from €${service.priceFrom}` : null]
+                    {[
+                      service.category,
+                      service.duration,
+                      service.priceFrom ? `from €${service.priceFrom}` : null,
+                    ]
                       .filter(Boolean)
                       .join(" · ") || "—"}
                   </div>
@@ -133,7 +195,12 @@ export function ServiceManager({ services }: { services: ServiceItem[] }) {
                 </Badge>
               </div>
               <div className="mt-3 flex gap-2">
-                <Button type="button" size="sm" variant="outline" onClick={() => setEditing(service)}>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setEditing(service)}
+                >
                   {t("edit")}
                 </Button>
                 <Button

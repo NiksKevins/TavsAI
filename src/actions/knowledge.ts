@@ -427,6 +427,27 @@ export async function reindexKnowledgeAction(): Promise<KnowledgeActionResult> {
   };
 }
 
+export async function importFromWebsiteAction(): Promise<KnowledgeActionResult> {
+  const { workspace } = await requireWorkspaceRole("ADMIN");
+  const pages = await prisma.knowledgeDocument.count({
+    where: { workspaceId: workspace.id, type: "WEBSITE_PAGE", status: "READY" },
+  });
+  if (pages === 0) {
+    return { ok: false, error: "no_website_pages" };
+  }
+
+  const { importStructuredKnowledgeFromCrawl } = await import(
+    "@/services/knowledge/import-from-crawl"
+  );
+  const imported = await importStructuredKnowledgeFromCrawl(workspace.id);
+  revalidateKnowledge();
+  return {
+    ok: true,
+    message: `imported:${imported.servicesCreated}:${imported.servicesUpdated}:${imported.faqsCreated}:${imported.faqsUpdated}`,
+    data: imported,
+  };
+}
+
 export async function testKnowledgeAiAction(
   _prev: KnowledgeActionResult | null,
   formData: FormData,

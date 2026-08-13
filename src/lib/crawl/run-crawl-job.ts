@@ -297,6 +297,16 @@ export async function runCrawlJob(jobId: string): Promise<void> {
       );
     }
 
+    try {
+      const { importStructuredKnowledgeFromCrawl } = await import(
+        "@/services/knowledge/import-from-crawl"
+      );
+      const imported = await importStructuredKnowledgeFromCrawl(job.workspaceId);
+      console.info("[crawl] imported structured knowledge", imported);
+    } catch (error) {
+      console.error("[crawl] structured import failed", error);
+    }
+
     await prisma.crawlJob.update({
       where: { id: jobId },
       data: {

@@ -316,6 +316,15 @@ export async function ingestUploadedDocument(params: {
 export async function reindexWorkspaceKnowledge(workspaceId: string) {
   await syncBusinessInformationKnowledge(workspaceId);
 
+  try {
+    const { importStructuredKnowledgeFromCrawl } = await import(
+      "@/services/knowledge/import-from-crawl"
+    );
+    await importStructuredKnowledgeFromCrawl(workspaceId);
+  } catch (error) {
+    console.error("[reindex] crawl structured import failed", error);
+  }
+
   const services = await prisma.service.findMany({
     where: { workspaceId, isActive: true },
     select: { id: true },

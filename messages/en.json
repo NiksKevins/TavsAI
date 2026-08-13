@@ -690,7 +690,7 @@
     },
     "services": {
       "title": "Services",
-      "subtitle": "Manually control what the AI knows about your offer. Price is optional.",
+      "subtitle": "Indexing fills this list from your website; edit or add more here. Price is optional.",
       "create": "New service",
       "edit": "Edit",
       "cancel": "Cancel",
@@ -698,7 +698,11 @@
       "saved": "Saved.",
       "error": "Could not save.",
       "delete": "Delete",
-      "empty": "No services yet.",
+      "empty": "No services yet. Index the website under Website, then click “Import from website”.",
+      "listHint": "From indexing and manual entries.",
+      "importFromWebsite": "Import from website",
+      "importing": "Importing…",
+      "importDone": "Added {created}, updated {updated}.",
       "available": "Available",
       "unavailable": "Unavailable",
       "fields": {
@@ -710,6 +714,9 @@
         "category": "Category",
         "notes": "Notes",
         "available": "Available"
+      },
+      "errors": {
+        "no_website_pages": "Index your website under Website first."
       }
     },
     "faqs": {
