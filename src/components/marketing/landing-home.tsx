@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 
 import {
-  MarketingBridgeCard,
   MarketingContainer,
   MarketingDemoStage,
   MarketingEyebrow,
@@ -11,16 +10,8 @@ import {
   MarketingSection,
 } from "@/components/marketing/marketing-ui";
 import { HowStepsEditorial } from "@/components/marketing/how-steps";
-import {
-  EditorialDivider,
-  FeatureIndex,
-} from "@/components/marketing/marketing-visuals";
-import {
-  HeroProductVisual,
-  ProductShowcaseRow,
-} from "@/components/marketing/product-visuals";
+import { HeroProductVisual } from "@/components/marketing/product-visuals";
 import { Button } from "@/components/ui/button";
-import { Link as LocaleLink } from "@/i18n/navigation";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
 
 const LiveDemoChat = dynamic(
@@ -37,12 +28,8 @@ export function LandingHome({ dict }: { dict: MarketingDict }) {
   return (
     <div>
       <HomeHero dict={dict} />
-      <ProductShowcaseRow dict={dict.visuals} />
       <HomeDemoStage dict={dict} />
-      <HomeProblem dict={dict} />
-      <HomeSolution dict={dict} />
       <HomeHow dict={dict} />
-      <HomeBridge dict={dict} />
       <MarketingFinalCta
         eyebrow={dict.finalCta.eyebrow}
         title={dict.finalCta.title}
@@ -54,7 +41,6 @@ export function LandingHome({ dict }: { dict: MarketingDict }) {
   );
 }
 
-/** Left-aligned editorial hero — quiet, no template effects. */
 function HomeHero({ dict }: { dict: MarketingDict }) {
   return (
     <section className="marketing-hero-bg relative border-b border-border/60">
@@ -68,7 +54,7 @@ function HomeHero({ dict }: { dict: MarketingDict }) {
             {dict.headline}
           </h1>
 
-          <p className="mt-4 max-w-lg text-pretty text-base leading-[1.65] text-ink-soft sm:text-lg">
+          <p className="mt-4 max-w-md text-pretty text-base leading-[1.6] text-ink-soft sm:text-lg">
             {dict.subhead}
           </p>
 
@@ -95,7 +81,6 @@ function HomeHero({ dict }: { dict: MarketingDict }) {
   );
 }
 
-/** Centered live demo — flows from hero scroll anchor. */
 function HomeDemoStage({ dict }: { dict: MarketingDict }) {
   return (
     <MarketingDemoStage
@@ -109,129 +94,19 @@ function HomeDemoStage({ dict }: { dict: MarketingDict }) {
   );
 }
 
-/** Magazine-style problem list — not a card grid. */
-function HomeProblem({ dict }: { dict: MarketingDict }) {
-  return (
-    <MarketingSection tone="plain">
-      <MarketingContainer wide>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:gap-12">
-          <div className="lg:sticky lg:top-20 lg:self-start">
-            <MarketingEyebrow>{dict.problem.eyebrow}</MarketingEyebrow>
-            <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
-              {dict.problem.title}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {dict.problem.hint}
-            </p>
-          </div>
-
-          <ol className="divide-y divide-border/80 sm:pl-2">
-            {dict.problem.items.map((item, index) => (
-              <li
-                key={item}
-                className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 py-5 first:pt-0 last:pb-0 sm:gap-x-5 sm:py-6"
-              >
-                <FeatureIndex n={index + 1} />
-                <p className="min-w-0 self-center text-base leading-[1.75] text-ink-soft sm:text-lg sm:leading-[1.7]">
-                  {item}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </MarketingContainer>
-    </MarketingSection>
-  );
-}
-
-/** Sticky title + scrolling feature stack. */
-function HomeSolution({ dict }: { dict: MarketingDict }) {
-  return (
-    <MarketingSection tone="cream">
-      <MarketingContainer wide>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:gap-12">
-          <div className="lg:sticky lg:top-20 lg:self-start">
-            <MarketingEyebrow>{dict.solution.eyebrow}</MarketingEyebrow>
-            <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
-              {dict.solution.title}
-            </h2>
-            <p className="mt-3 text-base leading-relaxed text-ink-soft">
-              {dict.solution.subtitle}
-            </p>
-            <p className="mt-5 hidden max-w-xs text-sm leading-relaxed text-muted-foreground lg:block">
-              {dict.solutionFootnote}
-            </p>
-          </div>
-
-          <ul className="space-y-0 sm:pl-2">
-            {dict.solution.items.map((item, index) => (
-              <li key={item.title}>
-                {index > 0 ? <EditorialDivider /> : null}
-                <article className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 py-5 sm:gap-x-5 sm:py-6">
-                  <FeatureIndex n={index + 1} />
-                  <div className="min-w-0">
-                    <h3 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-base leading-[1.7] text-ink-soft sm:text-lg sm:leading-[1.65]">
-                      {item.body}
-                    </p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </MarketingContainer>
-    </MarketingSection>
-  );
-}
-
-/** Editorial step list — matches problem/solution rhythm, no timeline cliché. */
 function HomeHow({ dict }: { dict: MarketingDict }) {
   return (
     <MarketingSection tone="plain" className="border-y border-border/50">
       <MarketingContainer wide>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-12">
-          <div className="lg:sticky lg:top-20 lg:self-start">
+          <div className="lg:self-start">
             <MarketingEyebrow>{dict.how.eyebrow}</MarketingEyebrow>
             <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
               {dict.how.title}
             </h2>
-            <LocaleLink
-              href="/how"
-              className="link-premium-primary mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
-            >
-              {dict.bridge.linkLabel}
-              <ArrowUpRight className="size-4" aria-hidden />
-            </LocaleLink>
           </div>
-
           <HowStepsEditorial steps={dict.how.steps} />
         </div>
-      </MarketingContainer>
-    </MarketingSection>
-  );
-}
-
-function HomeBridge({ dict }: { dict: MarketingDict }) {
-  return (
-    <MarketingSection tone="cream">
-      <MarketingContainer className="grid gap-4 sm:grid-cols-2">
-        <MarketingBridgeCard
-          href="/how"
-          title={dict.bridge.howTitle}
-          body={dict.bridge.howBody}
-          linkLabel={dict.bridge.linkLabel}
-          index={1}
-        />
-        <MarketingBridgeCard
-          href="/pricing"
-          title={dict.bridge.pricingTitle}
-          body={dict.bridge.pricingBody}
-          linkLabel={dict.bridge.linkLabel}
-          index={2}
-        />
       </MarketingContainer>
     </MarketingSection>
   );

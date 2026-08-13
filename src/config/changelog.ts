@@ -19,25 +19,17 @@ export const CHANGELOG: ChangelogEntry[] = [
     id: "2026-08-13-leads-chat",
     date: "2026-08-13",
     title: {
-      lv: "Labāka lead uztveršana no čata",
-      en: "Better lead capture from chat",
+      lv: "Leadi no čata",
+      en: "Leads from chat",
     },
     summary: {
-      lv: "Vārds, e-pasts un telefons no čata tagad nonāk Leadu sarakstā.",
-      en: "Name, email, and phone from chat now land in your Leads list.",
+      lv: "Kontakti no čata tagad nonāk Leadu sarakstā.",
+      en: "Chat contacts now show up in Leads.",
     },
     items: [
       {
-        lv: "Apmeklētājs var ierakstīt kontaktus vienā ziņā — botu tos saglabā kā leadu.",
-        en: "Visitors can type contacts in one message — the bot saves them as a lead.",
-      },
-      {
-        lv: "Ja lead forma ir ieslēgta, tā parādās, kad botu lūdz kontaktus.",
-        en: "When the lead form is on, it appears when the bot asks for contacts.",
-      },
-      {
-        lv: "Tukšie handoff leadu ieraksti tiek papildināti, kad kontakti tiek iesniegti.",
-        en: "Empty handoff leads are filled in once contacts are provided.",
+        lv: "Vārds, e-pasts un telefons no ziņas tiek saglabāti.",
+        en: "Name, email, and phone from a message are saved.",
       },
     ],
   },
@@ -45,25 +37,17 @@ export const CHANGELOG: ChangelogEntry[] = [
     id: "2026-08-12-knowledge",
     date: "2026-08-12",
     title: {
-      lv: "Zināšanas un indeksācija",
-      en: "Knowledge and indexing",
+      lv: "Ātrāka indeksācija",
+      en: "Faster indexing",
     },
     summary: {
-      lv: "Ātrāka mājaslapas indeksācija un pakalpojumu imports no crawl.",
-      en: "Faster site indexing and service import from crawl.",
+      lv: "Mājaslapas saturs un pakalpojumi — vieglāk importēt.",
+      en: "Website content and services — easier to import.",
     },
     items: [
       {
-        lv: "Indeksācijas progresa josla Pārskatā un Zināšanās.",
-        en: "Indexing progress bar on Overview and Knowledge.",
-      },
-      {
-        lv: "Pogā \"Importēt no mājaslapas\" aizpilda pakalpojumus no crawl rezultātiem.",
-        en: "“Import from website” fills services from crawl results.",
-      },
-      {
-        lv: "Crawl vairs nepaliek iestrēdzis statusā QUEUED.",
-        en: "Crawls no longer get stuck in QUEUED status.",
+        lv: "Progresa josla un imports no mājaslapas.",
+        en: "Progress bar and import from your website.",
       },
     ],
   },
@@ -71,21 +55,17 @@ export const CHANGELOG: ChangelogEntry[] = [
     id: "2026-08-01-launch",
     date: "2026-08-01",
     title: {
-      lv: "TavsWebs Bot panelis",
-      en: "TavsWebs Bot dashboard",
+      lv: "Panelis",
+      en: "Dashboard",
     },
     summary: {
-      lv: "Sarunas, leadi, zināšanas, widget un norēķini vienā vietā.",
-      en: "Conversations, leads, knowledge, widget, and billing in one place.",
+      lv: "Sarunas, leadi un widget vienā vietā.",
+      en: "Chats, leads, and widget in one place.",
     },
     items: [
       {
-        lv: "Pārskats ar metriku un uzstādīšanas kontrolsarakstu.",
-        en: "Overview with metrics and a setup checklist.",
-      },
-      {
-        lv: "Widget iestrāde mājaslapā ar lead formām un handoff.",
-        en: "Website widget with lead forms and human handoff.",
+        lv: "Pārskats, zināšanas un norēķini.",
+        en: "Overview, knowledge, and billing.",
       },
     ],
   },
