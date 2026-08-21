@@ -445,6 +445,11 @@
       "settings": "Iestatījumi",
       "partner": "Partneru portāls"
     },
+    "navGroups": {
+      "work": "Darbs",
+      "bot": "Bots",
+      "account": "Konts"
+    },
     "whatsNew": {
       "badge": "Jaunumi",
       "button": "Atjaunināt",

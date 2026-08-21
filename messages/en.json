@@ -445,6 +445,11 @@
       "settings": "Settings",
       "partner": "Partner portal"
     },
+    "navGroups": {
+      "work": "Work",
+      "bot": "Bot",
+      "account": "Account"
+    },
     "whatsNew": {
       "badge": "What's new",
       "button": "Update",
