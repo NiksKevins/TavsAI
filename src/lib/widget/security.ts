@@ -27,7 +27,8 @@ export function widgetCorsHeaders(origin: string | null, allowed: string[]) {
     return headers;
   }
 
-  if (allowed.includes("*") || allowed.includes(origin)) {
+  // Never treat "*" as reflect-any-origin (open CORS).
+  if (allowed.includes(origin)) {
     headers.set("Access-Control-Allow-Origin", origin);
   }
 
@@ -40,6 +41,27 @@ export function isOriginDenied(
   corsHeaders: Headers,
 ): boolean {
   return Boolean(origin && !corsHeaders.get("Access-Control-Allow-Origin"));
+}
+
+/** Validate widget parent page origin against workspace allow-list. */
+export function isParentOriginAllowed(
+  parentOrigin: string | null | undefined,
+  allowed: string[],
+): boolean {
+  if (!parentOrigin || parentOrigin === "*") return false;
+  let origin: string;
+  try {
+    origin = new URL(parentOrigin).origin;
+  } catch {
+    return false;
+  }
+
+  const concrete = allowed.filter((o) => o && o !== "*");
+  if (concrete.length === 0) {
+    // Allow-list not configured yet — permit embed (operators should set origins).
+    return true;
+  }
+  return concrete.includes(origin);
 }
 
 export function optionsResponse(origin: string | null, allowed: string[]) {

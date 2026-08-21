@@ -1,7 +1,6 @@
 import type { LeadStatus } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
-import { getKnowledgeOverview } from "@/lib/knowledge/queries";
 import { getAnalyticsSnapshot } from "@/services/analytics/analytics-service";
 import { getUsageSnapshot } from "@/services/billing/usage-service";
 
@@ -11,10 +10,44 @@ export type SetupStep = {
   href: string;
 };
 
+/** Lightweight knowledge stats for the overview — no document list. */
+async function getKnowledgeSummary(workspaceId: string) {
+  const website = await prisma.website.findFirst({
+    where: { workspaceId },
+    orderBy: { createdAt: "asc" },
+    select: { id: true, url: true, status: true },
+  });
+
+  const [documentCount, chunkCount, latestJob] = await Promise.all([
+    prisma.knowledgeDocument.count({
+      where: { workspaceId, type: "WEBSITE_PAGE" },
+    }),
+    prisma.knowledgeChunk.count({ where: { workspaceId } }),
+    website
+      ? prisma.crawlJob.findFirst({
+          where: { websiteId: website.id, workspaceId },
+          orderBy: { createdAt: "desc" },
+          select: { status: true },
+        })
+      : Promise.resolve(null),
+  ]);
+
+  return {
+    website: website
+      ? {
+          url: website.url,
+          status: latestJob?.status ?? website.status,
+        }
+      : null,
+    documentCount,
+    chunkCount,
+  };
+}
+
 export type DashboardOverview = {
   analytics: Awaited<ReturnType<typeof getAnalyticsSnapshot>>;
   usage: Awaited<ReturnType<typeof getUsageSnapshot>>;
-  knowledge: Awaited<ReturnType<typeof getKnowledgeOverview>>;
+  knowledge: Awaited<ReturnType<typeof getKnowledgeSummary>>;
   counts: {
     faqs: number;
     services: number;
@@ -71,7 +104,7 @@ export async function getDashboardOverview(
   ] = await Promise.all([
     getAnalyticsSnapshot(workspaceId, 30),
     getUsageSnapshot(workspaceId),
-    getKnowledgeOverview(workspaceId),
+    getKnowledgeSummary(workspaceId),
     prisma.fAQ.count({ where: { workspaceId } }),
     prisma.service.count({ where: { workspaceId } }),
     prisma.knowledgeDocument.count({
@@ -143,7 +176,9 @@ export async function getDashboardOverview(
   ]);
 
   const websiteCrawled =
-    knowledge.website?.status === "READY" && knowledge.documentCount > 0;
+    knowledge.documentCount > 0 &&
+    (knowledge.website?.status === "READY" ||
+      knowledge.website?.status === "COMPLETED");
   const widgetLive = Boolean(widget?.lastLoadedAt);
 
   const setupSteps: SetupStep[] = [

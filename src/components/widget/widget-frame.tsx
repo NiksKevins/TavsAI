@@ -95,7 +95,9 @@ export function WidgetFrame({
       if (typeof window === "undefined") return;
       window.parent.postMessage(
         { source: "tavswebs-bot", widgetId: publicKey, ...payload },
-        parentOrigin || "*",
+        parentOrigin && parentOrigin !== "*"
+          ? parentOrigin
+          : window.location.origin,
       );
     },
     [parentOrigin, publicKey],

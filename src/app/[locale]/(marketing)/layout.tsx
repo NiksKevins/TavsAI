@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { MarketingSiteChat } from "@/components/marketing/marketing-site-chat";
+import { CookieNotice } from "@/components/marketing/cookie-notice";
 
 function resolveSiteUrl(): URL {
   const configured = process.env.NEXT_PUBLIC_APP_URL?.trim();
@@ -65,6 +66,7 @@ export default function MarketingLayout({
       <main className="flex-1 pt-[4.25rem] sm:pt-[4.5rem]">{children}</main>
       <SiteFooter />
       <MarketingSiteChat />
+      <CookieNotice />
     </div>
   );
 }

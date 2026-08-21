@@ -257,7 +257,9 @@
       "demo": "Demo",
       "pricing": "Cenas",
       "start": "Sākt",
-      "login": "Ieiet"
+      "login": "Ieiet",
+      "privacy": "Privātums",
+      "cookies": "Sīkdatnes"
     }
   },
   "pricing": {
@@ -322,7 +324,8 @@
       "signin_failed": "Neizdevās pieteikties. Mēģiniet vēlreiz.",
       "invalid_credentials": "Nepareizs e-pasts vai parole.",
       "invalid_token": "Atiestatīšanas saite nav derīga vai ir beigusies.",
-      "service_unavailable": "Pakalpojums īslaicīgi nav pieejams. Mēģiniet vēlāk."
+      "service_unavailable": "Pakalpojums īslaicīgi nav pieejams. Mēģiniet vēlāk.",
+      "rate_limited": "Pārāk daudz mēģinājumu. Uzgaidiet un mēģiniet vēlreiz."
     }
   },
   "onboarding": {
@@ -1314,6 +1317,37 @@
         "plan": "Plāns",
         "assistant": "AI asistents",
         "commission": "Nopelnīts"
+      }
+    }
+  },
+  "legal": {
+    "privacyTitle": "Privātuma politika",
+    "cookiesTitle": "Sīkdatņu politika",
+    "bannerTitle": "Sīkdatnes",
+    "bannerBody": "Mēs izmantojam nepieciešamās sīkdatnes, lai nodrošinātu pierakstīšanos un valodas izvēli. Maksājumus apstrādā Stripe — kartes dati netiek glabāti pie mums.",
+    "bannerAccept": "Saprotu",
+    "bannerPrivacy": "Privātums",
+    "privacyIntro": "TavsWebs Bot (bot.tavswebs.com) apstrādā datus, lai sniegtu AI čata un leadu pakalpojumu Latvijas uzņēmumiem.",
+    "sections": {
+      "controller": {
+        "title": "Pārzinis / Controller",
+        "body": "Pakalpojumu sniedz TavsWebs. Kontakti: caur bot.tavswebs.com kontu vai tavswebs.com."
+      },
+      "data": {
+        "title": "Kādus datus apstrādājam",
+        "body": "Konta dati (vārds, e-pasts), darba vietas saturs, čata sarunas, leadi (vārds, tālrunis, e-pasts), norēķinu statuss no Stripe, un tehniskie žurnāli (IP, laiks)."
+      },
+      "payments": {
+        "title": "Maksājumi",
+        "body": "Maksājumus apstrādā Stripe Checkout / Customer Portal. Mēs nesaņemam un neglabājam kartes numurus (PCI). Stripe ir atsevišķs pārzinis kartes datiem."
+      },
+      "retention": {
+        "title": "Glabāšana un tiesības",
+        "body": "Panelī varat eksportēt un dzēst datus. Varat pieprasīt piekļuvi, labošanu vai dzēšanu. Sūdzības: Datu valsts inspekcija (dvi.gov.lv)."
+      },
+      "cookies": {
+        "title": "Sīkdatnes",
+        "body": "Nepieciešamās: sesija (pierakstīšanās) un valoda (NEXT_LOCALE). Mēs neizmantojam reklāmas izsekošanu."
       }
     }
   }

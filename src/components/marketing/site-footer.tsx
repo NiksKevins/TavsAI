@@ -23,6 +23,8 @@ export async function SiteFooter() {
       links: [
         { href: "/pricing" as const, label: t("pricing") },
         { href: "/faq" as const, label: nav("faq") },
+        { href: "/privacy" as const, label: t("privacy") },
+        { href: "/cookies" as const, label: t("cookies") },
       ],
     },
   ] as const;

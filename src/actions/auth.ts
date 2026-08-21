@@ -1,5 +1,4 @@
-"use server";
-
+import { headers } from "next/headers";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -8,12 +7,28 @@ import { signIn, signOut } from "@/auth";
 import { writeAuditLog } from "@/lib/audit";
 import { createWorkspaceForUser } from "@/lib/authz";
 import { prisma } from "@/lib/db";
+import { sendEmail } from "@/lib/email";
 import { hashPassword } from "@/lib/password";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { generateToken, hashToken } from "@/lib/tokens";
 
 export type ActionResult =
   | { ok: true; message?: string }
   | { ok: false; error: string };
+
+async function clientKey(suffix: string) {
+  const h = await headers();
+  const forwarded = h.get("x-forwarded-for");
+  const ip =
+    (forwarded ? forwarded.split(",")[0]?.trim() : null) ||
+    h.get("x-real-ip") ||
+    "unknown";
+  return `auth:${suffix}:${ip}`;
+}
+
+function rateLimitedResult(): ActionResult {
+  return { ok: false, error: "rate_limited" };
+}
 
 const registerSchema = z.object({
   name: z.string().trim().min(2).max(80),
@@ -31,6 +46,13 @@ export async function registerAction(
   _prev: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
+  const rl = checkRateLimit({
+    key: await clientKey("register"),
+    limit: 8,
+    windowMs: 15 * 60_000,
+  });
+  if (!rl.ok) return rateLimitedResult();
+
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
@@ -109,6 +131,13 @@ export async function loginAction(
   _prev: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
+  const rl = checkRateLimit({
+    key: await clientKey("login"),
+    limit: 20,
+    windowMs: 15 * 60_000,
+  });
+  if (!rl.ok) return rateLimitedResult();
+
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -180,6 +209,13 @@ export async function requestPasswordResetAction(
   _prev: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
+  const rl = checkRateLimit({
+    key: await clientKey("forgot"),
+    limit: 5,
+    windowMs: 15 * 60_000,
+  });
+  if (!rl.ok) return rateLimitedResult();
+
   const emailRaw = String(formData.get("email") ?? "")
     .toLowerCase()
     .trim();
@@ -207,15 +243,17 @@ export async function requestPasswordResetAction(
       },
     });
 
-    const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password/${token}`;
+    const base =
+      process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ||
+      "https://bot.tavswebs.com";
+    const resetUrl = `${base}/reset-password/${token}`;
 
-    // Resend integration comes later — log in development only.
-    if (process.env.NODE_ENV === "development") {
-      console.info("[password-reset] DEV reset link:", resetUrl);
-    }
-
-    // When RESEND_API_KEY is present, email delivery will be wired in a later phase.
-    void process.env.RESEND_API_KEY;
+    await sendEmail({
+      to: user.email,
+      subject: "Atiestatīt paroli / Reset password — TavsWebs Bot",
+      text: `Reset your password: ${resetUrl}\n\nThis link expires in 1 hour.`,
+      html: `<p>Atiestatīt paroli / Reset your password:</p><p><a href="${resetUrl}">${resetUrl}</a></p><p>Saite derīga 1 stundu / Link expires in 1 hour.</p>`,
+    });
   }
 
   return { ok: true, message: "reset_sent" };
@@ -230,6 +268,13 @@ export async function resetPasswordAction(
   _prev: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
+  const rl = checkRateLimit({
+    key: await clientKey("reset"),
+    limit: 10,
+    windowMs: 15 * 60_000,
+  });
+  if (!rl.ok) return rateLimitedResult();
+
   const parsed = resetSchema.safeParse({
     token: formData.get("token"),
     password: formData.get("password"),

@@ -49,6 +49,11 @@ describe("widget CORS", () => {
     ]);
     expect(headers.get("Access-Control-Allow-Origin")).toBe("https://shop.lv");
   });
+
+  it("does not reflect Origin when allow-list contains only *", () => {
+    const headers = widgetCorsHeaders("https://evil.example", ["*"]);
+    expect(headers.get("Access-Control-Allow-Origin")).toBeNull();
+  });
 });
 
 describe("upload malware magic", () => {

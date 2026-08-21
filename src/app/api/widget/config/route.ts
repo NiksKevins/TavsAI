@@ -1,3 +1,5 @@
+import { after } from "next/server";
+
 import { prisma } from "@/lib/db";
 import { clientIp, checkRateLimit } from "@/lib/rate-limit";
 import {
@@ -79,13 +81,27 @@ export async function GET(request: Request) {
     );
   }
 
-  await prisma.widgetConfiguration.update({
-    where: { id: widget.id },
-    data: { lastLoadedAt: new Date() },
+  // Do not block the response on analytics writes — keeps config cacheable/fast.
+  const widgetId = widget.id;
+  after(async () => {
+    try {
+      await prisma.widgetConfiguration.update({
+        where: { id: widgetId },
+        data: { lastLoadedAt: new Date() },
+      });
+    } catch (error) {
+      console.error("[widget/config] lastLoadedAt", error);
+    }
   });
 
   const assistant = widget.workspace.assistantConfiguration;
   const locale = widget.workspace.primaryLocale;
+
+  const headers = new Headers(cors);
+  headers.set(
+    "Cache-Control",
+    "public, max-age=30, s-maxage=60, stale-while-revalidate=300",
+  );
 
   return Response.json(
     {
@@ -126,7 +142,8 @@ export async function GET(request: Request) {
           : assistant?.handoffMessageLv ||
             "Varu savienot jūs ar komandu. Lūdzu, atstājiet kontaktus.",
       locale,
+      allowedOrigins: widget.allowedOrigins.filter((o) => o && o !== "*"),
     },
-    { headers: cors },
+    { headers },
   );
 }

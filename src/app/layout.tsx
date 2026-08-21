@@ -11,7 +11,7 @@ const manrope = Manrope({
   subsets: ["latin", "latin-ext"],
   variable: "--font-manrope",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   preload: true,
   adjustFontFallback: true,
 });
@@ -20,7 +20,7 @@ const syne = Syne({
   subsets: ["latin", "latin-ext"],
   variable: "--font-syne",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700"],
   preload: true,
   adjustFontFallback: true,
 });

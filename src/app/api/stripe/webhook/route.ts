@@ -1,9 +1,22 @@
 import { getStripe, hasStripeSecret } from "@/lib/stripe";
+import { clientIp, checkRateLimit } from "@/lib/rate-limit";
 import { handleStripeEvent } from "@/services/billing/webhook-handlers";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const rl = checkRateLimit({
+    key: `stripe-webhook:${clientIp(request)}`,
+    limit: 120,
+    windowMs: 60_000,
+  });
+  if (!rl.ok) {
+    return Response.json(
+      { error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSec) } },
+    );
+  }
+
   if (!hasStripeSecret()) {
     return Response.json({ error: "stripe_not_configured" }, { status: 503 });
   }
