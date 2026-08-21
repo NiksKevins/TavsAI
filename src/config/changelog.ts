@@ -16,6 +16,40 @@ export type ChangelogEntry = {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    id: "2026-08-22-dashboard-polish",
+    date: "2026-08-22",
+    title: {
+      lv: "Ērtāks panelis",
+      en: "Smoother dashboard",
+    },
+    summary: {
+      lv: "Jaunumi kā lapa, ātrāki leadi un skaidrākas integrācijas.",
+      en: "What's new as a page, faster leads, clearer integrations.",
+    },
+    items: [
+      {
+        lv: "Jaunumi tagad ir atsevišķa lapa — vairs ne uznirstošais logs.",
+        en: "What's new is its own page — no more popup.",
+      },
+      {
+        lv: "Leadu tabulā klikšķiniet jebkurā rindas vietā, lai atvērtu detaļas.",
+        en: "Click anywhere on a leads row to open the detail.",
+      },
+      {
+        lv: "Integrācijās oficiālie Google Calendar, Outlook un Calendly logotipi.",
+        en: "Official Google Calendar, Outlook, and Calendly logos on Integrations.",
+      },
+      {
+        lv: "Navigācija grupēta: Darbs, Bots un Konts — sadaļas var sakļaut.",
+        en: "Nav grouped into Work, Bot, and Account — sections collapse.",
+      },
+      {
+        lv: "Tukši „Bez vārda” leadi no handoff vairs netiek radīti bez kontakta.",
+        en: "Empty unnamed handoff leads are no longer created without contact info.",
+      },
+    ],
+  },
+  {
     id: "2026-08-13-leads-chat",
     date: "2026-08-13",
     title: {

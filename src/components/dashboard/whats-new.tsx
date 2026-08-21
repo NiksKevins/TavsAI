@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import Link from "next/link";
 import { Megaphone, Sparkles, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -22,13 +23,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   CHANGELOG,
   LATEST_CHANGELOG_ID,
   WHATS_NEW_STORAGE_KEY,
@@ -37,13 +31,12 @@ import {
 } from "@/config/changelog";
 import { cn } from "@/lib/utils";
 
+const WHATS_NEW_HREF = "/dashboard/whats-new";
+
 type WhatsNewContextValue = {
   ready: boolean;
   hasUnread: boolean;
-  logOpen: boolean;
-  setLogOpen: (open: boolean) => void;
   dismiss: () => void;
-  openLog: () => void;
 };
 
 const WhatsNewContext = createContext<WhatsNewContextValue | null>(null);
@@ -59,7 +52,6 @@ function useWhatsNew() {
 export function WhatsNewProvider({ children }: { children: ReactNode }) {
   const [dismissedVersion, setDismissedVersion] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
-  const [logOpen, setLogOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -79,34 +71,32 @@ export function WhatsNewProvider({ children }: { children: ReactNode }) {
     setDismissedVersion(LATEST_CHANGELOG_ID);
   }, []);
 
-  const openLog = useCallback(() => {
-    setLogOpen(true);
-    dismiss();
-  }, [dismiss]);
-
   const value = useMemo(
     () => ({
       ready,
       hasUnread: ready && dismissedVersion !== LATEST_CHANGELOG_ID,
-      logOpen,
-      setLogOpen,
       dismiss,
-      openLog,
     }),
-    [ready, dismissedVersion, logOpen, dismiss, openLog],
+    [ready, dismissedVersion, dismiss],
   );
 
   return (
-    <WhatsNewContext.Provider value={value}>
-      {children}
-      {logOpen ? (
-        <WhatsNewDialog open={logOpen} onOpenChange={setLogOpen} />
-      ) : null}
-    </WhatsNewContext.Provider>
+    <WhatsNewContext.Provider value={value}>{children}</WhatsNewContext.Provider>
   );
 }
 
-function ChangelogList({
+/** Marks the latest changelog as read when the Jaunumi page mounts. */
+export function WhatsNewMarkRead() {
+  const { dismiss } = useWhatsNew();
+
+  useEffect(() => {
+    dismiss();
+  }, [dismiss]);
+
+  return null;
+}
+
+export function ChangelogList({
   locale,
   entries = CHANGELOG,
 }: {
@@ -148,34 +138,11 @@ function ChangelogList({
   );
 }
 
-function WhatsNewDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const t = useTranslations("dashboard.whatsNew");
-  const locale = useLocale();
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] max-w-lg overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{t("logTitle")}</DialogTitle>
-          <DialogDescription>{t("logSubtitle")}</DialogDescription>
-        </DialogHeader>
-        <ChangelogList locale={locale} />
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 /** First-glance card on Pārskats — newest release only. */
 export function WhatsNewBanner() {
   const t = useTranslations("dashboard.whatsNew");
   const locale = useLocale();
-  const { ready, hasUnread, dismiss, openLog } = useWhatsNew();
+  const { ready, hasUnread, dismiss } = useWhatsNew();
   const latest = CHANGELOG[0];
 
   if (!ready || !hasUnread || !latest) return null;
@@ -211,8 +178,8 @@ export function WhatsNewBanner() {
         </Button>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-2 pt-0">
-        <Button type="button" size="sm" onClick={openLog}>
-          {t("readAll")}
+        <Button type="button" size="sm" asChild>
+          <Link href={WHATS_NEW_HREF}>{t("readAll")}</Link>
         </Button>
         <Button type="button" size="sm" variant="outline" onClick={dismiss}>
           {t("dismiss")}
@@ -222,10 +189,10 @@ export function WhatsNewBanner() {
   );
 }
 
-/** Header control — reopen the full log anytime; badge when unread. */
+/** Header control — opens the full Jaunumi page; badge when unread. */
 export function WhatsNewHeaderButton({ className }: { className?: string }) {
   const t = useTranslations("dashboard.whatsNew");
-  const { ready, hasUnread, openLog } = useWhatsNew();
+  const { ready, hasUnread } = useWhatsNew();
 
   return (
     <Button
@@ -233,17 +200,22 @@ export function WhatsNewHeaderButton({ className }: { className?: string }) {
       variant="outline"
       size="sm"
       className={cn("relative gap-1.5", className)}
-      onClick={openLog}
-      aria-label={t("button")}
+      asChild
     >
-      <Megaphone className="size-3.5" />
-      <span className="hidden sm:inline">{t("button")}</span>
-      {ready && hasUnread ? (
-        <span
-          className="absolute -right-1 -top-1 size-2 rounded-full bg-primary"
-          aria-hidden
-        />
-      ) : null}
+      <Link
+        href={WHATS_NEW_HREF}
+        aria-label={t("button")}
+        className="relative"
+      >
+        <Megaphone className="size-3.5" />
+        <span className="hidden sm:inline">{t("button")}</span>
+        {ready && hasUnread ? (
+          <span
+            className="absolute -right-1 -top-1 size-2 rounded-full bg-primary"
+            aria-hidden
+          />
+        ) : null}
+      </Link>
     </Button>
   );
 }
