@@ -59,18 +59,16 @@ export function widgetCorsHeaders(origin: string | null, allowed: string[]) {
     return headers;
   }
 
+  // Widget iframe is hosted on this app — its same-origin POSTs send
+  // Origin: <APP_URL>. That must never be treated as a foreign embed site.
+  const appOrigin = originFromUrl(process.env.NEXT_PUBLIC_APP_URL);
+  if (appOrigin && origin === appOrigin) {
+    headers.set("Access-Control-Allow-Origin", origin);
+    return headers;
+  }
+
   // Empty allow-list must NOT mean "allow all" (default was open CORS — High risk).
   if (allowed.length === 0) {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
-    if (appUrl) {
-      try {
-        if (origin === new URL(appUrl).origin) {
-          headers.set("Access-Control-Allow-Origin", origin);
-        }
-      } catch {
-        /* ignore */
-      }
-    }
     return headers;
   }
 

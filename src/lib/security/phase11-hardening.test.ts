@@ -50,6 +50,22 @@ describe("widget CORS", () => {
     expect(headers.get("Access-Control-Allow-Origin")).toBe("https://shop.lv");
   });
 
+  it("allows the app origin even when a customer allow-list is set", () => {
+    const prev = process.env.NEXT_PUBLIC_APP_URL;
+    process.env.NEXT_PUBLIC_APP_URL = "https://bot.tavswebs.com";
+    try {
+      const headers = widgetCorsHeaders("https://bot.tavswebs.com", [
+        "https://tavswebs.com",
+      ]);
+      expect(headers.get("Access-Control-Allow-Origin")).toBe(
+        "https://bot.tavswebs.com",
+      );
+      expect(isOriginDenied("https://bot.tavswebs.com", headers)).toBe(false);
+    } finally {
+      process.env.NEXT_PUBLIC_APP_URL = prev;
+    }
+  });
+
   it("does not reflect Origin when allow-list contains only *", () => {
     const headers = widgetCorsHeaders("https://evil.example", ["*"]);
     expect(headers.get("Access-Control-Allow-Origin")).toBeNull();
