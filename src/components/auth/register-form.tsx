@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -88,6 +89,9 @@ export function RegisterForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? (
+              <Loader2 className="size-4 animate-spin" aria-hidden />
+            ) : null}
             {pending ? t("register.submitting") : t("register.submit")}
           </Button>
           <p className="text-center text-sm text-muted-foreground">

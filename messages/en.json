@@ -431,6 +431,7 @@
   },
   "dashboard": {
     "logout": "Log out",
+    "loading": "Loading…",
     "nav": {
       "overview": "Overview",
       "conversations": "Conversations",

@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PendingSubmitButton } from "@/components/ui/pending-submit-button";
 import {
   Table,
   TableBody,
@@ -109,7 +110,10 @@ export default async function LeadsPage({ searchParams }: Props) {
           defaultValue={params.service ?? ""}
           placeholder={t("filters.service")}
         />
-        <Button type="submit">{t("filters.apply")}</Button>
+        <PendingSubmitButton
+          idleLabel={t("filters.apply")}
+          pendingLabel={t("filters.apply")}
+        />
       </form>
 
       {leads.length === 0 ? (

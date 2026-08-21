@@ -5,7 +5,6 @@ import {
   startCheckoutAction,
 } from "@/actions/billing";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PendingSubmitButton } from "@/components/ui/pending-submit-button";
 import { PAID_PLANS, PLANS, type PlanId } from "@/config/plans";
 import type { UsageSnapshot } from "@/services/billing/usage-service";
 
@@ -182,21 +182,28 @@ export function BillingDashboard(props: {
               <div className="flex flex-wrap gap-2 border-t border-border pt-4">
                 {props.hasStripeCustomer ? (
                   <form action={openBillingPortalAction}>
-                    <Button type="submit" variant="outline">
-                      {labels.manageBilling}
-                    </Button>
+                    <PendingSubmitButton
+                      idleLabel={labels.manageBilling}
+                      pendingLabel={labels.manageBilling}
+                      variant="outline"
+                    />
                   </form>
                 ) : null}
                 {props.hasStripeSubscription && !usage.cancelAtPeriodEnd ? (
                   <form action={cancelSubscriptionAction}>
-                    <Button type="submit" variant="outline">
-                      {labels.cancel}
-                    </Button>
+                    <PendingSubmitButton
+                      idleLabel={labels.cancel}
+                      pendingLabel={labels.cancel}
+                      variant="outline"
+                    />
                   </form>
                 ) : null}
                 {usage.cancelAtPeriodEnd && props.hasStripeSubscription ? (
                   <form action={resumeSubscriptionAction}>
-                    <Button type="submit">{labels.resume}</Button>
+                    <PendingSubmitButton
+                      idleLabel={labels.resume}
+                      pendingLabel={labels.resume}
+                    />
                   </form>
                 ) : null}
               </div>
@@ -236,9 +243,11 @@ export function BillingDashboard(props: {
                     ) : props.canManage && props.stripeConfigured && isPaid ? (
                       <form action={startCheckoutAction}>
                         <input type="hidden" name="planId" value={planId} />
-                        <Button type="submit" size="sm">
-                          {labels.upgrade}
-                        </Button>
+                        <PendingSubmitButton
+                          idleLabel={labels.upgrade}
+                          pendingLabel={labels.upgrade}
+                          size="sm"
+                        />
                       </form>
                     ) : null}
                   </div>

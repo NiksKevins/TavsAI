@@ -431,6 +431,7 @@
   },
   "dashboard": {
     "logout": "Iziet",
+    "loading": "Ielādē…",
     "nav": {
       "overview": "Pārskats",
       "conversations": "Sarunas",

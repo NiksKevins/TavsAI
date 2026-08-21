@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useActionState } from "react";
@@ -19,10 +20,10 @@ import { Label } from "@/components/ui/label";
 
 export function LoginForm() {
   const t = useTranslations("auth");
-  const [state, formAction, pending] = useActionState<ActionResult | null, FormData>(
-    loginAction,
-    null,
-  );
+  const [state, formAction, pending] = useActionState<
+    ActionResult | null,
+    FormData
+  >(loginAction, null);
 
   return (
     <Card>
@@ -40,6 +41,7 @@ export function LoginForm() {
               type="email"
               autoComplete="email"
               required
+              disabled={pending}
             />
           </div>
           <div className="space-y-2">
@@ -59,6 +61,7 @@ export function LoginForm() {
               autoComplete="current-password"
               required
               minLength={8}
+              disabled={pending}
             />
           </div>
           {state && !state.ok ? (
@@ -69,6 +72,9 @@ export function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? (
+              <Loader2 className="size-4 animate-spin" aria-hidden />
+            ) : null}
             {pending ? t("login.submitting") : t("login.submit")}
           </Button>
           <p className="text-center text-sm text-muted-foreground">
