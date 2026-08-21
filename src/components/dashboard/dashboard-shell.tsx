@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import { logoutAction } from "@/actions/auth";
+import { BrandLockup } from "@/components/brand/tavswebs-logo";
 import {
   WhatsNewHeaderButton,
   WhatsNewProvider,
@@ -207,19 +208,16 @@ export function DashboardShell({
             open ? "translate-x-0" : "-translate-x-full",
           )}
         >
-          <div className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
-            <div>
-              <p className="font-display text-sm font-semibold leading-none">
-                TavsWebs Bot
-              </p>
-              <p className="mt-1 truncate text-xs text-muted-foreground">
-                {workspace.name}
-              </p>
-            </div>
+          <div className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-border px-4">
+            <BrandLockup
+              className="min-w-0 flex-1"
+              subtitle={workspace.name}
+              markClassName="size-8"
+            />
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="shrink-0 lg:hidden"
               onClick={() => setOpen(false)}
               aria-label="Close"
             >

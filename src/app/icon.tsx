@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-/** App favicon — geometric chat mark on TavsWebs navy. */
+/** App favicon — chat mark + live pulse on TavsWebs navy. */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -14,43 +14,69 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a1220",
-          borderRadius: 8,
+          background: "#0A1220",
+          borderRadius: 9,
           position: "relative",
         }}
       >
         <div
           style={{
             display: "flex",
-            width: 18,
-            height: 13,
+            width: 16,
+            height: 12,
             borderRadius: 5,
-            background: "#ffffff",
-            marginTop: -2,
+            background: "#FFFFFF",
+            marginTop: -3,
+            marginLeft: -1,
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: 6,
-            left: 8,
+            bottom: 5,
+            left: 7,
             width: 6,
             height: 6,
-            background: "#ffffff",
+            background: "#FFFFFF",
             transform: "rotate(45deg)",
+            borderRadius: 1,
           }}
         />
         <div
           style={{
             position: "absolute",
-            top: 6,
-            right: 5,
-            width: 7,
-            height: 7,
+            top: 4,
+            right: 4,
+            width: 10,
+            height: 10,
             borderRadius: 999,
-            background: "#3b82f6",
+            background: "#0A1220",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <div
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: 999,
+              background: "#3B82F6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: 2.5,
+                height: 2.5,
+                borderRadius: 999,
+                background: "#FFFFFF",
+              }}
+            />
+          </div>
+        </div>
       </div>
     ),
     { ...size },

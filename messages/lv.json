@@ -459,7 +459,8 @@
       "readAll": "Skatīt visu",
       "dismiss": "Aizvērt",
       "logTitle": "Jaunumi",
-      "logSubtitle": "Īsi — kas mainījies."
+      "logSubtitle": "Īsi — kas mainījies.",
+      "moreCount": "+{count} vēl"
     },
     "overview": {
       "title": "Pārskats",

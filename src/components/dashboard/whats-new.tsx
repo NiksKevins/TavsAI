@@ -10,18 +10,12 @@ import {
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import { Megaphone, Sparkles, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Megaphone, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   CHANGELOG,
   LATEST_CHANGELOG_ID,
@@ -81,7 +75,10 @@ export function WhatsNewProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <WhatsNewContext.Provider value={value}>{children}</WhatsNewContext.Provider>
+    <WhatsNewContext.Provider value={value}>
+      {children}
+      <WhatsNewPopup />
+    </WhatsNewContext.Provider>
   );
 }
 
@@ -138,54 +135,113 @@ export function ChangelogList({
   );
 }
 
-/** First-glance card on Pārskats — newest release only. */
-export function WhatsNewBanner() {
+/** Bottom-right preview when there is an unread release. */
+function WhatsNewPopup() {
   const t = useTranslations("dashboard.whatsNew");
   const locale = useLocale();
+  const pathname = usePathname();
   const { ready, hasUnread, dismiss } = useWhatsNew();
+  const [visible, setVisible] = useState(false);
   const latest = CHANGELOG[0];
 
-  if (!ready || !hasUnread || !latest) return null;
+  const onWhatsNewPage = pathname?.includes("/whats-new") ?? false;
+
+  useEffect(() => {
+    if (!ready || !hasUnread || !latest || onWhatsNewPage) {
+      setVisible(false);
+      return;
+    }
+    const id = window.setTimeout(() => setVisible(true), 450);
+    return () => window.clearTimeout(id);
+  }, [ready, hasUnread, latest, onWhatsNewPage]);
+
+  if (!ready || !hasUnread || !latest || onWhatsNewPage || !visible) {
+    return null;
+  }
+
+  const previewItems = latest.items.slice(0, 3);
 
   return (
-    <Card className="border-primary/25 bg-primary/[0.04]">
-      <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0 pb-3">
-        <div className="flex items-start gap-3">
-          <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
-            <Sparkles className="size-4" />
-          </div>
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <CardTitle className="text-base">{t("badge")}</CardTitle>
-              <Badge variant="secondary" className="font-normal">
-                {latest.date}
-              </Badge>
+    <aside
+      role="status"
+      aria-live="polite"
+      className={cn(
+        "fixed bottom-4 right-4 z-50 w-[min(100vw-2rem,22rem)]",
+        "animate-in fade-in slide-in-from-bottom-4 duration-300",
+      )}
+    >
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_16px_48px_-12px_rgba(15,23,42,0.28)]">
+        <div className="flex items-start justify-between gap-3 border-b border-border/80 bg-primary/[0.04] px-4 py-3">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Megaphone className="size-4" />
             </div>
-            <CardDescription className="mt-1.5 text-sm text-foreground/80">
-              {pickChangelogText(latest.summary, locale)}
-            </CardDescription>
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm font-semibold leading-none">{t("badge")}</p>
+                <Badge variant="secondary" className="font-normal">
+                  {latest.date}
+                </Badge>
+              </div>
+              <p className="mt-1.5 truncate text-sm text-foreground">
+                {pickChangelogText(latest.title, locale)}
+              </p>
+            </div>
           </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-8 shrink-0"
+            onClick={dismiss}
+            aria-label={t("dismiss")}
+          >
+            <X className="size-4" />
+          </Button>
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="shrink-0"
-          onClick={dismiss}
-          aria-label={t("dismiss")}
-        >
-          <X className="size-4" />
-        </Button>
-      </CardHeader>
-      <CardContent className="flex flex-wrap gap-2 pt-0">
-        <Button type="button" size="sm" asChild>
-          <Link href={WHATS_NEW_HREF}>{t("readAll")}</Link>
-        </Button>
-        <Button type="button" size="sm" variant="outline" onClick={dismiss}>
-          {t("dismiss")}
-        </Button>
-      </CardContent>
-    </Card>
+
+        <div className="space-y-3 px-4 py-3">
+          <p className="text-sm text-muted-foreground">
+            {pickChangelogText(latest.summary, locale)}
+          </p>
+          <ul className="space-y-2">
+            {previewItems.map((item, i) => (
+              <li
+                key={`${latest.id}-preview-${i}`}
+                className="flex gap-2 text-sm text-foreground/85"
+              >
+                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                <span>{pickChangelogText(item, locale)}</span>
+              </li>
+            ))}
+          </ul>
+          {latest.items.length > previewItems.length ? (
+            <p className="text-xs text-muted-foreground">
+              {t("moreCount", {
+                count: latest.items.length - previewItems.length,
+              })}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="flex gap-2 border-t border-border/80 px-4 py-3">
+          <Button type="button" size="sm" className="flex-1" asChild>
+            <Link href={WHATS_NEW_HREF} onClick={dismiss}>
+              {t("readAll")}
+            </Link>
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="flex-1"
+            onClick={dismiss}
+          >
+            {t("dismiss")}
+          </Button>
+        </div>
+      </div>
+    </aside>
   );
 }
 

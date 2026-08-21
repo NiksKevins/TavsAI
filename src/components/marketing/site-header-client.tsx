@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
+import { BrandMark } from "@/components/brand/tavswebs-logo";
 import { LocaleSwitcher } from "@/components/marketing/locale-switcher";
 import { Button } from "@/components/ui/button";
 import { Link as LocaleLink } from "@/i18n/navigation";
@@ -54,9 +55,10 @@ export function SiteHeaderClient({
       >
         <LocaleLink
           href="/"
-          className="min-w-0 shrink font-display text-[14px] font-semibold tracking-[-0.02em] text-foreground sm:text-[15px] md:text-base"
+          className="flex min-w-0 shrink items-center gap-2 font-display text-[14px] font-semibold tracking-[-0.02em] text-foreground sm:text-[15px] md:text-base"
           onClick={() => setOpen(false)}
         >
+          <BrandMark className="size-7 sm:size-8" title={labels.brand} />
           <span className="truncate">{labels.brand}</span>
         </LocaleLink>
 
@@ -161,13 +163,16 @@ export function SiteHeaderClient({
                 />
 
                 <div className="relative flex items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
-                  <div>
-                    <DialogPrimitive.Title className="font-display text-lg font-semibold tracking-tight text-white">
-                      {labels.brand}
-                    </DialogPrimitive.Title>
-                    <DialogPrimitive.Description className="mt-0.5 text-[11px] uppercase tracking-[0.2em] text-slate-400">
-                      {labels.menuTitle}
-                    </DialogPrimitive.Description>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <BrandMark className="size-9" title={labels.brand} />
+                    <div className="min-w-0">
+                      <DialogPrimitive.Title className="font-display text-lg font-semibold tracking-tight text-white">
+                        {labels.brand}
+                      </DialogPrimitive.Title>
+                      <DialogPrimitive.Description className="mt-0.5 text-[11px] uppercase tracking-[0.2em] text-slate-400">
+                        {labels.menuTitle}
+                      </DialogPrimitive.Description>
+                    </div>
                   </div>
                   <DialogPrimitive.Close
                     className={cn(

@@ -14,52 +14,68 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a1220",
-          borderRadius: 40,
+          background: "#0A1220",
+          borderRadius: 42,
+          position: "relative",
         }}
       >
         <div
           style={{
             display: "flex",
-            position: "relative",
-            width: 96,
-            height: 96,
+            width: 88,
+            height: 64,
+            borderRadius: 22,
+            background: "#FFFFFF",
+            marginTop: -14,
+            marginLeft: -6,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 38,
+            left: 48,
+            width: 28,
+            height: 28,
+            background: "#FFFFFF",
+            transform: "rotate(45deg)",
+            borderRadius: 4,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 28,
+            right: 28,
+            width: 48,
+            height: 48,
+            borderRadius: 999,
+            background: "#0A1220",
+            display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
           <div
             style={{
-              width: 88,
-              height: 64,
-              borderRadius: 22,
-              background: "#ffffff",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 8,
-              left: 18,
-              width: 22,
-              height: 22,
-              background: "#ffffff",
-              transform: "rotate(45deg)",
-              borderRadius: 4,
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: 22,
-              right: 10,
-              width: 22,
-              height: 22,
+              width: 34,
+              height: 34,
               borderRadius: 999,
-              background: "#3b82f6",
-              border: "4px solid #0a1220",
+              background: "#3B82F6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            <div
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 999,
+                background: "#FFFFFF",
+              }}
+            />
+          </div>
         </div>
       </div>
     ),

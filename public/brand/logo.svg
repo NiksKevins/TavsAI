@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" fill="none" role="img" aria-label="TavsWebs Bot">
+  <rect width="32" height="32" y="4" rx="9" fill="#0A1220"/>
+  <path
+    fill="#FFFFFF"
+    d="M8 14c0-1.657 1.343-3 3-3h10c1.657 0 3 1.343 3 3v7.5c0 1.657-1.343 3-3 3h-4.85L11.2 28.2c-.45.35-1.1.03-1.1-.5V24.5H11c-1.657 0-3-1.343-3-3V14z"
+  />
+  <circle cx="23" cy="13" r="5" fill="#0A1220"/>
+  <circle cx="23" cy="13" r="3.6" fill="#3B82F6"/>
+  <circle cx="23" cy="13" r="1.35" fill="#FFFFFF"/>
+  <text
+    x="44"
+    y="26"
+    fill="#0F172A"
+    font-family="Syne, Manrope, ui-sans-serif, system-ui, sans-serif"
+    font-size="18"
+    font-weight="700"
+    letter-spacing="-0.03em"
+  >TavsWebs Bot</text>
+</svg>

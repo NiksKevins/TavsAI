@@ -455,11 +455,12 @@
     },
     "whatsNew": {
       "badge": "What's new",
-      "button": "Update",
+      "button": "News",
       "readAll": "See all",
       "dismiss": "Dismiss",
       "logTitle": "What's new",
-      "logSubtitle": "Short — what changed."
+      "logSubtitle": "Short — what changed.",
+      "moreCount": "+{count} more"
     },
     "overview": {
       "title": "Overview",

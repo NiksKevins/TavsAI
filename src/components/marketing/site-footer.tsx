@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+import { BrandMark } from "@/components/brand/tavswebs-logo";
 import { MarketingContainer } from "@/components/marketing/marketing-ui";
 import { Link as LocaleLink } from "@/i18n/navigation";
 
@@ -40,8 +41,9 @@ export async function SiteFooter() {
         <div>
           <LocaleLink
             href="/"
-            className="font-display text-xl font-semibold text-text-on-dark transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2.5 font-display text-xl font-semibold text-text-on-dark transition-opacity hover:opacity-90"
           >
+            <BrandMark className="size-8" />
             {home("brand")}
           </LocaleLink>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">{t("tagline")}</p>
