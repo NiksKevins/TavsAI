@@ -1,4 +1,13 @@
 import Link from "next/link";
+import {
+  Bot,
+  HelpCircle,
+  MessageSquareWarning,
+  Sparkles,
+  Target,
+  TrendingUp,
+  UserRound,
+} from "lucide-react";
 
 import {
   ConversionBarChart,
@@ -14,10 +23,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { AnalyticsSnapshot } from "@/services/analytics/analytics-service";
+import type { BusinessInsight } from "@/services/analytics/insights";
+import { cn } from "@/lib/utils";
 
 export function AnalyticsDashboard(props: {
   snapshot: AnalyticsSnapshot;
-  insight: string | null;
+  insight: BusinessInsight | null;
   locale: "lv" | "en";
   labels: {
     title: string;
@@ -46,7 +57,7 @@ export function AnalyticsDashboard(props: {
     topics: Record<string, string>;
   };
 }) {
-  const { snapshot: s, labels } = props;
+  const { snapshot: s, labels, insight } = props;
   const pct = (value: number | null) =>
     value == null ? "—" : `${Math.round(value * 100)}%`;
 
@@ -80,16 +91,11 @@ export function AnalyticsDashboard(props: {
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">{labels.insight}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm leading-relaxed text-foreground">
-            {props.insight ?? labels.insightEmpty}
-          </p>
-        </CardContent>
-      </Card>
+      <BusinessInsightCard
+        title={labels.insight}
+        empty={labels.insightEmpty}
+        insight={insight}
+      />
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
         <Metric label={labels.conversations} value={String(s.conversations)} />
@@ -210,6 +216,104 @@ export function AnalyticsDashboard(props: {
           </CardContent>
         </Card>
       </div>
+    </div>
+  );
+}
+
+function BusinessInsightCard({
+  title,
+  empty,
+  insight,
+}: {
+  title: string;
+  empty: string;
+  insight: BusinessInsight | null;
+}) {
+  if (!insight) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">{empty}</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-primary/[0.06] via-card to-card">
+      <CardHeader className="pb-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex size-8 items-center justify-center rounded-md bg-primary/10 text-primary">
+            <Sparkles className="size-4" />
+          </div>
+          <CardTitle className="text-base">{title}</CardTitle>
+          <Badge variant="secondary" className="font-normal">
+            {insight.period}
+          </Badge>
+        </div>
+        <CardDescription className="mt-2 text-sm leading-relaxed text-foreground/85">
+          {insight.summary}
+        </CardDescription>
+      </CardHeader>
+      {insight.highlights.length > 0 ? (
+        <CardContent className="pt-0">
+          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {insight.highlights.map((item) => (
+              <li
+                key={`${item.label}-${item.value}`}
+                className="flex gap-3 rounded-lg border border-border/70 bg-background/80 px-3 py-2.5"
+              >
+                <InsightIcon label={item.label} />
+                <div className="min-w-0">
+                  <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                    {item.label}
+                  </p>
+                  <p className="mt-0.5 text-sm font-semibold leading-snug text-foreground">
+                    {item.value}
+                  </p>
+                  {item.hint ? (
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {item.hint}
+                    </p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      ) : null}
+    </Card>
+  );
+}
+
+function InsightIcon({ label }: { label: string }) {
+  const lower = label.toLowerCase();
+  const Icon =
+    lower.includes("jautāj") || lower.includes("question")
+      ? HelpCircle
+      : lower.includes("lead")
+        ? Target
+        : lower.includes("kvalific") ||
+            lower.includes("qualified") ||
+            lower.includes("won") ||
+            lower.includes("uzvar")
+          ? TrendingUp
+          : lower.includes("nodoš") || lower.includes("handoff")
+            ? UserRound
+            : lower.includes("neatbild") || lower.includes("unanswer")
+              ? MessageSquareWarning
+              : Bot;
+
+  return (
+    <div
+      className={cn(
+        "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground",
+      )}
+    >
+      <Icon className="size-3.5" />
     </div>
   );
 }

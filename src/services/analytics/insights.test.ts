@@ -32,7 +32,7 @@ describe("buildBusinessInsight", () => {
   });
 
   it("mentions real top topics from counts", () => {
-    const text = buildBusinessInsight(
+    const insight = buildBusinessInsight(
       base({
         conversations: 12,
         topQuestions: [
@@ -43,15 +43,20 @@ describe("buildBusinessInsight", () => {
       }),
       "lv",
     );
-    expect(text).toContain("cenu");
-    expect(text).toContain("sestdienas");
-    expect(text).toContain("8");
-    expect(text).toContain("5");
-    expect(text).toContain("75%");
+    expect(insight?.summary).toMatch(/cenu/i);
+    expect(insight?.summary).toMatch(/darba laiku/i);
+    const topics = insight?.highlights.find((h) =>
+      h.label.includes("jautājumi"),
+    );
+    expect(topics?.value).toContain("8");
+    expect(topics?.value).toContain("5");
+    expect(
+      insight?.highlights.some((h) => h.value.includes("75%")),
+    ).toBe(true);
   });
 
   it("does not invent lead numbers", () => {
-    const text = buildBusinessInsight(
+    const insight = buildBusinessInsight(
       base({
         conversations: 4,
         leads: 0,
@@ -59,7 +64,9 @@ describe("buildBusinessInsight", () => {
       }),
       "en",
     );
-    expect(text).toContain("booking");
-    expect(text).not.toMatch(/lead/i);
+    expect(insight?.summary.toLowerCase()).toContain("booking");
+    expect(insight?.highlights.some((h) => /lead/i.test(h.label))).toBe(
+      false,
+    );
   });
 });

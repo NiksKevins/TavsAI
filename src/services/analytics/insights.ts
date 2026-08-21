@@ -4,29 +4,49 @@ import type {
 } from "@/services/analytics/analytics-service";
 
 const TOPIC_LV: Record<Exclude<TopicKey, "other">, string> = {
+  price: "Cena",
+  hours: "Darba laiks",
+  booking: "Pieraksti",
+  location: "Atrašanās vieta",
+  services: "Pakalpojumi",
+};
+
+const TOPIC_LV_ABOUT: Record<Exclude<TopicKey, "other">, string> = {
   price: "cenu",
-  hours: "darba laiku / sestdienas pieejamību",
+  hours: "darba laiku",
   booking: "pierakstiem",
   location: "atrašanās vietu",
   services: "pakalpojumiem",
 };
 
 const TOPIC_EN: Record<Exclude<TopicKey, "other">, string> = {
-  price: "pricing",
-  hours: "opening hours / weekend availability",
-  booking: "booking",
-  location: "location",
-  services: "services",
+  price: "Pricing",
+  hours: "Opening hours",
+  booking: "Booking",
+  location: "Location",
+  services: "Services",
+};
+
+export type InsightHighlight = {
+  label: string;
+  value: string;
+  hint?: string;
+};
+
+export type BusinessInsight = {
+  period: string;
+  summary: string;
+  highlights: InsightHighlight[];
 };
 
 /**
- * Natural-language insight from stored aggregates only.
+ * Structured insight from stored aggregates only.
  * Returns null when there is not enough data — never invents stats.
  */
 export function buildBusinessInsight(
   snapshot: AnalyticsSnapshot,
   locale: "lv" | "en",
-): string | null {
+): BusinessInsight | null {
   const period =
     locale === "lv"
       ? snapshot.range === 7
@@ -37,43 +57,32 @@ export function buildBusinessInsight(
       : snapshot.range === 7
         ? "This week"
         : snapshot.range === 30
-          ? "In the last 30 days"
-          : "In the last 90 days";
+          ? "Last 30 days"
+          : "Last 90 days";
 
   if (snapshot.conversations === 0 && snapshot.leads === 0) {
     return null;
   }
 
-  const parts: string[] = [];
   const topics = snapshot.topQuestions
     .filter((t) => t.topic !== "other" && t.count > 0)
     .slice(0, 2);
 
+  const highlights: InsightHighlight[] = [];
+
   if (topics.length > 0) {
-    const labels = topics.map((t) =>
-      locale === "lv"
-        ? TOPIC_LV[t.topic as Exclude<TopicKey, "other">]
-        : TOPIC_EN[t.topic as Exclude<TopicKey, "other">],
-    );
-    if (locale === "lv") {
-      parts.push(
-        topics.length === 1
-          ? `${period} klienti visbiežāk interesējās par ${labels[0]} (${topics[0].count} jautājumi).`
-          : `${period} klienti visbiežāk interesējās par ${labels[0]} un ${labels[1]} (${topics[0].count} un ${topics[1].count} jautājumi).`,
-      );
-    } else {
-      parts.push(
-        topics.length === 1
-          ? `${period} customers most often asked about ${labels[0]} (${topics[0].count} questions).`
-          : `${period} customers most often asked about ${labels[0]} and ${labels[1]} (${topics[0].count} and ${topics[1].count} questions).`,
-      );
-    }
-  } else if (snapshot.conversations > 0) {
-    parts.push(
-      locale === "lv"
-        ? `${period} bija ${snapshot.conversations} sarunas.`
-        : `${period} there were ${snapshot.conversations} conversations.`,
-    );
+    highlights.push({
+      label: locale === "lv" ? "Biežākie jautājumi" : "Top questions",
+      value: topics
+        .map((t) => {
+          const name =
+            locale === "lv"
+              ? TOPIC_LV[t.topic as Exclude<TopicKey, "other">]
+              : TOPIC_EN[t.topic as Exclude<TopicKey, "other">];
+          return `${name} (${t.count})`;
+        })
+        .join(" · "),
+    });
   }
 
   if (snapshot.leads > 0) {
@@ -81,41 +90,65 @@ export function buildBusinessInsight(
       snapshot.leadConversionRate != null
         ? Math.round(snapshot.leadConversionRate * 100)
         : null;
-    if (locale === "lv") {
-      parts.push(
+    highlights.push({
+      label: locale === "lv" ? "Leadi" : "Leads",
+      value: String(snapshot.leads),
+      hint:
         rate != null
-          ? `Izveidoti ${snapshot.leads} lead${snapshot.leads === 1 ? "s" : "i"} (konversija ${rate}% no sarunām); kvalificēti ${snapshot.qualifiedLeads}, uzvarēti ${snapshot.wonLeads}.`
-          : `Izveidoti ${snapshot.leads} leadi.`,
-      );
-    } else {
-      parts.push(
-        rate != null
-          ? `${snapshot.leads} lead${snapshot.leads === 1 ? "" : "s"} created (${rate}% conversion from conversations); ${snapshot.qualifiedLeads} qualified, ${snapshot.wonLeads} won.`
-          : `${snapshot.leads} leads created.`,
-      );
-    }
+          ? locale === "lv"
+            ? `${rate}% no sarunām`
+            : `${rate}% of chats`
+          : undefined,
+    });
+    highlights.push({
+      label: locale === "lv" ? "Kvalificēti / uzvarēti" : "Qualified / won",
+      value: `${snapshot.qualifiedLeads} / ${snapshot.wonLeads}`,
+    });
   }
 
-  if (snapshot.humanHandoffs > 0 || snapshot.unansweredCount > 0) {
-    if (locale === "lv") {
-      parts.push(
-        `Cilvēka nodošanas: ${snapshot.humanHandoffs}. Neatbildēti / rezerves gadījumi: ${snapshot.unansweredCount}.`,
-      );
-    } else {
-      parts.push(
-        `Human handoffs: ${snapshot.humanHandoffs}. Unanswered / fallback cases: ${snapshot.unansweredCount}.`,
-      );
-    }
+  if (snapshot.humanHandoffs > 0) {
+    highlights.push({
+      label: locale === "lv" ? "Nodošanas cilvēkam" : "Human handoffs",
+      value: String(snapshot.humanHandoffs),
+    });
+  }
+
+  if (snapshot.unansweredCount > 0) {
+    highlights.push({
+      label: locale === "lv" ? "Neatbildēti" : "Unanswered",
+      value: String(snapshot.unansweredCount),
+      hint: locale === "lv" ? "rezerves atbildes" : "fallback replies",
+    });
   }
 
   if (snapshot.aiResolutionRate != null && snapshot.conversations > 0) {
-    const pct = Math.round(snapshot.aiResolutionRate * 100);
-    parts.push(
-      locale === "lv"
-        ? `AI atrisināšanas rādītājs: ${pct}%.`
-        : `AI resolution rate: ${pct}%.`,
-    );
+    highlights.push({
+      label: locale === "lv" ? "AI atrisināšana" : "AI resolution",
+      value: `${Math.round(snapshot.aiResolutionRate * 100)}%`,
+    });
   }
 
-  return parts.length ? parts.join(" ") : null;
+  let summary: string;
+  if (topics.length > 0) {
+    const names = topics.map((t) =>
+      locale === "lv"
+        ? TOPIC_LV_ABOUT[t.topic as Exclude<TopicKey, "other">]
+        : TOPIC_EN[t.topic as Exclude<TopicKey, "other">].toLowerCase(),
+    );
+    summary =
+      locale === "lv"
+        ? topics.length === 1
+          ? `${period} klienti visbiežāk jautāja par ${names[0]}.`
+          : `${period} klienti visbiežāk jautāja par ${names[0]} un ${names[1]}.`
+        : topics.length === 1
+          ? `${period}, customers most often asked about ${names[0]}.`
+          : `${period}, customers most often asked about ${names[0]} and ${names[1]}.`;
+  } else {
+    summary =
+      locale === "lv"
+        ? `${period} bija ${snapshot.conversations} sarunas.`
+        : `${period}: ${snapshot.conversations} conversations.`;
+  }
+
+  return { period, summary, highlights };
 }
