@@ -2,6 +2,7 @@ import {
   cancelSubscriptionAction,
   openBillingPortalAction,
   resumeSubscriptionAction,
+  startAddPaymentMethodAction,
   startCheckoutAction,
 } from "@/actions/billing";
 import { Badge } from "@/components/ui/badge";
@@ -28,11 +29,13 @@ export type BillingInvoice = {
 };
 
 export type BillingPaymentMethod = {
+  id: string;
   brand: string | null;
   last4: string | null;
   expMonth: number | null;
   expYear: number | null;
-} | null;
+  isDefault: boolean;
+};
 
 export type BillingLabels = {
   title: string;
@@ -47,7 +50,9 @@ export type BillingLabels = {
   paymentMethod: string;
   noPaymentMethod: string;
   paymentMethodHint: string;
-  addOrUpdateCard: string;
+  addCard: string;
+  manageCards: string;
+  defaultCard: string;
   invoices: string;
   noInvoices: string;
   changePlan: string;
@@ -62,6 +67,7 @@ export type BillingLabels = {
   cancelPending: string;
   stripeMissing: string;
   conversations: string;
+  conversationsPerMonth: string;
   status: string;
   download: string;
   view: string;
@@ -70,13 +76,14 @@ export type BillingLabels = {
   flashCanceled: string;
   flashCanceledPending: string;
   flashResumed: string;
+  flashCardAdded: string;
 };
 
 export function BillingDashboard(props: {
   usage: UsageSnapshot;
   hasStripeCustomer: boolean;
   hasStripeSubscription: boolean;
-  paymentMethod: BillingPaymentMethod;
+  paymentMethods: BillingPaymentMethod[];
   invoices: BillingInvoice[];
   stripeConfigured: boolean;
   canManage: boolean;
@@ -149,37 +156,58 @@ export function BillingDashboard(props: {
                 }
               />
               <Stat label={labels.billingCycle} value={periodLabel} />
-              <div className="space-y-1.5">
-                <Stat
-                  label={labels.paymentMethod}
-                  value={
-                    props.paymentMethod?.last4
-                      ? `${props.paymentMethod.brand ?? "Card"} ···· ${props.paymentMethod.last4}`
-                      : labels.noPaymentMethod
-                  }
-                />
-                {!props.paymentMethod?.last4 ? (
-                  <p className="text-xs text-muted-foreground">
-                    {props.hasStripeCustomer
-                      ? labels.addOrUpdateCard
-                      : labels.paymentMethodHint}
-                  </p>
-                ) : null}
-                {props.canManage &&
-                props.stripeConfigured &&
-                props.hasStripeCustomer ? (
-                  <form action={openBillingPortalAction}>
-                    <PendingSubmitButton
-                      idleLabel={
-                        props.paymentMethod?.last4
-                          ? labels.manageBilling
-                          : labels.addOrUpdateCard
-                      }
-                      pendingLabel={labels.manageBilling}
-                      variant="outline"
-                      size="sm"
-                    />
-                  </form>
+              <div className="space-y-2 sm:col-span-1">
+                <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                  {labels.paymentMethod}
+                </div>
+                {props.paymentMethods.length === 0 ? (
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">{labels.noPaymentMethod}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {labels.paymentMethodHint}
+                    </p>
+                  </div>
+                ) : (
+                  <ul className="space-y-1.5">
+                    {props.paymentMethods.map((pm) => (
+                      <li
+                        key={pm.id}
+                        className="flex flex-wrap items-center gap-2 text-sm font-medium"
+                      >
+                        <span>
+                          {formatCardBrand(pm.brand)} ···· {pm.last4}
+                          {pm.expMonth && pm.expYear
+                            ? ` · ${String(pm.expMonth).padStart(2, "0")}/${String(pm.expYear).slice(-2)}`
+                            : ""}
+                        </span>
+                        {pm.isDefault ? (
+                          <Badge variant="secondary" className="font-normal">
+                            {labels.defaultCard}
+                          </Badge>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {props.canManage && props.stripeConfigured ? (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <form action={startAddPaymentMethodAction}>
+                      <PendingSubmitButton
+                        idleLabel={labels.addCard}
+                        pendingLabel={labels.addCard}
+                        variant="outline"
+                        size="sm"
+                      />
+                    </form>
+                    <form action={openBillingPortalAction}>
+                      <PendingSubmitButton
+                        idleLabel={labels.manageCards}
+                        pendingLabel={labels.manageCards}
+                        variant="ghost"
+                        size="sm"
+                      />
+                    </form>
+                  </div>
                 ) : null}
               </div>
             </div>
@@ -257,7 +285,7 @@ export function BillingDashboard(props: {
                         €{plan.priceMonthlyEur}
                         {labels.perMonth} ·{" "}
                         {plan.conversationLimit.toLocaleString()}{" "}
-                        {labels.conversations}
+                        {labels.conversationsPerMonth}
                       </div>
                     </div>
                     {isCurrent ? (
@@ -373,6 +401,11 @@ function formatPeriod(start: Date, end: Date) {
   return `${start.toLocaleDateString(undefined, opts)} – ${end.toLocaleDateString(undefined, opts)}`;
 }
 
+function formatCardBrand(brand: string | null) {
+  if (!brand) return "Card";
+  return brand.charAt(0).toUpperCase() + brand.slice(1);
+}
+
 function flashMessage(flash: string, labels: BillingLabels) {
   switch (flash) {
     case "success":
@@ -385,6 +418,8 @@ function flashMessage(flash: string, labels: BillingLabels) {
       return labels.flashCanceledPending;
     case "resumed":
       return labels.flashResumed;
+    case "card_added":
+      return labels.flashCardAdded;
     default:
       return flash;
   }

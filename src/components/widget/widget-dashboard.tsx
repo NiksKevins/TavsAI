@@ -50,6 +50,7 @@ type Props = {
     leadFormEnabled: boolean;
     isActive: boolean;
     lastLoadedAt: string | null;
+    allowedOrigins: string[];
   };
 };
 
@@ -400,6 +401,19 @@ export function WidgetDashboard({ appUrl, widget }: Props) {
                       name="quickActions"
                       defaultValue={widget.quickActions.join("\n")}
                       rows={5}
+                    />
+                  </Field>
+                  <Field
+                    label={t("config.allowedOrigins")}
+                    hint={t("config.allowedOriginsHint")}
+                    htmlFor="allowedOrigins"
+                  >
+                    <Textarea
+                      id="allowedOrigins"
+                      name="allowedOrigins"
+                      defaultValue={widget.allowedOrigins.join("\n")}
+                      rows={3}
+                      placeholder="https://tavswebs.com"
                     />
                   </Field>
                 </section>

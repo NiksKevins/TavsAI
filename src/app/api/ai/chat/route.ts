@@ -15,6 +15,7 @@ import {
   isHandoffRequest,
   isOriginDenied,
   optionsResponse,
+  resolveWidgetAllowedOrigins,
   widgetCorsHeaders,
 } from "@/lib/widget/security";
 import {
@@ -43,12 +44,21 @@ async function resolveWorkspace(input: {
         workspaceId: true,
         isActive: true,
         allowedOrigins: true,
+        workspace: {
+          select: {
+            businessInformation: { select: { websiteUrl: true } },
+          },
+        },
       },
     });
     if (!widget?.isActive) return null;
     return {
       workspaceId: widget.workspaceId,
-      allowedOrigins: widget.allowedOrigins,
+      allowedOrigins: resolveWidgetAllowedOrigins(
+        widget.allowedOrigins,
+        widget.workspace.businessInformation?.websiteUrl,
+        input.publicKey,
+      ),
     };
   }
 

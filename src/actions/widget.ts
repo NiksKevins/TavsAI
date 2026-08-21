@@ -6,6 +6,7 @@ import { z } from "zod";
 import { writeAuditLog } from "@/lib/audit";
 import { requireWorkspaceRole } from "@/lib/authz";
 import { prisma } from "@/lib/db";
+import { originFromUrl } from "@/lib/widget/security";
 
 export type WidgetActionResult =
   | { ok: true }
@@ -20,6 +21,7 @@ const updateSchema = z.object({
   welcomeMessageLv: z.string().max(500).optional(),
   logoUrl: z.string().url().optional().or(z.literal("")),
   quickActions: z.string().max(500).optional(),
+  allowedOrigins: z.string().max(2000).optional(),
   leadFormEnabled: z.coerce.boolean().optional(),
   isActive: z.coerce.boolean().optional(),
 });
@@ -39,6 +41,7 @@ export async function updateWidgetConfigAction(
     welcomeMessageLv: formData.get("welcomeMessageLv") || undefined,
     logoUrl: formData.get("logoUrl") || "",
     quickActions: formData.get("quickActions") || undefined,
+    allowedOrigins: formData.get("allowedOrigins") || undefined,
     leadFormEnabled: formData.get("leadFormEnabled") === "on",
     isActive: formData.get("isActive") === "on",
   });
@@ -52,6 +55,12 @@ export async function updateWidgetConfigAction(
     .map((s) => s.trim())
     .filter(Boolean)
     .slice(0, 8);
+
+  const allowedOrigins = (parsed.data.allowedOrigins || "")
+    .split(/[\n,]+/)
+    .map((s) => originFromUrl(s.trim()))
+    .filter((o): o is string => Boolean(o))
+    .slice(0, 20);
 
   await prisma.widgetConfiguration.upsert({
     where: { workspaceId: workspace.id },
@@ -68,6 +77,7 @@ export async function updateWidgetConfigAction(
         quickActions.length > 0
           ? quickActions
           : ["Cenas", "Pakalpojumi", "Darba laiks", "Kontakti"],
+      allowedOrigins,
       leadFormEnabled: parsed.data.leadFormEnabled ?? true,
       isActive: parsed.data.isActive ?? true,
     },
@@ -83,6 +93,7 @@ export async function updateWidgetConfigAction(
         quickActions.length > 0
           ? quickActions
           : undefined,
+      allowedOrigins,
       leadFormEnabled: parsed.data.leadFormEnabled ?? true,
       isActive: parsed.data.isActive ?? true,
     },

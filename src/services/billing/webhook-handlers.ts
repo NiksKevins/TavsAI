@@ -99,6 +99,10 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
     });
   }
 
+  if (session.mode === "setup" && customerId) {
+    await ensureDefaultPaymentMethodFromSetup(session, customerId);
+  }
+
   if (subscriptionId) {
     const stripe = getStripe();
     const sub = await stripe.subscriptions.retrieve(subscriptionId);
@@ -115,11 +119,43 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
         metadata: {
           event: "checkout.session.completed",
           sessionId: session.id,
+          mode: session.mode,
           planHint: session.metadata?.planId ?? null,
+          purpose: session.metadata?.purpose ?? null,
         },
       },
     });
   }
+}
+
+/** After setup Checkout, attach card as customer default when none is set. */
+async function ensureDefaultPaymentMethodFromSetup(
+  session: Stripe.Checkout.Session,
+  customerId: string,
+) {
+  const stripe = getStripe();
+  const setupIntentId =
+    typeof session.setup_intent === "string"
+      ? session.setup_intent
+      : session.setup_intent?.id;
+  if (!setupIntentId) return;
+
+  const setupIntent = await stripe.setupIntents.retrieve(setupIntentId);
+  const paymentMethodId =
+    typeof setupIntent.payment_method === "string"
+      ? setupIntent.payment_method
+      : setupIntent.payment_method?.id;
+  if (!paymentMethodId) return;
+
+  const customer = await stripe.customers.retrieve(customerId);
+  if (customer.deleted) return;
+
+  const existingDefault = customer.invoice_settings?.default_payment_method;
+  if (existingDefault) return;
+
+  await stripe.customers.update(customerId, {
+    invoice_settings: { default_payment_method: paymentMethodId },
+  });
 }
 
 async function onSubscriptionDeleted(sub: Stripe.Subscription) {

@@ -5,6 +5,7 @@ import { clientIp, checkRateLimit } from "@/lib/rate-limit";
 import {
   isOriginDenied,
   optionsResponse,
+  resolveWidgetAllowedOrigins,
   widgetCorsHeaders,
 } from "@/lib/widget/security";
 
@@ -59,7 +60,7 @@ export async function GET(request: Request) {
             },
           },
           businessInformation: {
-            select: { displayName: true },
+            select: { displayName: true, websiteUrl: true },
           },
         },
       },
@@ -73,7 +74,12 @@ export async function GET(request: Request) {
     );
   }
 
-  const cors = widgetCorsHeaders(origin, widget.allowedOrigins);
+  const allowedOrigins = resolveWidgetAllowedOrigins(
+    widget.allowedOrigins,
+    widget.workspace.businessInformation?.websiteUrl,
+    widget.publicKey,
+  );
+  const cors = widgetCorsHeaders(origin, allowedOrigins);
   if (isOriginDenied(origin, cors)) {
     return Response.json(
       { error: "origin_not_allowed" },
@@ -142,7 +148,7 @@ export async function GET(request: Request) {
           : assistant?.handoffMessageLv ||
             "Varu savienot jūs ar komandu. Lūdzu, atstājiet kontaktus.",
       locale,
-      allowedOrigins: widget.allowedOrigins.filter((o) => o && o !== "*"),
+      allowedOrigins: allowedOrigins.filter((o) => o && o !== "*"),
     },
     { headers },
   );

@@ -32,12 +32,14 @@ export default async function BillingPage({
   });
 
   const stripeConfigured = hasStripeSecret();
-  let paymentMethod = null as {
+  let paymentMethods: {
+    id: string;
     brand: string | null;
     last4: string | null;
     expMonth: number | null;
     expYear: number | null;
-  } | null;
+    isDefault: boolean;
+  }[] = [];
   let invoices: {
     id: string;
     number: string | null;
@@ -52,24 +54,38 @@ export default async function BillingPage({
   if (stripeConfigured && subscription?.stripeCustomerId) {
     try {
       const stripe = getStripe();
-      const customer = await stripe.customers.retrieve(
-        subscription.stripeCustomerId,
-        { expand: ["invoice_settings.default_payment_method"] },
-      );
+      const customerId = subscription.stripeCustomerId;
+      const customer = await stripe.customers.retrieve(customerId, {
+        expand: ["invoice_settings.default_payment_method"],
+      });
+
+      let defaultPmId: string | null = null;
       if (!customer.deleted) {
-        const pm = customer.invoice_settings?.default_payment_method;
-        if (pm && typeof pm !== "string" && pm.card) {
-          paymentMethod = {
-            brand: pm.card.brand ?? null,
-            last4: pm.card.last4 ?? null,
-            expMonth: pm.card.exp_month ?? null,
-            expYear: pm.card.exp_year ?? null,
-          };
-        }
+        const defaultPm = customer.invoice_settings?.default_payment_method;
+        defaultPmId =
+          typeof defaultPm === "string" ? defaultPm : (defaultPm?.id ?? null);
       }
 
+      const listed = await stripe.paymentMethods.list({
+        customer: customerId,
+        type: "card",
+        limit: 20,
+      });
+
+      paymentMethods = listed.data.map((pm) => ({
+        id: pm.id,
+        brand: pm.card?.brand ?? null,
+        last4: pm.card?.last4 ?? null,
+        expMonth: pm.card?.exp_month ?? null,
+        expYear: pm.card?.exp_year ?? null,
+        isDefault: pm.id === defaultPmId,
+      }));
+
+      // Prefer default first
+      paymentMethods.sort((a, b) => Number(b.isDefault) - Number(a.isDefault));
+
       const list = await stripe.invoices.list({
-        customer: subscription.stripeCustomerId,
+        customer: customerId,
         limit: 12,
       });
       invoices = list.data
@@ -95,13 +111,15 @@ export default async function BillingPage({
     ? "success"
     : first(params.updated)
       ? "updated"
-      : first(params.canceled_pending)
-        ? "canceled_pending"
-        : first(params.canceled)
-          ? "canceled"
-          : first(params.resumed)
-            ? "resumed"
-            : null;
+      : first(params.card_added)
+        ? "card_added"
+        : first(params.canceled_pending)
+          ? "canceled_pending"
+          : first(params.canceled)
+            ? "canceled"
+            : first(params.resumed)
+              ? "resumed"
+              : null;
 
   const errorKey = first(params.error);
   const error =
@@ -114,7 +132,7 @@ export default async function BillingPage({
       usage={usage}
       hasStripeCustomer={Boolean(subscription?.stripeCustomerId)}
       hasStripeSubscription={Boolean(subscription?.stripeSubscriptionId)}
-      paymentMethod={paymentMethod}
+      paymentMethods={paymentMethods}
       invoices={invoices}
       stripeConfigured={stripeConfigured}
       canManage={hasMinimumRole(membership.role, "ADMIN")}
@@ -133,7 +151,9 @@ export default async function BillingPage({
         paymentMethod: t("paymentMethod"),
         noPaymentMethod: t("noPaymentMethod"),
         paymentMethodHint: t("paymentMethodHint"),
-        addOrUpdateCard: t("addOrUpdateCard"),
+        addCard: t("addCard"),
+        manageCards: t("manageCards"),
+        defaultCard: t("defaultCard"),
         invoices: t("invoices"),
         noInvoices: t("noInvoices"),
         changePlan: t("changePlan"),
@@ -148,6 +168,7 @@ export default async function BillingPage({
         cancelPending: t("cancelPending"),
         stripeMissing: t("stripeMissing"),
         conversations: t("conversations"),
+        conversationsPerMonth: t("conversationsPerMonth"),
         status: t("status"),
         download: t("download"),
         view: t("view"),
@@ -156,6 +177,7 @@ export default async function BillingPage({
         flashCanceled: t("flash.canceled"),
         flashCanceledPending: t("flash.canceledPending"),
         flashResumed: t("flash.resumed"),
+        flashCardAdded: t("flash.cardAdded"),
       }}
     />
   );

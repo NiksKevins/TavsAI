@@ -67,7 +67,8 @@ Card for successful test payments: `4242 4242 4242 4242`.
 |--------|-----------|
 | Free → paid | Stripe Checkout (`mode=subscription`) |
 | Upgrade / downgrade | Server updates subscription item + proration |
-| Payment method / invoices | Stripe Customer Portal |
+| Add payment method | Stripe Checkout (`mode=setup`) — no plan change |
+| Manage / remove cards | Stripe Customer Portal |
 | Cancel | `cancel_at_period_end` (or Portal) |
 | Payment failure | `invoice.payment_failed` → `PAST_DUE` + in-app notification |
 

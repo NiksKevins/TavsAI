@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/db";
-import { isParentOriginAllowed } from "@/lib/widget/security";
+import {
+  isParentOriginAllowed,
+  resolveWidgetAllowedOrigins,
+} from "@/lib/widget/security";
 import { WidgetFrame } from "@/components/widget/widget-frame";
 
 type Props = {
@@ -23,7 +26,15 @@ export default async function WidgetFramePage({ searchParams }: Props) {
   const widget = publicKey
     ? await prisma.widgetConfiguration.findUnique({
         where: { publicKey },
-        select: { isActive: true, allowedOrigins: true },
+        select: {
+          isActive: true,
+          allowedOrigins: true,
+          workspace: {
+            select: {
+              businessInformation: { select: { websiteUrl: true } },
+            },
+          },
+        },
       })
     : null;
 
@@ -35,10 +46,13 @@ export default async function WidgetFramePage({ searchParams }: Props) {
     );
   }
 
-  if (
-    parentOrigin &&
-    !isParentOriginAllowed(parentOrigin, widget.allowedOrigins)
-  ) {
+  const allowedOrigins = resolveWidgetAllowedOrigins(
+    widget.allowedOrigins,
+    widget.workspace.businessInformation?.websiteUrl,
+    publicKey,
+  );
+
+  if (parentOrigin && !isParentOriginAllowed(parentOrigin, allowedOrigins)) {
     return (
       <div className="flex h-full items-center justify-center bg-white p-4 text-sm text-slate-600">
         Origin not allowed

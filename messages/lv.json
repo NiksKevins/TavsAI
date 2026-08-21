@@ -894,6 +894,8 @@
       "logoHint": "Neobligāti. Ja tukšs, rādīsim asistenta iniciāli.",
       "quickActions": "Ātrās pogas",
       "quickActionsHint": "Viena poga katrā rindā. Klients ar vienu klikšķi nosūta šo tekstu.",
+      "allowedOrigins": "Atļautās vietnes",
+      "allowedOriginsHint": "Katra rinda — https://jusu-vietne.lv. Biznesa mājaslapas URL tiek iekļauts automātiski.",
       "leads": "Kontaktformas ievākšana",
       "leadsHint": "Rādīt vārda, tālruņa un e-pasta formu, kad trūkst atbildes vai klients vēlas runāt ar cilvēku.",
       "active": "Widget ir ieslēgts",
@@ -1174,7 +1176,10 @@
     "perMonth": "/mēn.",
     "paymentMethod": "Maksājuma metode",
     "noPaymentMethod": "Nav pievienota karte",
-    "paymentMethodHint": "Karte tiek pievienota automātiski, kad izvēlaties maksas plānu (Stripe Checkout).",
+    "paymentMethodHint": "Pievienojiet vienu vai vairākas kartes jebkurā laikā — nav jāmaina plāns.",
+    "addCard": "Pievienot karti",
+    "manageCards": "Pārvaldīt kartes",
+    "defaultCard": "Noklusējums",
     "addOrUpdateCard": "Pievienot vai mainīt karti",
     "invoices": "Rēķini",
     "noInvoices": "Rēķinu vēl nav.",
@@ -1190,6 +1195,7 @@
     "cancelPending": "Atcelšana perioda beigās",
     "stripeMissing": "Stripe vēl nav konfigurēts. Pievienojiet STRIPE_SECRET_KEY un cenu ID, lai ieslēgtu Checkout (der arī test režīms).",
     "conversations": "sarunas",
+    "conversationsPerMonth": "sarunas mēnesī",
     "status": "Statuss",
     "download": "PDF",
     "view": "Skatīt",
@@ -1198,7 +1204,8 @@
       "updated": "Plāns atjaunināts.",
       "canceled": "Checkout atcelts.",
       "canceledPending": "Atcelšana ieplānota perioda beigās.",
-      "resumed": "Abonements atjaunosies kā ierasts."
+      "resumed": "Abonements atjaunosies kā ierasts.",
+      "cardAdded": "Karte pievienota."
     },
     "errors": {
       "stripe_not_configured": "Šajā vidē Stripe nav konfigurēts.",

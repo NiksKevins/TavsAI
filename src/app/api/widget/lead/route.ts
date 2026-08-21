@@ -5,6 +5,7 @@ import { clientIp, checkRateLimit } from "@/lib/rate-limit";
 import {
   isOriginDenied,
   optionsResponse,
+  resolveWidgetAllowedOrigins,
   widgetCorsHeaders,
 } from "@/lib/widget/security";
 import { upsertLead } from "@/services/leads/lead-service";
@@ -53,6 +54,13 @@ export async function POST(request: Request) {
 
   const widget = await prisma.widgetConfiguration.findUnique({
     where: { publicKey: parsed.data.publicKey },
+    include: {
+      workspace: {
+        select: {
+          businessInformation: { select: { websiteUrl: true } },
+        },
+      },
+    },
   });
   if (!widget?.isActive) {
     return Response.json(
@@ -61,7 +69,14 @@ export async function POST(request: Request) {
     );
   }
 
-  const cors = widgetCorsHeaders(origin, widget.allowedOrigins);
+  const cors = widgetCorsHeaders(
+    origin,
+    resolveWidgetAllowedOrigins(
+      widget.allowedOrigins,
+      widget.workspace.businessInformation?.websiteUrl,
+      widget.publicKey,
+    ),
+  );
   if (isOriginDenied(origin, cors)) {
     return Response.json(
       { error: "origin_not_allowed" },

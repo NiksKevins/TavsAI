@@ -33,6 +33,7 @@ export default async function DashboardWidgetPage() {
         leadFormEnabled: widget.leadFormEnabled,
         isActive: widget.isActive,
         lastLoadedAt: widget.lastLoadedAt?.toISOString() ?? null,
+        allowedOrigins: widget.allowedOrigins,
       }}
     />
   );

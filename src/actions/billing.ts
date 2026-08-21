@@ -144,13 +144,20 @@ export async function openBillingPortalAction(): Promise<void> {
   const subscription = await prisma.subscription.findUnique({
     where: { workspaceId: workspace.id },
   });
-  if (!subscription?.stripeCustomerId) {
-    redirect("/dashboard/billing?error=no_customer");
+  if (!subscription) {
+    redirect("/dashboard/billing?error=no_subscription");
   }
 
   const stripe = getStripe();
+  const customerId = await ensureStripeCustomerId({
+    workspaceId: workspace.id,
+    email: user.email,
+    name: workspace.name,
+    stripeCustomerId: subscription.stripeCustomerId,
+  });
+
   const portal = await stripe.billingPortal.sessions.create({
-    customer: subscription.stripeCustomerId,
+    customer: customerId,
     return_url: `${getAppUrl()}/dashboard/billing`,
   });
 
@@ -165,6 +172,60 @@ export async function openBillingPortalAction(): Promise<void> {
   });
 
   redirect(portal.url);
+}
+
+/** Collect a card without changing plan (Stripe Checkout setup mode). */
+export async function startAddPaymentMethodAction(): Promise<void> {
+  const { workspace, user } = await requireWorkspaceRole("ADMIN");
+  if (!hasStripeSecret()) {
+    redirect("/dashboard/billing?error=stripe_not_configured");
+  }
+
+  const subscription = await prisma.subscription.findUnique({
+    where: { workspaceId: workspace.id },
+  });
+  if (!subscription) {
+    redirect("/dashboard/billing?error=no_subscription");
+  }
+
+  const stripe = getStripe();
+  const customerId = await ensureStripeCustomerId({
+    workspaceId: workspace.id,
+    email: user.email,
+    name: workspace.name,
+    stripeCustomerId: subscription.stripeCustomerId,
+  });
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "setup",
+    customer: customerId,
+    currency: "eur",
+    payment_method_types: ["card"],
+    success_url: `${getAppUrl()}/dashboard/billing?card_added=1`,
+    cancel_url: `${getAppUrl()}/dashboard/billing`,
+    client_reference_id: workspace.id,
+    metadata: {
+      workspaceId: workspace.id,
+      purpose: "add_payment_method",
+    },
+  });
+
+  if (!session.url) {
+    redirect("/dashboard/billing?error=checkout_failed");
+  }
+
+  await prisma.auditLog.create({
+    data: {
+      workspaceId: workspace.id,
+      userId: user.id,
+      action: "BILLING",
+      entityType: "CheckoutSession",
+      entityId: session.id,
+      metadata: { purpose: "add_payment_method" },
+    },
+  });
+
+  redirect(session.url);
 }
 
 export async function cancelSubscriptionAction(): Promise<void> {

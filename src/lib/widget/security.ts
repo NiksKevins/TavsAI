@@ -1,5 +1,52 @@
 import { NextResponse } from "next/server";
 
+/** Normalize a URL or origin string to `https://host` form, or null. */
+export function originFromUrl(value: string | null | undefined): string | null {
+  if (!value?.trim()) return null;
+  try {
+    const withProtocol = /^https?:\/\//i.test(value.trim())
+      ? value.trim()
+      : `https://${value.trim()}`;
+    return new URL(withProtocol).origin;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Combine explicit widget allow-list with the business website origin so
+ * the primary site works without a second copy-paste step.
+ */
+export function resolveWidgetAllowedOrigins(
+  allowed: string[],
+  websiteUrl?: string | null,
+  publicKey?: string | null,
+): string[] {
+  const fromList = allowed
+    .map((o) => originFromUrl(o))
+    .filter((o): o is string => Boolean(o));
+  const fromSite = originFromUrl(websiteUrl);
+  const fromFirstParty =
+    publicKey && FIRST_PARTY_WIDGET_ORIGINS[publicKey]
+      ? FIRST_PARTY_WIDGET_ORIGINS[publicKey]
+      : [];
+  return Array.from(
+    new Set([
+      ...fromList,
+      ...(fromSite ? [fromSite] : []),
+      ...fromFirstParty,
+    ]),
+  );
+}
+
+/** First-party marketing embeds (TavsWebs.com ↔ this bot workspace). */
+const FIRST_PARTY_WIDGET_ORIGINS: Record<string, string[]> = {
+  "78080731-2def-414c-aed5-497531cd06d5": [
+    "https://tavswebs.com",
+    "https://www.tavswebs.com",
+  ],
+};
+
 export function widgetCorsHeaders(origin: string | null, allowed: string[]) {
   const headers = new Headers();
   headers.set("Vary", "Origin");

@@ -894,6 +894,8 @@
       "logoHint": "Optional. If empty, we show the assistant initial.",
       "quickActions": "Quick replies",
       "quickActionsHint": "One button per line. A click sends that text as a message.",
+      "allowedOrigins": "Allowed sites",
+      "allowedOriginsHint": "One origin per line — https://your-site.com. Your business website URL is included automatically.",
       "leads": "Collect contact details",
       "leadsHint": "Show name, phone, and email when answers are missing or someone asks for a human.",
       "active": "Widget is on",
@@ -1174,7 +1176,10 @@
     "perMonth": "/mo",
     "paymentMethod": "Payment method",
     "noPaymentMethod": "No card on file",
-    "paymentMethodHint": "A card is added automatically when you choose a paid plan (Stripe Checkout).",
+    "paymentMethodHint": "Add one or more cards anytime — you do not need to change your plan.",
+    "addCard": "Add card",
+    "manageCards": "Manage cards",
+    "defaultCard": "Default",
     "addOrUpdateCard": "Add or update card",
     "invoices": "Invoices",
     "noInvoices": "No invoices yet.",
@@ -1190,6 +1195,7 @@
     "cancelPending": "Cancels at period end",
     "stripeMissing": "Stripe is not configured yet. Add STRIPE_SECRET_KEY and price IDs to enable checkout (test mode is fine).",
     "conversations": "conversations",
+    "conversationsPerMonth": "conversations / month",
     "status": "Status",
     "download": "PDF",
     "view": "View",
@@ -1198,7 +1204,8 @@
       "updated": "Plan updated.",
       "canceled": "Checkout canceled.",
       "canceledPending": "Cancellation scheduled for the end of the billing period.",
-      "resumed": "Subscription will renew as usual."
+      "resumed": "Subscription will renew as usual.",
+      "cardAdded": "Card added."
     },
     "errors": {
       "stripe_not_configured": "Stripe is not configured on this environment.",
