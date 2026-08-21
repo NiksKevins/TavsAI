@@ -10,6 +10,10 @@ import { prisma } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
 import { hashPassword } from "@/lib/password";
 import { checkRateLimit } from "@/lib/rate-limit";
+import {
+  cloudflareClientIp,
+  verifyTurnstileToken,
+} from "@/lib/security/turnstile";
 import { generateToken, hashToken } from "@/lib/tokens";
 
 export type ActionResult =
@@ -18,12 +22,19 @@ export type ActionResult =
 
 async function clientKey(suffix: string) {
   const h = await headers();
-  const forwarded = h.get("x-forwarded-for");
-  const ip =
-    (forwarded ? forwarded.split(",")[0]?.trim() : null) ||
-    h.get("x-real-ip") ||
-    "unknown";
-  return `auth:${suffix}:${ip}`;
+  return `auth:${suffix}:${cloudflareClientIp(h)}`;
+}
+
+async function requireHuman(formData: FormData): Promise<ActionResult | null> {
+  const h = await headers();
+  const verified = await verifyTurnstileToken({
+    token: String(formData.get("cf-turnstile-response") || ""),
+    remoteip: cloudflareClientIp(h),
+  });
+  if (!verified.ok) {
+    return { ok: false, error: verified.error };
+  }
+  return null;
 }
 
 function rateLimitedResult(): ActionResult {
@@ -52,6 +63,9 @@ export async function registerAction(
     windowMs: 15 * 60_000,
   });
   if (!rl.ok) return rateLimitedResult();
+
+  const botCheck = await requireHuman(formData);
+  if (botCheck) return botCheck;
 
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
@@ -138,6 +152,9 @@ export async function loginAction(
   });
   if (!rl.ok) return rateLimitedResult();
 
+  const botCheck = await requireHuman(formData);
+  if (botCheck) return botCheck;
+
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -215,6 +232,9 @@ export async function requestPasswordResetAction(
     windowMs: 15 * 60_000,
   });
   if (!rl.ok) return rateLimitedResult();
+
+  const botCheck = await requireHuman(formData);
+  if (botCheck) return botCheck;
 
   const emailRaw = String(formData.get("email") ?? "")
     .toLowerCase()

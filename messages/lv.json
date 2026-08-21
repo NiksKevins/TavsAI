@@ -325,7 +325,9 @@
       "invalid_credentials": "Nepareizs e-pasts vai parole.",
       "invalid_token": "Atiestatīšanas saite nav derīga vai ir beigusies.",
       "service_unavailable": "Pakalpojums īslaicīgi nav pieejams. Mēģiniet vēlāk.",
-      "rate_limited": "Pārāk daudz mēģinājumu. Uzgaidiet un mēģiniet vēlreiz."
+      "rate_limited": "Pārāk daudz mēģinājumu. Uzgaidiet un mēģiniet vēlreiz.",
+      "turnstile_required": "Apstipriniet, ka neesat robots (Cloudflare).",
+      "turnstile_failed": "Drošības pārbaude neizdevās. Mēģiniet vēlreiz."
     }
   },
   "onboarding": {

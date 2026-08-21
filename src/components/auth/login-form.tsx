@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 
 import { loginAction, type ActionResult } from "@/actions/auth";
+import { TurnstileField } from "@/components/auth/turnstile-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -64,6 +65,7 @@ export function LoginForm() {
               disabled={pending}
             />
           </div>
+          <TurnstileField />
           {state && !state.ok ? (
             <p className="text-sm text-destructive" role="alert">
               {t(`errors.${state.error}`)}

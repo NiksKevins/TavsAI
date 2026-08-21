@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 
 import { registerAction, type ActionResult } from "@/actions/auth";
+import { TurnstileField } from "@/components/auth/turnstile-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -81,6 +82,7 @@ export function RegisterForm() {
               {t("register.referral", { code: referralCode })}
             </p>
           ) : null}
+          <TurnstileField />
           {state && !state.ok ? (
             <p className="text-sm text-destructive" role="alert">
               {t(`errors.${state.error}`)}

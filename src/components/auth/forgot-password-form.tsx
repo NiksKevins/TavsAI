@@ -8,6 +8,7 @@ import {
   requestPasswordResetAction,
   type ActionResult,
 } from "@/actions/auth";
+import { TurnstileField } from "@/components/auth/turnstile-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -45,6 +46,7 @@ export function ForgotPasswordForm() {
               required
             />
           </div>
+          <TurnstileField />
           {state?.ok ? (
             <p className="text-sm text-primary" role="status">
               {t("forgot.sent")}
