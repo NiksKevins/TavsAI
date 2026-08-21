@@ -21,13 +21,16 @@ export async function sendEmail(params: {
 }): Promise<{ ok: boolean; id?: string; skipped?: boolean; error?: string }> {
   const resend = getResend();
   if (!resend) {
+    const message = "RESEND_API_KEY missing";
     if (process.env.NODE_ENV !== "production") {
       console.info("[email] RESEND_API_KEY missing — skipping send", {
         to: params.to,
         subject: params.subject,
       });
+      return { ok: true, skipped: true };
     }
-    return { ok: true, skipped: true };
+    console.error("[email]", message, { to: params.to, subject: params.subject });
+    return { ok: false, skipped: true, error: message };
   }
 
   try {

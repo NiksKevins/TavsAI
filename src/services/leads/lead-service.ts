@@ -156,7 +156,7 @@ export async function upsertLead(
 }
 
 export async function notifyNewLead(lead: Lead) {
-  const [assistant, business, workspace, fields] = await Promise.all([
+  const [assistant, business, workspace, fields, owner] = await Promise.all([
     prisma.assistantConfiguration.findUnique({
       where: { workspaceId: lead.workspaceId },
     }),
@@ -169,13 +169,31 @@ export async function notifyNewLead(lead: Lead) {
       select: { key: true, value: true },
       take: 20,
     }),
+    prisma.workspaceMember.findFirst({
+      where: { workspaceId: lead.workspaceId, role: "OWNER" },
+      orderBy: { createdAt: "asc" },
+      select: { user: { select: { email: true } } },
+    }),
   ]);
 
   const to =
     assistant?.leadNotificationEmail?.trim() ||
     business?.email?.trim() ||
+    owner?.user.email?.trim() ||
     null;
-  if (!to) return;
+  if (!to) {
+    console.warn("[lead/notify] no recipient for workspace", lead.workspaceId);
+    await prisma.notification.create({
+      data: {
+        workspaceId: lead.workspaceId,
+        channel: "EMAIL",
+        title: "Lead email skipped",
+        body: "Nav e-pasta adreses paziņojumam (iestatiet Lead e-pastu vai uzņēmuma e-pastu).",
+        payload: { leadId: lead.id, skipped: true, reason: "no_recipient" },
+      },
+    });
+    return;
+  }
 
   const businessName =
     business?.displayName || workspace?.name || "TavsWebs Bot";
@@ -197,18 +215,40 @@ export async function notifyNewLead(lead: Lead) {
   });
 
   const result = await sendEmail({ to, subject, html, text });
-  if (result.ok) {
+  if (result.ok && !result.skipped) {
     await prisma.notification.create({
       data: {
         workspaceId: lead.workspaceId,
         channel: "EMAIL",
         title: subject,
         body: text,
-        payload: { leadId: lead.id, to, skipped: result.skipped ?? false },
+        payload: { leadId: lead.id, to },
         sentAt: new Date(),
       },
     });
+    return;
   }
+
+  console.error("[lead/notify] email not sent", {
+    leadId: lead.id,
+    to,
+    skipped: result.skipped ?? false,
+    error: result.error,
+  });
+  await prisma.notification.create({
+    data: {
+      workspaceId: lead.workspaceId,
+      channel: "EMAIL",
+      title: subject,
+      body: result.error || "E-pasts netika nosūtīts",
+      payload: {
+        leadId: lead.id,
+        to,
+        skipped: Boolean(result.skipped),
+        error: result.error ?? null,
+      },
+    },
+  });
 }
 
 export async function evaluateConversationForLead(params: {
@@ -366,7 +406,9 @@ export async function evaluateConversationForLead(params: {
     summary: extraction.summary,
     intent: extraction.intent,
     fields: extraction.fields,
-    notify: !existingLead,
+    // Notify on create or when an empty shell first gains contact
+    // (upsertLead also gates on hasContactNow / hadContactBefore).
+    notify: true,
   });
 
   return {

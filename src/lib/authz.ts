@@ -185,6 +185,7 @@ export async function createWorkspaceForUser(params: {
             greetingEn: DEFAULT_ASSISTANT.greetingEn,
             fallbackLv: DEFAULT_ASSISTANT.fallbackLv,
             fallbackEn: DEFAULT_ASSISTANT.fallbackEn,
+            leadNotificationEmail: params.email,
           },
         },
         widgetConfiguration: {

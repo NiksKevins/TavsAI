@@ -17,7 +17,7 @@ import { prisma } from "@/lib/db";
 
 export default async function AssistantPage() {
   const t = await getTranslations("assistantAdmin");
-  const { workspace } = await requireWorkspace();
+  const { workspace, user } = await requireWorkspace();
 
   const assistant =
     (await prisma.assistantConfiguration.findUnique({
@@ -33,6 +33,7 @@ export default async function AssistantPage() {
         fallbackEn: DEFAULT_ASSISTANT.fallbackEn,
         languageMode: "auto",
         handoffTriggers: DEFAULT_HANDOFF_TRIGGERS,
+        leadNotificationEmail: user.email,
       },
     }));
 
