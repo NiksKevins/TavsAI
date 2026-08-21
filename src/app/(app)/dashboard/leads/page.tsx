@@ -139,33 +139,40 @@ export default async function LeadsPage({ searchParams }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {leads.map((lead) => (
-                <TableRow key={lead.id}>
-                  <TableCell>
-                    <Link
-                      href={`/dashboard/leads/${lead.id}`}
-                      className="font-medium text-primary hover:underline"
-                    >
-                      {lead.name || lead.phone || lead.email || t("unnamed")}
-                    </Link>
-                    <div className="text-xs text-muted-foreground">
-                      {[lead.phone, lead.email].filter(Boolean).join(" · ")}
-                    </div>
-                  </TableCell>
-                  <TableCell>{lead.service || "—"}</TableCell>
-                  <TableCell>
-                    <Badge variant={statusVariant(lead.status)}>
-                      {t(`status.${lead.status}`)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {lead.source || "—"}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap text-muted-foreground">
-                    {formatLeadDate(lead.updatedAt)}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {leads.map((lead) => {
+                const label =
+                  lead.name || lead.phone || lead.email || t("unnamed");
+                return (
+                  <TableRow
+                    key={lead.id}
+                    className="relative cursor-pointer"
+                  >
+                    <TableCell>
+                      <Link
+                        href={`/dashboard/leads/${lead.id}`}
+                        className="font-medium after:absolute after:inset-0 after:content-['']"
+                      >
+                        {label}
+                      </Link>
+                      <div className="relative text-xs text-muted-foreground">
+                        {[lead.phone, lead.email].filter(Boolean).join(" · ")}
+                      </div>
+                    </TableCell>
+                    <TableCell>{lead.service || "—"}</TableCell>
+                    <TableCell>
+                      <Badge variant={statusVariant(lead.status)}>
+                        {t(`status.${lead.status}`)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {lead.source || "—"}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">
+                      {formatLeadDate(lead.updatedAt)}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>

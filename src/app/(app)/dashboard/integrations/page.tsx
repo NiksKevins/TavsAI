@@ -196,7 +196,7 @@ export default async function IntegrationsPage({
             >
               <CardHeader className="space-y-4 pb-3">
                 <div className="flex items-start justify-between gap-3">
-                  <IntegrationLogoMark className="grayscale-[0.15]">
+                  <IntegrationLogoMark>
                     {item.logo}
                   </IntegrationLogoMark>
                   <Badge variant="outline">{t("comingSoon.badge")}</Badge>

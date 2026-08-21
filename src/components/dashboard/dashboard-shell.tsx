@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   BarChart3,
   Bot,
   Calendar,
+  ChevronDown,
   Code2,
   CreditCard,
   LayoutDashboard,
@@ -47,7 +48,11 @@ const NAV_GROUPS: NavGroup[] = [
     labelKey: "work",
     items: [
       { href: "/dashboard", key: "overview", icon: LayoutDashboard },
-      { href: "/dashboard/conversations", key: "conversations", icon: MessageSquare },
+      {
+        href: "/dashboard/conversations",
+        key: "conversations",
+        icon: MessageSquare,
+      },
       { href: "/dashboard/leads", key: "leads", icon: Users },
       { href: "/dashboard/appointments", key: "appointments", icon: Calendar },
       { href: "/dashboard/analytics", key: "analytics", icon: BarChart3 },
@@ -71,8 +76,19 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
+const NAV_COLLAPSE_KEY = "tavsai.navGroupsCollapsed";
+
+function itemIsActive(pathname: string, href: string) {
+  if (href === "/dashboard") return pathname === "/dashboard";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function groupContainsPath(group: NavGroup, pathname: string) {
+  return group.items.some((item) => itemIsActive(pathname, item.href));
+}
+
 type DashboardShellProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   user: { name?: string | null; email: string };
   workspace: { name: string; slug: string };
   role: string;
@@ -90,10 +106,64 @@ export function DashboardShell({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [collapseReady, setCollapseReady] = useState(false);
 
   useEffect(() => {
     setIsNavigating(false);
   }, [pathname]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(NAV_COLLAPSE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Record<string, boolean>;
+        if (parsed && typeof parsed === "object") setCollapsed(parsed);
+      }
+    } catch {
+      /* ignore */
+    }
+    setCollapseReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!collapseReady) return;
+    // Keep the section that owns the current page open.
+    setCollapsed((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      for (const group of NAV_GROUPS) {
+        if (groupContainsPath(group, pathname) && next[group.labelKey]) {
+          next[group.labelKey] = false;
+          changed = true;
+        }
+      }
+      if (changed) {
+        try {
+          localStorage.setItem(NAV_COLLAPSE_KEY, JSON.stringify(next));
+        } catch {
+          /* ignore */
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [pathname, collapseReady]);
+
+  const toggleGroup = (labelKey: string) => {
+    const group = NAV_GROUPS.find((g) => g.labelKey === labelKey);
+    // Keep the section with the current page open.
+    if (group && groupContainsPath(group, pathname)) return;
+
+    setCollapsed((prev) => {
+      const next = { ...prev, [labelKey]: !prev[labelKey] };
+      try {
+        localStorage.setItem(NAV_COLLAPSE_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
 
   const onNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -107,13 +177,17 @@ export function DashboardShell({
     if (isActive) return;
     setIsNavigating(true);
     setOpen(false);
-    // Safety: clear if navigation is interrupted / soft-same-page.
-    window.setTimeout(() => {
-      if (window.location.pathname === href || window.location.pathname.startsWith(href + "/")) {
-        /* route may already match */
-      }
-    }, 0);
   };
+
+  const openGroups = useMemo(() => {
+    return NAV_GROUPS.map((group) => {
+      const hasActive = groupContainsPath(group, pathname);
+      const isCollapsed = collapseReady
+        ? Boolean(collapsed[group.labelKey]) && !hasActive
+        : false;
+      return { group, hasActive, isCollapsed };
+    });
+  }, [collapsed, collapseReady, pathname]);
 
   return (
     <WhatsNewProvider>
@@ -154,38 +228,61 @@ export function DashboardShell({
           </div>
 
           <nav className="flex-1 overflow-y-auto p-3" aria-busy={isNavigating}>
-            <div className="space-y-5">
-              {NAV_GROUPS.map((group) => (
-                <div key={group.labelKey}>
-                  <p className="mb-1.5 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/80">
-                    {t(`navGroups.${group.labelKey}`)}
-                  </p>
-                  <div className="flex flex-col gap-0.5">
-                    {group.items.map((item) => {
-                      const active =
-                        item.href === "/dashboard"
-                          ? pathname === "/dashboard"
-                          : pathname.startsWith(item.href);
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => onNavClick(e, item.href, active)}
-                          aria-disabled={isNavigating}
-                          className={cn(
-                            "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
-                            active
-                              ? "bg-accent text-accent-foreground"
-                              : "text-ink-soft hover:bg-muted hover:text-foreground",
-                            isNavigating && "pointer-events-none opacity-70",
-                          )}
-                        >
-                          <Icon className="h-4 w-4 shrink-0" />
-                          {t(`nav.${item.key}`)}
-                        </Link>
-                      );
-                    })}
+            <div className="space-y-2">
+              {openGroups.map(({ group, hasActive, isCollapsed }) => (
+                <div key={group.labelKey} className="rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.labelKey)}
+                    aria-expanded={!isCollapsed}
+                    className={cn(
+                      "flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors",
+                      hasActive
+                        ? "text-foreground"
+                        : "text-muted-foreground/80 hover:bg-muted/60 hover:text-foreground",
+                    )}
+                  >
+                    <span>{t(`navGroups.${group.labelKey}`)}</span>
+                    <ChevronDown
+                      className={cn(
+                        "size-3.5 shrink-0 transition-transform duration-200",
+                        isCollapsed && "-rotate-90",
+                      )}
+                      aria-hidden
+                    />
+                  </button>
+                  <div
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-200 ease-out",
+                      isCollapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]",
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="flex flex-col gap-0.5 pb-1 pt-0.5">
+                        {group.items.map((item) => {
+                          const active = itemIsActive(pathname, item.href);
+                          const Icon = item.icon;
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={(e) => onNavClick(e, item.href, active)}
+                              aria-disabled={isNavigating}
+                              className={cn(
+                                "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
+                                active
+                                  ? "bg-accent text-accent-foreground"
+                                  : "text-ink-soft hover:bg-muted hover:text-foreground",
+                                isNavigating && "pointer-events-none opacity-70",
+                              )}
+                            >
+                              <Icon className="h-4 w-4 shrink-0" />
+                              {t(`nav.${item.key}`)}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -194,7 +291,9 @@ export function DashboardShell({
             {showPartnerPortal ? (
               <Link
                 href="/partner"
-                onClick={(e) => onNavClick(e, "/partner", pathname.startsWith("/partner"))}
+                onClick={(e) =>
+                  onNavClick(e, "/partner", pathname.startsWith("/partner"))
+                }
                 className={cn(
                   "mt-5 flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-ink-soft hover:bg-muted hover:text-foreground",
                   isNavigating && "pointer-events-none opacity-70",
