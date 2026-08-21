@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Megaphone, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -132,6 +133,161 @@ export function ChangelogList({
         </li>
       ))}
     </ol>
+  );
+}
+
+/** Master–detail changelog browser for the Jaunumi page. */
+export function ChangelogMasterDetail({
+  locale,
+  entries = CHANGELOG,
+}: {
+  locale: string;
+  entries?: ChangelogEntry[];
+}) {
+  const t = useTranslations("dashboard.whatsNew");
+  const [selectedId, setSelectedId] = useState(entries[0]?.id ?? "");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const fromQuery = new URLSearchParams(window.location.search).get("id");
+    if (fromQuery && entries.some((e) => e.id === fromQuery)) {
+      setSelectedId(fromQuery);
+    }
+  }, [entries]);
+
+  const selected =
+    entries.find((e) => e.id === selectedId) ?? entries[0] ?? null;
+
+  function selectEntry(id: string) {
+    setSelectedId(id);
+    const url = new URL(window.location.href);
+    url.searchParams.set("id", id);
+    window.history.replaceState({}, "", url.toString());
+  }
+
+  if (!selected) {
+    return (
+      <p className="text-sm text-muted-foreground">{t("logSubtitle")}</p>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-card lg:grid lg:grid-cols-[minmax(220px,280px)_minmax(0,1fr)]">
+      <aside className="border-b border-border lg:border-b-0 lg:border-r">
+        <div className="max-h-[40vh] overflow-y-auto lg:max-h-[min(70vh,640px)]">
+          <ul className="p-2" role="listbox" aria-label={t("logTitle")}>
+            {entries.map((entry) => {
+              const active = entry.id === selected.id;
+              return (
+                <li key={entry.id}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={active}
+                    onClick={() => selectEntry(entry.id)}
+                    className={cn(
+                      "flex w-full items-start gap-2.5 rounded-lg px-3 py-2.5 text-left transition-colors",
+                      active
+                        ? "bg-primary/10 text-foreground"
+                        : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                    )}
+                  >
+                    {entry.images?.[0] ? (
+                      <span className="relative mt-0.5 size-10 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
+                        <Image
+                          src={entry.images[0].src}
+                          alt=""
+                          fill
+                          className="object-cover object-top"
+                          sizes="40px"
+                        />
+                      </span>
+                    ) : null}
+                    <span className="min-w-0 flex-1">
+                      <span
+                        className={cn(
+                          "block font-display text-sm leading-snug",
+                          active ? "font-semibold" : "font-medium",
+                        )}
+                      >
+                        {pickChangelogText(entry.title, locale)}
+                      </span>
+                      <time
+                        dateTime={entry.date}
+                        className="mt-1 block text-xs tabular-nums opacity-80"
+                      >
+                        {entry.date}
+                      </time>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </aside>
+
+      <article className="flex min-h-[280px] flex-col p-5 sm:p-6 lg:max-h-[min(70vh,640px)] lg:overflow-y-auto lg:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0 space-y-1.5">
+            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+              {pickChangelogText(selected.title, locale)}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {pickChangelogText(selected.summary, locale)}
+            </p>
+          </div>
+          <Badge variant="secondary" className="shrink-0 font-normal tabular-nums">
+            {selected.date}
+          </Badge>
+        </div>
+
+        {selected.images && selected.images.length > 0 ? (
+          <div
+            className={cn(
+              "mt-6 grid gap-3",
+              selected.images.length > 1
+                ? "sm:grid-cols-2"
+                : "grid-cols-1",
+            )}
+          >
+            {selected.images.map((image) => (
+              <figure
+                key={image.src}
+                className="overflow-hidden rounded-xl border border-border bg-muted/30"
+              >
+                <div className="relative aspect-[16/10] w-full">
+                  <Image
+                    src={image.src}
+                    alt={pickChangelogText(image.alt, locale)}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 480px"
+                  />
+                </div>
+                {image.caption ? (
+                  <figcaption className="border-t border-border px-3 py-2 text-xs text-muted-foreground">
+                    {pickChangelogText(image.caption, locale)}
+                  </figcaption>
+                ) : null}
+              </figure>
+            ))}
+          </div>
+        ) : null}
+
+        <ul className="mt-6 space-y-3 border-t border-border pt-6">
+          {selected.items.map((item, i) => (
+            <li
+              key={`${selected.id}-detail-${i}`}
+              className="flex gap-3 text-sm leading-relaxed text-foreground/90"
+            >
+              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+              <span>{pickChangelogText(item, locale)}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
   );
 }
 
