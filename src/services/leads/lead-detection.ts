@@ -167,12 +167,27 @@ function extractContactFromText(text: string): {
   const phone = phoneMatch?.[0]?.trim() ?? null;
 
   let name: string | null = null;
+  const introName =
+    text.match(
+      /(?:mani\s+sauc|man\s+vārds(?:\s+ir)?|es\s+esmu|my\s+name\s+is|i'?m|i\s+am)\s+([A-ZĀČĒĢĪĶĻŅŠŪŽa-zāčēģīķļņšūž][A-ZĀČĒĢĪĶĻŅŠŪŽa-zāčēģīķļņšūž' -]{1,60})/i,
+    )?.[1]
+      ?.replace(/[,.!?;:].*$/, "")
+      .trim() ?? null;
+  if (
+    introName &&
+    introName.split(/\s+/).length <= 6 &&
+    !/^(jā|ja|yes|ok|labi)\b/i.test(introName)
+  ) {
+    name = introName;
+  }
+
   const lines = text
     .split(/\n/)
     .map((l) => l.trim())
     .filter(Boolean);
   const candidates = [...lines].reverse();
   for (const line of candidates) {
+    if (name) break;
     if (!email && !phone) break;
     if (email && line === email) continue;
     if (phone && line.replace(/\s/g, "") === phone.replace(/\s/g, "")) continue;

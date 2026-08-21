@@ -105,7 +105,19 @@ export async function upsertLead(
     });
   }
 
-  if (created) {
+  const hadContactBefore = Boolean(
+    existing?.phone?.trim() || existing?.email?.trim() || existing?.name?.trim(),
+  );
+  const hasContactNow = Boolean(
+    lead.phone?.trim() || lead.email?.trim() || lead.name?.trim(),
+  );
+  // Notify on create, or when an empty handoff shell later gets real contact.
+  const shouldNotify =
+    input.notify !== false &&
+    hasContactNow &&
+    (created || !hadContactBefore);
+
+  if (shouldNotify) {
     await prisma.notification.create({
       data: {
         workspaceId: input.workspaceId,
@@ -118,9 +130,6 @@ export async function upsertLead(
         payload: { leadId: lead.id, created } as Prisma.InputJsonValue,
       },
     });
-  }
-
-  if (created && input.notify !== false) {
     await notifyNewLead(lead);
   }
 
@@ -314,6 +323,9 @@ export async function evaluateConversationForLead(params: {
     }
   }
 
+  const hasContact =
+    Boolean(extraction.phone?.trim()) || Boolean(extraction.email?.trim());
+
   const shouldAskFollowUp =
     extraction.hasPurchaseIntent &&
     !extraction.isSpam &&
@@ -330,11 +342,14 @@ export async function evaluateConversationForLead(params: {
       ? extraction.missingQuestions[0]
       : null;
 
+  // Handoff may mark intent early, but never create empty "Bez vārda" shells —
+  // wait until the visitor shares phone or email (chat dump or lead form).
   const ready =
     meetsLeadCriteria(extraction, criteria) ||
     (Boolean(params.forceHandoff) &&
       assistant.handoffCreatesLead &&
-      !extraction.isSpam);
+      !extraction.isSpam &&
+      hasContact);
 
   if (!ready) {
     return {

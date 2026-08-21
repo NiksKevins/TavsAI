@@ -67,4 +67,18 @@ describe("lead detection heuristics", () => {
       true,
     );
   });
+
+  it("extracts name from intro phrases without requiring contact on the same line", () => {
+    const extraction = heuristicExtract({
+      messages: [
+        { role: "user", content: "Vēlos pierakstīties" },
+        { role: "user", content: "Mani sauc Jānis Bērziņš" },
+        { role: "user", content: "25547113" },
+      ],
+      questions: [],
+      locale: "lv",
+    });
+    expect(extraction.name?.toLowerCase()).toContain("jānis");
+    expect(extraction.phone).toContain("25547113");
+  });
 });

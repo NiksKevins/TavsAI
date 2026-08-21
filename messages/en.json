@@ -1198,20 +1198,39 @@
   },
   "integrations": {
     "title": "Integrations",
-    "subtitle": "Connect external calendars. OAuth tokens are encrypted at rest and never sent to the browser.",
+    "subtitle": "Connect calendars and booking tools. OAuth tokens are encrypted at rest and never sent to the browser.",
     "connected": "Connected",
     "disconnected": "Not connected",
+    "sections": {
+      "available": "Available now"
+    },
     "google": {
-      "hint": "Used for real availability and booking confirmation. The AI never invents free slots.",
+      "hint": "Real availability and booking confirmation. The AI never invents free slots.",
       "connect": "Connect Google Calendar",
       "disconnect": "Disconnect",
-      "notConnected": "Connect Google Calendar to enable appointment booking in chat.",
+      "notConnected": "Connect to enable appointment booking in chat.",
       "connectedNoEmail": "Google Calendar connected.",
       "viewAppointments": "View appointments"
     },
+    "providers": {
+      "outlook": {
+        "name": "Microsoft Outlook",
+        "hint": "Outlook / Microsoft 365 calendar for bookings."
+      },
+      "calendly": {
+        "name": "Calendly",
+        "hint": "Sync Calendly slots with your assistant."
+      },
+      "custom": {
+        "name": "Custom booking",
+        "hint": "Your own booking API or webhook."
+      }
+    },
     "comingSoon": {
-      "title": "Coming later",
-      "hint": "Same CalendarIntegration interface — additional providers later."
+      "title": "Coming soon",
+      "hint": "These connections are on the way — same card layout.",
+      "badge": "Soon",
+      "cta": "Coming soon"
     },
     "flash": {
       "connected": "Google Calendar connected."

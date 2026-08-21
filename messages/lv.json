@@ -1198,20 +1198,39 @@
   },
   "integrations": {
     "title": "Integrācijas",
-    "subtitle": "Pievienojiet ārējos kalendārus. OAuth marķieri tiek šifrēti un netiek rādīti pārlūkā.",
+    "subtitle": "Pievienojiet kalendārus un pierakstu rīkus. OAuth marķieri tiek šifrēti un netiek rādīti pārlūkā.",
     "connected": "Savienots",
     "disconnected": "Nav savienots",
+    "sections": {
+      "available": "Pieejams tagad"
+    },
     "google": {
-      "hint": "Izmanto reālai pieejamībai un pierakstu apstiprināšanai. AI nekad neizdomā brīvus laikus.",
+      "hint": "Reāla pieejamība un pierakstu apstiprināšana. AI neizdomā brīvus laikus.",
       "connect": "Pievienot Google Calendar",
       "disconnect": "Atvienot",
-      "notConnected": "Pievienojiet Google Calendar, lai čatā ieslēgtu pierakstus.",
+      "notConnected": "Pievienojiet, lai čatā ieslēgtu pierakstus.",
       "connectedNoEmail": "Google Calendar pievienots.",
       "viewAppointments": "Skatīt pierakstus"
     },
+    "providers": {
+      "outlook": {
+        "name": "Microsoft Outlook",
+        "hint": "Outlook / Microsoft 365 kalendārs pierakstiem."
+      },
+      "calendly": {
+        "name": "Calendly",
+        "hint": "Sinhronizē Calendly slotus ar asistentu."
+      },
+      "custom": {
+        "name": "Custom booking",
+        "hint": "Savs pierakstu API vai webhook."
+      }
+    },
     "comingSoon": {
       "title": "Drīzumā",
-      "hint": "Tā pati CalendarIntegration saskarne — citi pakalpojumu sniedzēji vēlāk."
+      "hint": "Šie savienojumi tiek gatavoti — tajā pašā kartīšu formātā.",
+      "badge": "Drīzumā",
+      "cta": "Gaidām"
     },
     "flash": {
       "connected": "Google Calendar pievienots."

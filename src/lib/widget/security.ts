@@ -114,7 +114,24 @@ export function extractContactHint(message: string): {
   }
 
   // Combined dumps like: "Niks Kevins, niks@x.com, 25547113"
-  if (!email && !phone) return null;
+  if (!email && !phone) {
+    // Name-only intros: "Mani sauc Jānis" / "My name is Jane"
+    const intro = trimmed.match(
+      /^(?:mani\s+sauc|man\s+vārds(?:\s+ir)?|es\s+esmu|my\s+name\s+is|i'?m)\s+(.+)$/i,
+    );
+    if (intro?.[1]) {
+      const name = intro[1].replace(/[,.!?;:].*$/, "").trim();
+      if (
+        name.length >= 2 &&
+        name.length <= 80 &&
+        name.split(/\s+/).length <= 6 &&
+        /[a-zA-Zāčēģīķļņšūž]/i.test(name)
+      ) {
+        return { name };
+      }
+    }
+    return null;
+  }
 
   let namePart = trimmed;
   if (email) namePart = namePart.replace(email, " ");

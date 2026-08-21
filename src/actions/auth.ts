@@ -1,3 +1,5 @@
+"use server";
+
 import { headers } from "next/headers";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";

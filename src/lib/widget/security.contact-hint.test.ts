@@ -26,4 +26,11 @@ describe("extractContactHint", () => {
       ),
     ).toBeNull();
   });
+
+  it("parses name-only intros", () => {
+    expect(extractContactHint("Mani sauc Jānis Bērziņš")).toEqual({
+      name: "Jānis Bērziņš",
+    });
+    expect(extractContactHint("My name is Jane Doe")?.name).toBe("Jane Doe");
+  });
 });
