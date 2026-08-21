@@ -36,6 +36,18 @@ export type PlanId = keyof typeof PLANS;
 export const PAID_PLANS = ["STARTER", "BUSINESS", "PRO"] as const;
 export type PaidPlanId = (typeof PAID_PLANS)[number];
 
+/** Higher = more capable plan. Used for upgrade vs downgrade CTAs. */
+export const PLAN_RANK: Record<PlanId, number> = {
+  FREE: 0,
+  STARTER: 1,
+  BUSINESS: 2,
+  PRO: 3,
+};
+
+export function planRank(plan: PlanId | string): number {
+  return PLAN_RANK[plan as PlanId] ?? 0;
+}
+
 export function isPlanId(value: string): value is PlanId {
   return value in PLANS;
 }

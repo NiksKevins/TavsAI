@@ -693,8 +693,38 @@
       "title": "Business information",
       "subtitle": "This is a high-priority source for AI answers.",
       "save": "Save",
+      "saving": "Saving…",
       "saved": "Saved and synced to knowledge.",
-      "error": "Could not save. Check fields and JSON.",
+      "error": "Could not save. Check the fields.",
+      "sections": {
+        "profile": "Profile",
+        "profileHint": "Core details the assistant treats as a priority source.",
+        "hours": "Opening hours",
+        "hoursHint": "One row per day — no JSON.",
+        "social": "Social links",
+        "socialHint": "Paste profile URLs. Leave unused platforms empty.",
+        "languages": "Languages",
+        "languagesHint": "Languages your business serves customers in.",
+        "policies": "Policies",
+        "policiesHint": "Cancellation rules, warranties, and similar terms."
+      },
+      "days": {
+        "mon": "Monday",
+        "tue": "Tuesday",
+        "wed": "Wednesday",
+        "thu": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "sun": "Sunday"
+      },
+      "langs": {
+        "lv": "Latvian",
+        "en": "English",
+        "ru": "Russian",
+        "de": "German",
+        "lt": "Lithuanian",
+        "et": "Estonian"
+      },
       "fields": {
         "name": "Name",
         "description": "Description",
@@ -703,12 +733,8 @@
         "address": "Address",
         "city": "City",
         "website": "Website",
-        "hours": "Opening hours (JSON)",
-        "hoursHint": "Example: {\"mon\":\"9-18\",\"tue\":\"9-18\"}",
-        "social": "Social links (JSON)",
-        "socialHint": "Example: {\"instagram\":\"https://...\"}",
-        "languages": "Languages",
-        "languagesHint": "Comma-separated, e.g. lv, en",
+        "closed": "Closed",
+        "hoursPlaceholder": "e.g. 9:00–18:00",
         "policies": "Policies / terms"
       }
     },
@@ -960,7 +986,14 @@
     },
     "detail": {
       "messages": "Messages",
-      "delete": "Delete conversation"
+      "delete": "Delete conversation",
+      "noMessages": "No messages in this conversation yet."
+    },
+    "roles": {
+      "visitor": "Visitor",
+      "assistant": "Assistant",
+      "system": "System",
+      "human": "Human"
     }
   },
   "assistantAdmin": {
@@ -1140,9 +1173,13 @@
     "perMonth": "/mo",
     "paymentMethod": "Payment method",
     "noPaymentMethod": "No card on file",
+    "paymentMethodHint": "A card is added automatically when you choose a paid plan (Stripe Checkout).",
+    "addOrUpdateCard": "Add or update card",
     "invoices": "Invoices",
     "noInvoices": "No invoices yet.",
     "upgrade": "Upgrade",
+    "downgrade": "Downgrade",
+    "changePlan": "Change plan",
     "current": "Current",
     "manageBilling": "Customer portal",
     "cancel": "Cancel at period end",
@@ -1248,6 +1285,10 @@
     "title": "Settings",
     "subtitle": "Privacy, retention, and account controls for this workspace.",
     "ownerOnly": "Only the workspace owner can change privacy and deletion settings.",
+    "sections": {
+      "data": "Data & privacy",
+      "danger": "Danger zone"
+    },
     "workspace": {
       "title": "Workspace",
       "slug": "Slug",
@@ -1264,7 +1305,8 @@
     "export": {
       "title": "Export data",
       "hint": "Download a JSON export of conversations, leads, appointments, FAQs, and document metadata. Secrets and OAuth tokens are never included.",
-      "action": "Download export"
+      "action": "Download export",
+      "pending": "Exporting…"
     },
     "danger": {
       "workspaceTitle": "Delete workspace",

@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PendingSubmitButton } from "@/components/ui/pending-submit-button";
-import { PAID_PLANS, PLANS, type PlanId } from "@/config/plans";
+import { PAID_PLANS, PLANS, planRank, type PlanId } from "@/config/plans";
 import type { UsageSnapshot } from "@/services/billing/usage-service";
 
 export type BillingInvoice = {
@@ -46,9 +46,13 @@ export type BillingLabels = {
   perMonth: string;
   paymentMethod: string;
   noPaymentMethod: string;
+  paymentMethodHint: string;
+  addOrUpdateCard: string;
   invoices: string;
   noInvoices: string;
+  changePlan: string;
   upgrade: string;
+  downgrade: string;
   current: string;
   manageBilling: string;
   cancel: string;
@@ -145,14 +149,39 @@ export function BillingDashboard(props: {
                 }
               />
               <Stat label={labels.billingCycle} value={periodLabel} />
-              <Stat
-                label={labels.paymentMethod}
-                value={
-                  props.paymentMethod?.last4
-                    ? `${props.paymentMethod.brand ?? "Card"} ···· ${props.paymentMethod.last4}`
-                    : labels.noPaymentMethod
-                }
-              />
+              <div className="space-y-1.5">
+                <Stat
+                  label={labels.paymentMethod}
+                  value={
+                    props.paymentMethod?.last4
+                      ? `${props.paymentMethod.brand ?? "Card"} ···· ${props.paymentMethod.last4}`
+                      : labels.noPaymentMethod
+                  }
+                />
+                {!props.paymentMethod?.last4 ? (
+                  <p className="text-xs text-muted-foreground">
+                    {props.hasStripeCustomer
+                      ? labels.addOrUpdateCard
+                      : labels.paymentMethodHint}
+                  </p>
+                ) : null}
+                {props.canManage &&
+                props.stripeConfigured &&
+                props.hasStripeCustomer ? (
+                  <form action={openBillingPortalAction}>
+                    <PendingSubmitButton
+                      idleLabel={
+                        props.paymentMethod?.last4
+                          ? labels.manageBilling
+                          : labels.addOrUpdateCard
+                      }
+                      pendingLabel={labels.manageBilling}
+                      variant="outline"
+                      size="sm"
+                    />
+                  </form>
+                ) : null}
+              </div>
             </div>
 
             <div>
@@ -180,15 +209,6 @@ export function BillingDashboard(props: {
 
             {props.canManage && props.stripeConfigured ? (
               <div className="flex flex-wrap gap-2 border-t border-border pt-4">
-                {props.hasStripeCustomer ? (
-                  <form action={openBillingPortalAction}>
-                    <PendingSubmitButton
-                      idleLabel={labels.manageBilling}
-                      pendingLabel={labels.manageBilling}
-                      variant="outline"
-                    />
-                  </form>
-                ) : null}
                 {props.hasStripeSubscription && !usage.cancelAtPeriodEnd ? (
                   <form action={cancelSubscriptionAction}>
                     <PendingSubmitButton
@@ -216,13 +236,15 @@ export function BillingDashboard(props: {
 
         <Card>
           <CardHeader>
-            <CardTitle>{labels.upgrade}</CardTitle>
+            <CardTitle>{labels.changePlan}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {(Object.keys(PLANS) as PlanId[]).map((planId) => {
               const plan = PLANS[planId];
               const isCurrent = planId === usage.plan;
               const isPaid = (PAID_PLANS as readonly string[]).includes(planId);
+              const isUpgrade = planRank(planId) > planRank(usage.plan);
+              const actionLabel = isUpgrade ? labels.upgrade : labels.downgrade;
               return (
                 <div
                   key={planId}
@@ -244,9 +266,10 @@ export function BillingDashboard(props: {
                       <form action={startCheckoutAction}>
                         <input type="hidden" name="planId" value={planId} />
                         <PendingSubmitButton
-                          idleLabel={labels.upgrade}
-                          pendingLabel={labels.upgrade}
+                          idleLabel={actionLabel}
+                          pendingLabel={actionLabel}
                           size="sm"
+                          variant={isUpgrade ? "default" : "outline"}
                         />
                       </form>
                     ) : null}

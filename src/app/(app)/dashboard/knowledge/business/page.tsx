@@ -1,6 +1,10 @@
 import { getTranslations } from "next-intl/server";
 
 import { BusinessInfoForm } from "@/components/knowledge/business-info-form";
+import {
+  parseOpeningHours,
+  parseSocialLinks,
+} from "@/config/business-profile";
 import { requireWorkspace } from "@/lib/authz";
 import { prisma } from "@/lib/db";
 
@@ -36,13 +40,9 @@ export default async function KnowledgeBusinessPage() {
           address: business.address ?? "",
           city: business.city ?? "",
           websiteUrl: business.websiteUrl ?? "",
-          openingHours: business.openingHours
-            ? JSON.stringify(business.openingHours, null, 2)
-            : "",
-          socialLinks: business.socialLinks
-            ? JSON.stringify(business.socialLinks, null, 2)
-            : "",
-          languages: (business.languages ?? ["lv"]).join(", "),
+          openingHours: parseOpeningHours(business.openingHours),
+          socialLinks: parseSocialLinks(business.socialLinks),
+          languages: business.languages?.length ? business.languages : ["lv"],
           policies: business.policies ?? "",
         }}
       />

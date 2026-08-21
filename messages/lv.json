@@ -693,8 +693,38 @@
       "title": "Uzņēmuma informācija",
       "subtitle": "Šie dati ir prioritārs avots AI atbildēm.",
       "save": "Saglabāt",
+      "saving": "Saglabā…",
       "saved": "Saglabāts un sinhronizēts zināšanās.",
-      "error": "Neizdevās saglabāt. Pārbaudiet laukus un JSON.",
+      "error": "Neizdevās saglabāt. Pārbaudiet laukus.",
+      "sections": {
+        "profile": "Profils",
+        "profileHint": "Pamatinformācija, ko asistents izmanto kā prioritāru avotu.",
+        "hours": "Darba laiks",
+        "hoursHint": "Katrai dienai atsevišķi — bez JSON.",
+        "social": "Sociālie tīkli",
+        "socialHint": "Ielīmējiet profila saiti. Tukšos laukus var atstāt.",
+        "languages": "Valodas",
+        "languagesHint": "Valodas, kurās uzņēmums apkalpo klientus.",
+        "policies": "Politikas",
+        "policiesHint": "Atcelšanas noteikumi, garantijas u.c."
+      },
+      "days": {
+        "mon": "Pirmdiena",
+        "tue": "Otrdiena",
+        "wed": "Trešdiena",
+        "thu": "Ceturtdiena",
+        "fri": "Piektdiena",
+        "sat": "Sestdiena",
+        "sun": "Svētdiena"
+      },
+      "langs": {
+        "lv": "Latviešu",
+        "en": "Angļu",
+        "ru": "Krievu",
+        "de": "Vācu",
+        "lt": "Lietuviešu",
+        "et": "Igauņu"
+      },
       "fields": {
         "name": "Nosaukums",
         "description": "Apraksts",
@@ -703,12 +733,8 @@
         "address": "Adrese",
         "city": "Pilsēta",
         "website": "Mājaslapa",
-        "hours": "Darba laiks (JSON)",
-        "hoursHint": "Piemērs: {\"mon\":\"9-18\",\"tue\":\"9-18\"}",
-        "social": "Sociālie linki (JSON)",
-        "socialHint": "Piemērs: {\"instagram\":\"https://...\"}",
-        "languages": "Valodas",
-        "languagesHint": "Atdaliet ar komatu, piem. lv, en",
+        "closed": "Slēgts",
+        "hoursPlaceholder": "piem. 9:00–18:00",
         "policies": "Politikas / noteikumi"
       }
     },
@@ -960,7 +986,14 @@
     },
     "detail": {
       "messages": "Ziņojumi",
-      "delete": "Dzēst sarunu"
+      "delete": "Dzēst sarunu",
+      "noMessages": "Šajā sarunā vēl nav ziņu."
+    },
+    "roles": {
+      "visitor": "Apmeklētājs",
+      "assistant": "Asistents",
+      "system": "Sistēma",
+      "human": "Cilvēks"
     }
   },
   "assistantAdmin": {
@@ -1140,9 +1173,13 @@
     "perMonth": "/mēn.",
     "paymentMethod": "Maksājuma metode",
     "noPaymentMethod": "Nav pievienota karte",
+    "paymentMethodHint": "Karte tiek pievienota automātiski, kad izvēlaties maksas plānu (Stripe Checkout).",
+    "addOrUpdateCard": "Pievienot vai mainīt karti",
     "invoices": "Rēķini",
     "noInvoices": "Rēķinu vēl nav.",
-    "upgrade": "Jaunināt",
+    "upgrade": "Uzlabot",
+    "downgrade": "Pazemināt",
+    "changePlan": "Mainīt plānu",
     "current": "Pašreizējais",
     "manageBilling": "Klientu portāls",
     "cancel": "Atcelt perioda beigās",
@@ -1248,6 +1285,10 @@
     "title": "Iestatījumi",
     "subtitle": "Privātums, datu glabāšana un konta kontroles šim darba telpai.",
     "ownerOnly": "Tikai darba telpas īpašnieks var mainīt privātuma un dzēšanas iestatījumus.",
+    "sections": {
+      "data": "Dati un privātums",
+      "danger": "Bīstamā zona"
+    },
     "workspace": {
       "title": "Darba telpa",
       "slug": "Slug",
@@ -1264,7 +1305,8 @@
     "export": {
       "title": "Eksportēt datus",
       "hint": "Lejupielādējiet JSON eksportu ar sarunām, leads, tikšanās, FAQ un dokumentu metadatiem. Noslēpumi un OAuth marķieri netiek iekļauti.",
-      "action": "Lejupielādēt eksportu"
+      "action": "Lejupielādēt eksportu",
+      "pending": "Eksportē…"
     },
     "danger": {
       "workspaceTitle": "Dzēst darba telpu",

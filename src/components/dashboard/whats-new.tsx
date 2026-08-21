@@ -99,7 +99,9 @@ export function WhatsNewProvider({ children }: { children: ReactNode }) {
   return (
     <WhatsNewContext.Provider value={value}>
       {children}
-      <WhatsNewDialog open={logOpen} onOpenChange={setLogOpen} />
+      {logOpen ? (
+        <WhatsNewDialog open={logOpen} onOpenChange={setLogOpen} />
+      ) : null}
     </WhatsNewContext.Provider>
   );
 }

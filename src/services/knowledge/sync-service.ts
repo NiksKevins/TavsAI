@@ -1,5 +1,11 @@
 import type { KnowledgeDocumentType, Prisma } from "@prisma/client";
 
+import {
+  formatOpeningHoursForKnowledge,
+  formatSocialLinksForKnowledge,
+  parseOpeningHours,
+  parseSocialLinks,
+} from "@/config/business-profile";
 import { sha256 } from "@/lib/crawl/hash";
 import { chunkDocument } from "@/lib/crawl/chunk";
 import { prisma } from "@/lib/db";
@@ -142,14 +148,13 @@ export async function syncBusinessInformationKnowledge(
   });
   if (!business) return null;
 
-  const hours =
-    business.openingHours && typeof business.openingHours === "object"
-      ? JSON.stringify(business.openingHours)
-      : null;
-  const social =
-    business.socialLinks && typeof business.socialLinks === "object"
-      ? JSON.stringify(business.socialLinks)
-      : null;
+  const hours = formatOpeningHoursForKnowledge(
+    parseOpeningHours(business.openingHours),
+    "lv",
+  );
+  const social = formatSocialLinksForKnowledge(
+    parseSocialLinks(business.socialLinks),
+  );
 
   const lines = [
     `Business name: ${business.displayName || business.legalName || ""}`,
@@ -165,8 +170,8 @@ export async function syncBusinessInformationKnowledge(
     business.languages?.length
       ? `Languages: ${business.languages.join(", ")}`
       : null,
-    hours ? `Opening hours: ${hours}` : null,
-    social ? `Social links: ${social}` : null,
+    hours ? `Opening hours:\n${hours}` : null,
+    social ? `Social links:\n${social}` : null,
     business.policies ? `Policies: ${business.policies}` : null,
   ].filter(Boolean);
 

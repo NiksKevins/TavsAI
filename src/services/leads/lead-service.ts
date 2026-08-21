@@ -2,6 +2,7 @@ import type { Lead, LeadStatus, Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
+import { buildNewLeadEmail } from "@/services/leads/lead-email";
 import {
   meetsLeadCriteria,
   parseMinCriteria,
@@ -49,13 +50,27 @@ export async function upsertLead(
     status: input.status ?? existing?.status ?? "NEW",
   };
 
+  const hadContactBefore = Boolean(
+    existing?.phone?.trim() || existing?.email?.trim() || existing?.name?.trim(),
+  );
+  const hasContactNow = Boolean(
+    data.phone?.trim() || data.email?.trim() || data.name?.trim(),
+  );
+  // First time we get real contact — treat as "received now" so the leads
+  // list date matches when the customer actually shared details.
+  const firstContactCapture = Boolean(existing) && !hadContactBefore && hasContactNow;
+
   let lead: Lead;
   let created = false;
 
   if (existing) {
     lead = await prisma.lead.update({
       where: { id: existing.id },
-      data,
+      data: {
+        ...data,
+        ...(firstContactCapture ? { createdAt: new Date() } : {}),
+        updatedAt: new Date(),
+      },
     });
   } else {
     let conversationId = input.conversationId || null;
@@ -105,12 +120,6 @@ export async function upsertLead(
     });
   }
 
-  const hadContactBefore = Boolean(
-    existing?.phone?.trim() || existing?.email?.trim() || existing?.name?.trim(),
-  );
-  const hasContactNow = Boolean(
-    lead.phone?.trim() || lead.email?.trim() || lead.name?.trim(),
-  );
   // Notify on create, or when an empty handoff shell later gets real contact.
   const shouldNotify =
     input.notify !== false &&
@@ -147,7 +156,7 @@ export async function upsertLead(
 }
 
 export async function notifyNewLead(lead: Lead) {
-  const [assistant, business, workspace] = await Promise.all([
+  const [assistant, business, workspace, fields] = await Promise.all([
     prisma.assistantConfiguration.findUnique({
       where: { workspaceId: lead.workspaceId },
     }),
@@ -155,6 +164,11 @@ export async function notifyNewLead(lead: Lead) {
       where: { workspaceId: lead.workspaceId },
     }),
     prisma.workspace.findUnique({ where: { id: lead.workspaceId } }),
+    prisma.leadField.findMany({
+      where: { leadId: lead.id },
+      select: { key: true, value: true },
+      take: 20,
+    }),
   ]);
 
   const to =
@@ -168,34 +182,19 @@ export async function notifyNewLead(lead: Lead) {
   const appUrl =
     process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ||
     "https://bot.tavswebs.com";
-  const link = `${appUrl}/dashboard/leads/${lead.id}`;
+  const dashboardUrl = `${appUrl}/dashboard/leads/${lead.id}`;
+  const conversationUrl = lead.conversationId
+    ? `${appUrl}/dashboard/conversations/${lead.conversationId}`
+    : null;
 
-  const subject = `Jauns potenciālais klients — ${businessName}`;
-  const text = [
-    `Klients: ${lead.name || "—"}`,
-    `Kontakti: ${[lead.phone, lead.email].filter(Boolean).join(" · ") || "—"}`,
-    `Pakalpojums: ${lead.service || "—"}`,
-    `Kopsavilkums: ${lead.summary || "—"}`,
-    `Panelis: ${link}`,
-  ].join("\n");
-
-  const html = `
-    <div style="font-family:IBM Plex Sans,Segoe UI,sans-serif;line-height:1.5;color:#14201c">
-      <h2 style="margin:0 0 12px">Jauns potenciālais klients</h2>
-      <p style="margin:0 0 8px"><strong>Uzņēmums:</strong> ${escapeHtml(businessName)}</p>
-      <p style="margin:0 0 8px"><strong>Klients:</strong> ${escapeHtml(lead.name || "—")}</p>
-      <p style="margin:0 0 8px"><strong>Kontakti:</strong> ${escapeHtml(
-        [lead.phone, lead.email].filter(Boolean).join(" · ") || "—",
-      )}</p>
-      <p style="margin:0 0 8px"><strong>Pakalpojums:</strong> ${escapeHtml(
-        lead.service || "—",
-      )}</p>
-      <p style="margin:0 0 16px"><strong>Kopsavilkums:</strong> ${escapeHtml(
-        lead.summary || "—",
-      )}</p>
-      <p><a href="${link}" style="color:#0F5C4C">Atvērt panelī</a></p>
-    </div>
-  `;
+  const { subject, html, text } = buildNewLeadEmail({
+    lead,
+    businessName,
+    dashboardUrl,
+    conversationUrl,
+    extraFields: fields.map((f) => ({ key: f.key, value: f.value })),
+    locale: "lv",
+  });
 
   const result = await sendEmail({ to, subject, html, text });
   if (result.ok) {
@@ -210,14 +209,6 @@ export async function notifyNewLead(lead: Lead) {
       },
     });
   }
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 }
 
 export async function evaluateConversationForLead(params: {

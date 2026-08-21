@@ -3,6 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
+import {
+  languagesFromFormData,
+  openingHoursFromFormData,
+  socialLinksFromFormData,
+} from "@/config/business-profile";
 import { requireWorkspaceRole } from "@/lib/authz";
 import { writeAuditLog } from "@/lib/audit";
 import { prisma } from "@/lib/db";
@@ -55,9 +60,6 @@ export async function updateBusinessInformationAction(
     address: z.string().trim().max(240).optional(),
     city: z.string().trim().max(120).optional(),
     websiteUrl: z.string().trim().url().optional().or(z.literal("")),
-    openingHours: z.string().trim().max(2000).optional(),
-    socialLinks: z.string().trim().max(2000).optional(),
-    languages: z.string().trim().max(120).optional(),
     policies: z.string().trim().max(4000).optional(),
   });
 
@@ -69,31 +71,26 @@ export async function updateBusinessInformationAction(
     address: formData.get("address") || undefined,
     city: formData.get("city") || undefined,
     websiteUrl: formData.get("websiteUrl") || "",
-    openingHours: formData.get("openingHours") || undefined,
-    socialLinks: formData.get("socialLinks") || undefined,
-    languages: formData.get("languages") || undefined,
     policies: formData.get("policies") || undefined,
   });
 
   if (!parsed.success) return { ok: false, error: "invalid_input" };
 
-  let openingHours: object | undefined;
-  let socialLinks: object | undefined;
-  try {
-    if (parsed.data.openingHours?.trim()) {
-      openingHours = JSON.parse(parsed.data.openingHours);
-    }
-    if (parsed.data.socialLinks?.trim()) {
-      socialLinks = JSON.parse(parsed.data.socialLinks);
-    }
-  } catch {
-    return { ok: false, error: "invalid_json" };
-  }
+  const openingHours = openingHoursFromFormData(formData);
+  const socialLinks = socialLinksFromFormData(formData);
+  const languages = languagesFromFormData(formData);
 
-  const languages = (parsed.data.languages || "lv")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  // Soft-validate social URLs when provided.
+  for (const url of Object.values(socialLinks)) {
+    if (!url) continue;
+    try {
+      // Allow wa.me / t.me without forcing https in rare cases.
+      const normalized = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+      new URL(normalized);
+    } catch {
+      return { ok: false, error: "invalid_social_url" };
+    }
+  }
 
   await prisma.businessInformation.upsert({
     where: { workspaceId: workspace.id },
@@ -106,8 +103,8 @@ export async function updateBusinessInformationAction(
       address: parsed.data.address,
       city: parsed.data.city,
       websiteUrl: parsed.data.websiteUrl || null,
-      openingHours: openingHours ?? undefined,
-      socialLinks: socialLinks ?? undefined,
+      openingHours,
+      socialLinks,
       languages,
       policies: parsed.data.policies,
     },
@@ -119,8 +116,8 @@ export async function updateBusinessInformationAction(
       address: parsed.data.address,
       city: parsed.data.city,
       websiteUrl: parsed.data.websiteUrl || null,
-      openingHours: openingHours ?? undefined,
-      socialLinks: socialLinks ?? undefined,
+      openingHours,
+      socialLinks,
       languages,
       policies: parsed.data.policies,
     },

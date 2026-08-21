@@ -1,17 +1,20 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { useState, useTransition } from "react";
 
-import { Button } from "@/components/ui/button";
 import type { PrivacyActionResult } from "@/actions/privacy";
+import { Button } from "@/components/ui/button";
 
 export function ExportDataButton({
   action,
   label,
+  pendingLabel,
   filename,
 }: {
   action: () => Promise<PrivacyActionResult>;
   label: string;
+  pendingLabel?: string;
   filename: string;
 }) {
   const [pending, start] = useTransition();
@@ -42,7 +45,10 @@ export function ExportDataButton({
           })
         }
       >
-        {pending ? "…" : label}
+        {pending ? (
+          <Loader2 className="size-4 animate-spin" aria-hidden />
+        ) : null}
+        {pending ? pendingLabel || label : label}
       </Button>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>

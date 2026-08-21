@@ -62,11 +62,14 @@ export default async function LeadsPage({ searchParams }: Props) {
     ];
   }
 
-  const sort = params.sort === "oldest" ? "asc" : "desc";
+  const sortNewestFirst = params.sort !== "oldest";
 
   const leads = await prisma.lead.findMany({
     where,
-    orderBy: { createdAt: sort },
+    // Prefer recently updated so filled-in / new leads stay on top.
+    orderBy: sortNewestFirst
+      ? [{ updatedAt: "desc" }, { createdAt: "desc" }]
+      : [{ updatedAt: "asc" }, { createdAt: "asc" }],
     take: 100,
     include: {
       conversation: { select: { id: true, status: true } },
@@ -158,8 +161,8 @@ export default async function LeadsPage({ searchParams }: Props) {
                   <TableCell className="text-muted-foreground">
                     {lead.source || "—"}
                   </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {lead.createdAt.toLocaleString()}
+                  <TableCell className="whitespace-nowrap text-muted-foreground">
+                    {formatLeadDate(lead.updatedAt)}
                   </TableCell>
                 </TableRow>
               ))}
@@ -169,6 +172,17 @@ export default async function LeadsPage({ searchParams }: Props) {
       )}
     </div>
   );
+}
+
+function formatLeadDate(value: Date) {
+  return new Intl.DateTimeFormat("lv-LV", {
+    timeZone: "Europe/Riga",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(value);
 }
 
 function statusVariant(status: LeadStatus) {
