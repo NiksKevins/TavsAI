@@ -25,7 +25,11 @@ function isAppOrAuthPath(pathname: string) {
 function withSecurityHeaders(request: NextRequest, response: NextResponse) {
   const path = request.nextUrl.pathname;
   const isWidget =
-    path.startsWith("/widget/") || path === "/widget.js" || path.startsWith("/api/widget/");
+    path === "/widget.js" ||
+    path.startsWith("/widget/") ||
+    path.startsWith("/api/widget/") ||
+    // Belt-and-suspenders if a locale prefix ever appears on embed URLs
+    /^\/(lv|en)\/widget(\/|$)/.test(path);
 
   if (isWidget) {
     // Customer sites embed the widget iframe — allow any parent frame.
@@ -70,6 +74,23 @@ function withSecurityHeaders(request: NextRequest, response: NextResponse) {
 
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  // Widget iframe must stay unprefixed — next-intl would redirect to /lv/widget/*
+  // which 404s and inherits frame-ancestors 'self', breaking customer embeds.
+  const localeWidget = pathname.match(/^\/(lv|en)(\/widget(?:\/.*)?)$/);
+  if (localeWidget) {
+    const url = req.nextUrl.clone();
+    url.pathname = localeWidget[2];
+    return withSecurityHeaders(req, NextResponse.redirect(url));
+  }
+
+  if (
+    pathname === "/widget.js" ||
+    pathname.startsWith("/widget/") ||
+    pathname.startsWith("/api/widget/")
+  ) {
+    return withSecurityHeaders(req, NextResponse.next());
+  }
 
   let response: NextResponse;
   if (isAppOrAuthPath(pathname)) {
