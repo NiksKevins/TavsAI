@@ -143,8 +143,8 @@ async function loadAssistantContext(workspaceId: string, locale: Locale) {
           locale === "en"
             ? s.descriptionEn || s.descriptionLv
             : s.descriptionLv || s.descriptionEn,
-        priceFrom: s.priceFrom,
-        priceTo: s.priceTo,
+        priceFrom: s.priceFrom != null ? Number(s.priceFrom) : null,
+        priceTo: s.priceTo != null ? Number(s.priceTo) : null,
         currency: s.currency,
       })),
     },
