@@ -60,8 +60,8 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         src: "/changelog/integrations.png",
         alt: {
-          lv: "Integrāciju lapa ar Google Calendar, Outlook un Calendly",
-          en: "Integrations page with Google Calendar, Outlook, and Calendly",
+          lv: "Integrāciju lapa ar Google Calendar, Outlook un Calendly logotipiem",
+          en: "Integrations page with Google Calendar, Outlook, and Calendly logos",
         },
         caption: {
           lv: "Integrācijas — oficiālie logotipi",
@@ -71,23 +71,12 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         src: "/changelog/leads-table.png",
         alt: {
-          lv: "Leadu tabula ar klientiem un statusiem",
-          en: "Leads table with customers and statuses",
+          lv: "Leadu tabula ar klientu, statusu un avotu",
+          en: "Leads table with customer, status, and source",
         },
         caption: {
-          lv: "Leadi — klikšķināma rinda",
-          en: "Leads — clickable rows",
-        },
-      },
-      {
-        src: "/changelog/jaunumi-page.png",
-        alt: {
-          lv: "Jaunumi lapa ar izlaidumu sarakstu",
-          en: "What's new page with release list",
-        },
-        caption: {
-          lv: "Jaunumi — atsevišķa lapa",
-          en: "What's new — dedicated page",
+          lv: "Leadi — visa rinda ir klikšķināma",
+          en: "Leads — whole row is clickable",
         },
       },
     ],
@@ -111,14 +100,14 @@ export const CHANGELOG: ChangelogEntry[] = [
     ],
     images: [
       {
-        src: "/changelog/leads-from-chat.png",
+        src: "/changelog/leads-table.png",
         alt: {
-          lv: "Čats, kurā klients iesniedz kontaktinformāciju",
-          en: "Chat where a visitor submits contact details",
+          lv: "Leadu saraksts ar vārdu, tālruni un e-pastu no čata",
+          en: "Leads list with name, phone, and email captured from chat",
         },
         caption: {
-          lv: "Kontaktu ievākšana čatā",
-          en: "Contact capture in chat",
+          lv: "Leadi — kontakti no čata (piem. widget_lead_form)",
+          en: "Leads — contacts from chat (e.g. widget_lead_form)",
         },
       },
     ],
@@ -140,19 +129,6 @@ export const CHANGELOG: ChangelogEntry[] = [
         en: "Progress bar and import from your website.",
       },
     ],
-    images: [
-      {
-        src: "/changelog/knowledge-services.png",
-        alt: {
-          lv: "Zināšanu sadaļa — pakalpojumu pārvaldība",
-          en: "Knowledge section — services management",
-        },
-        caption: {
-          lv: "Zināšanas un pakalpojumi",
-          en: "Knowledge and services",
-        },
-      },
-    ],
   },
   {
     id: "2026-08-01-launch",
@@ -169,19 +145,6 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         lv: "Pārskats, zināšanas un norēķini.",
         en: "Overview, knowledge, and billing.",
-      },
-    ],
-    images: [
-      {
-        src: "/changelog/dashboard-launch.png",
-        alt: {
-          lv: "TavsWebs Bot mārketinga sākumlapa",
-          en: "TavsWebs Bot marketing homepage",
-        },
-        caption: {
-          lv: "Produkta starts",
-          en: "Product launch",
-        },
       },
     ],
   },

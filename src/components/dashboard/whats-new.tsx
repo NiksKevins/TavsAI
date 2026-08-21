@@ -193,12 +193,12 @@ export function ChangelogMasterDetail({
                     )}
                   >
                     {entry.images?.[0] ? (
-                      <span className="relative mt-0.5 size-10 shrink-0 overflow-hidden rounded-md border border-border bg-muted">
+                      <span className="relative mt-0.5 size-10 shrink-0 overflow-hidden rounded-md border border-border bg-white">
                         <Image
                           src={entry.images[0].src}
                           alt=""
                           fill
-                          className="object-cover object-top"
+                          className="object-contain p-0.5"
                           sizes="40px"
                         />
                       </span>
@@ -256,12 +256,12 @@ export function ChangelogMasterDetail({
                 key={image.src}
                 className="overflow-hidden rounded-xl border border-border bg-muted/30"
               >
-                <div className="relative aspect-[16/10] w-full">
+                <div className="relative aspect-[16/10] w-full bg-white">
                   <Image
                     src={image.src}
                     alt={pickChangelogText(image.alt, locale)}
                     fill
-                    className="object-cover object-top"
+                    className="object-contain p-2 sm:p-3"
                     sizes="(max-width: 768px) 100vw, 480px"
                   />
                 </div>
