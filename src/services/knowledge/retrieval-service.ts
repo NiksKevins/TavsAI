@@ -7,6 +7,7 @@ import {
 import { AI_CONFIG } from "@/config/ai";
 import { prisma } from "@/lib/db";
 import { embedTexts } from "@/services/knowledge/embedding-service";
+import { expandRetrievalQuery } from "@/services/ai/grounding";
 import type { KnowledgeDocumentType } from "@prisma/client";
 
 export type RetrievedChunk = {
@@ -32,9 +33,15 @@ export async function retrieveRelevantChunks(params: {
   relevanceThreshold?: number;
 }): Promise<RetrievedChunk[]> {
   const topK = params.topK ?? AI_CONFIG.topK;
-  const threshold = params.relevanceThreshold ?? AI_CONFIG.relevanceThreshold;
+  const query = expandRetrievalQuery(params.query);
+  const shortQuery = params.query.trim().split(/\s+/).filter(Boolean).length <= 2;
+  const threshold =
+    params.relevanceThreshold ??
+    (shortQuery
+      ? Math.min(AI_CONFIG.relevanceThreshold, 0.22)
+      : AI_CONFIG.relevanceThreshold);
 
-  const [queryEmbedding] = await embedTexts([params.query]);
+  const [queryEmbedding] = await embedTexts([query]);
   const vectorLiteral = `[${queryEmbedding.join(",")}]`;
   const fetchLimit = Math.max(topK * 4, 20);
 

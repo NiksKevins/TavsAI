@@ -157,22 +157,23 @@ export async function syncBusinessInformationKnowledge(
   );
 
   const lines = [
-    `Business name: ${business.displayName || business.legalName || ""}`,
-    business.description ? `Description: ${business.description}` : null,
-    business.phone ? `Phone: ${business.phone}` : null,
-    business.email ? `Email: ${business.email}` : null,
+    "Kontakti / Contact information",
+    `Business name / Uzņēmums: ${business.displayName || business.legalName || ""}`,
+    business.description ? `Description / Apraksts: ${business.description}` : null,
+    business.phone ? `Phone / Tālrunis / Telefons: ${business.phone}` : null,
+    business.email ? `Email / E-pasts: ${business.email}` : null,
     business.address || business.city
-      ? `Address: ${[business.address, business.city, business.country]
+      ? `Address / Adrese: ${[business.address, business.city, business.country]
           .filter(Boolean)
           .join(", ")}`
       : null,
-    business.websiteUrl ? `Website: ${business.websiteUrl}` : null,
+    business.websiteUrl ? `Website / Mājaslapa: ${business.websiteUrl}` : null,
     business.languages?.length
-      ? `Languages: ${business.languages.join(", ")}`
+      ? `Languages / Valodas: ${business.languages.join(", ")}`
       : null,
-    hours ? `Opening hours:\n${hours}` : null,
-    social ? `Social links:\n${social}` : null,
-    business.policies ? `Policies: ${business.policies}` : null,
+    hours ? `Opening hours / Darba laiks:\n${hours}` : null,
+    social ? `Social links / Sociālie tīkli:\n${social}` : null,
+    business.policies ? `Policies / Politikas: ${business.policies}` : null,
   ].filter(Boolean);
 
   if (lines.length === 0) return null;
@@ -215,12 +216,13 @@ export async function syncServiceKnowledge(
       : null;
 
   const text = [
-    `Service: ${service.nameLv}${service.nameEn ? ` / ${service.nameEn}` : ""}`,
-    service.category ? `Category: ${service.category}` : null,
+    `Service / Pakalpojums: ${service.nameLv}${service.nameEn ? ` / ${service.nameEn}` : ""}`,
+    "Cenas / Prices / Pakalpojumi",
+    service.category ? `Category / Kategorija: ${service.category}` : null,
     service.descriptionLv ? `Description: ${service.descriptionLv}` : null,
     service.descriptionEn ? `Description (EN): ${service.descriptionEn}` : null,
     price,
-    service.duration ? `Duration: ${service.duration}` : null,
+    service.duration ? `Duration / Ilgums: ${service.duration}` : null,
     service.notes ? `Notes: ${service.notes}` : null,
   ]
     .filter(Boolean)

@@ -28,6 +28,7 @@ import {
   getOrCreateConversation,
 } from "@/services/conversation/conversation-service";
 import { retrieveRelevantChunks } from "@/services/knowledge/retrieval-service";
+import { canAnswerWithoutRetrieval } from "@/services/ai/grounding";
 
 export type ChatRequest = {
   workspaceId: string;
@@ -65,10 +66,24 @@ function resolveLocale(
 }
 
 async function loadAssistantContext(workspaceId: string, locale: Locale) {
-  const [workspace, business, assistant] = await Promise.all([
+  const [workspace, business, assistant, services] = await Promise.all([
     prisma.workspace.findUniqueOrThrow({ where: { id: workspaceId } }),
     prisma.businessInformation.findUnique({ where: { workspaceId } }),
     prisma.assistantConfiguration.findUnique({ where: { workspaceId } }),
+    prisma.service.findMany({
+      where: { workspaceId, isActive: true },
+      orderBy: [{ sortOrder: "asc" }, { nameLv: "asc" }],
+      take: 40,
+      select: {
+        nameLv: true,
+        nameEn: true,
+        descriptionLv: true,
+        descriptionEn: true,
+        priceFrom: true,
+        priceTo: true,
+        currency: true,
+      },
+    }),
   ]);
 
   if (!assistant) {
@@ -95,6 +110,16 @@ async function loadAssistantContext(workspaceId: string, locale: Locale) {
     ? assistant.tone
     : ("professional" as AssistantTone);
 
+  const { formatOpeningHoursForKnowledge, parseOpeningHours } = await import(
+    "@/config/business-profile"
+  );
+  const openingHours = business
+    ? formatOpeningHoursForKnowledge(
+        parseOpeningHours(business.openingHours),
+        locale,
+      )
+    : null;
+
   return {
     workspace,
     rawAssistant: assistant,
@@ -108,6 +133,20 @@ async function loadAssistantContext(workspaceId: string, locale: Locale) {
       websiteUrl: business?.websiteUrl,
       languages: business?.languages,
       policies: business?.policies,
+      openingHours: openingHours || null,
+      services: services.map((s) => ({
+        name:
+          locale === "en" && s.nameEn
+            ? s.nameEn
+            : s.nameLv || s.nameEn || "Service",
+        description:
+          locale === "en"
+            ? s.descriptionEn || s.descriptionLv
+            : s.descriptionLv || s.descriptionEn,
+        priceFrom: s.priceFrom,
+        priceTo: s.priceTo,
+        currency: s.currency,
+      })),
     },
     assistant: {
       name: assistant.name,
@@ -226,8 +265,12 @@ export async function generateAssistantReply(
     query: request.message,
   }).catch(() => []);
 
-  const usedFallback = knowledge.length === 0;
-  if (usedFallback) {
+  const profileCanAnswer = canAnswerWithoutRetrieval(
+    request.message,
+    ctx.business,
+  );
+
+  if (knowledge.length === 0 && !profileCanAnswer) {
     const answer = ctx.assistant.fallbackMessage;
     await appendMessage({
       workspaceId: request.workspaceId,
@@ -421,7 +464,12 @@ export async function streamAssistantReply(
     query: request.message,
   }).catch(() => []);
 
-  if (knowledge.length === 0 || !hasOpenAIKey()) {
+  const profileCanAnswer = canAnswerWithoutRetrieval(
+    request.message,
+    ctx.business,
+  );
+
+  if ((knowledge.length === 0 && !profileCanAnswer) || !hasOpenAIKey()) {
     const answer = ctx.assistant.fallbackMessage;
     onToken(answer);
     await appendMessage({
