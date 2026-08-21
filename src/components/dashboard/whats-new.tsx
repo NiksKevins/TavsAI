@@ -227,15 +227,20 @@ export function ChangelogMasterDetail({
         </div>
       </aside>
 
-      <article className="flex min-h-[280px] flex-col p-5 sm:p-6 lg:max-h-[min(70vh,640px)] lg:overflow-y-auto lg:p-8">
+      <article className="flex min-h-[280px] flex-col p-5 sm:p-6 lg:max-h-[min(78vh,760px)] lg:overflow-y-auto lg:p-8">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0 space-y-1.5">
+          <div className="min-w-0 space-y-2">
             <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
               {pickChangelogText(selected.title, locale)}
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               {pickChangelogText(selected.summary, locale)}
             </p>
+            {selected.details ? (
+              <p className="text-sm leading-relaxed text-foreground/85">
+                {pickChangelogText(selected.details, locale)}
+              </p>
+            ) : null}
           </div>
           <Badge variant="secondary" className="shrink-0 font-normal tabular-nums">
             {selected.date}
@@ -245,7 +250,7 @@ export function ChangelogMasterDetail({
         {selected.images && selected.images.length > 0 ? (
           <div
             className={cn(
-              "mt-6 grid gap-3",
+              "mt-6 grid gap-4",
               selected.images.length > 1
                 ? "sm:grid-cols-2"
                 : "grid-cols-1",
@@ -254,19 +259,21 @@ export function ChangelogMasterDetail({
             {selected.images.map((image) => (
               <figure
                 key={image.src}
-                className="overflow-hidden rounded-xl border border-border bg-muted/30"
+                className="overflow-hidden rounded-xl border border-border bg-white shadow-sm"
               >
-                <div className="relative aspect-[16/10] w-full bg-white">
+                <div className="relative aspect-[16/10] w-full">
                   <Image
                     src={image.src}
                     alt={pickChangelogText(image.alt, locale)}
                     fill
-                    className="object-contain p-2 sm:p-3"
-                    sizes="(max-width: 768px) 100vw, 480px"
+                    quality={95}
+                    priority={selected.images?.[0]?.src === image.src}
+                    className="object-contain object-top p-1 sm:p-2"
+                    sizes="(max-width: 768px) 100vw, 640px"
                   />
                 </div>
                 {image.caption ? (
-                  <figcaption className="border-t border-border px-3 py-2 text-xs text-muted-foreground">
+                  <figcaption className="border-t border-border bg-muted/20 px-3 py-2 text-xs leading-relaxed text-muted-foreground">
                     {pickChangelogText(image.caption, locale)}
                   </figcaption>
                 ) : null}
@@ -275,7 +282,7 @@ export function ChangelogMasterDetail({
           </div>
         ) : null}
 
-        <ul className="mt-6 space-y-3 border-t border-border pt-6">
+        <ul className="mt-6 space-y-4 border-t border-border pt-6">
           {selected.items.map((item, i) => (
             <li
               key={`${selected.id}-detail-${i}`}
