@@ -1083,7 +1083,7 @@
       "conversations": "Conversations",
       "leads": "Leads",
       "qualified": "Qualified leads",
-      "won": "Won leads",
+      "won": "Won (closed)",
       "handoffs": "Human handoffs",
       "aiResolution": "AI resolution",
       "leadConversion": "Lead conversion"

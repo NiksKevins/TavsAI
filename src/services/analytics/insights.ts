@@ -84,7 +84,7 @@ export function buildBusinessInsight(
     if (locale === "lv") {
       parts.push(
         rate != null
-          ? `Izveidoti ${snapshot.leads} lead${snapshot.leads === 1 ? "s" : "i"} (konversija ${rate}% no sarunām); kvalificēti ${snapshot.qualifiedLeads}, iegūti ${snapshot.wonLeads}.`
+          ? `Izveidoti ${snapshot.leads} lead${snapshot.leads === 1 ? "s" : "i"} (konversija ${rate}% no sarunām); kvalificēti ${snapshot.qualifiedLeads}, uzvarēti ${snapshot.wonLeads}.`
           : `Izveidoti ${snapshot.leads} leadi.`,
       );
     } else {
