@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "TavsWebs Bot — AI chat for your website",
-    "description": "Answers customers 24/7, saves contacts, and helps them book. Add it to your site in minutes.",
+    "description": "AI chatbot for your website — answers customers 24/7, captures leads, and books appointments. One-time €290 setup + monthly plan. Latvian & English.",
     "ogTitle": "TavsWebs Bot — AI chat for your website",
-    "ogDescription": "Answers customers 24/7 and captures leads — simple setup.",
+    "ogDescription": "24/7 answers and leads. €290 one-time setup + monthly plan.",
     "keywords": "AI chat, website assistant, leads, Latvian AI, TavsWebs"
   },
   "nav": {
@@ -30,11 +30,11 @@
   "marketing": {
     "hero": {
       "headline": "AI chat for your website.",
-      "subhead": "Answers customers 24/7 and saves contacts when you’re away.",
+      "subhead": "Answers customers around the clock, captures leads when you are away, and hands serious conversations to you. We set it up for you — or you can start free and DIY.",
       "ctaPrimary": "Try for free",
       "ctaSecondary": "Watch the demo",
       "proof": "Try it here",
-      "trust": "Free · No card · LV & EN",
+      "trust": "LV & EN · €290 setup (one-time) + monthly plan · Free DIY option",
       "tryHint": "Pick an industry and ask a question."
     },
     "demo": {
@@ -70,46 +70,47 @@
     },
     "problem": {
       "eyebrow": "The problem",
-      "title": "Customers ask — you don’t reply.",
-      "hint": "Especially after hours.",
+      "title": "Customers ask — you don’t reply in time.",
+      "hint": "Especially evenings, weekends, and busy hours — when the best leads often arrive.",
       "items": {
-        "0": "The same questions again and again.",
-        "1": "Visitors come when nobody answers.",
-        "2": "Leads leave without a message.",
-        "3": "Your team wastes time on simple replies."
+        "0": "The same questions again and again: prices, availability, what you offer, how to book.",
+        "1": "Visitors land when nobody is online — and leave without a message.",
+        "2": "Phone and email pile up; slow replies lose jobs to whoever answers first.",
+        "3": "Your team spends hours on simple replies instead of real work.",
+        "4": "You have no clear record of who asked what — leads disappear in chat apps and missed calls."
       }
     },
     "solution": {
       "eyebrow": "Solution",
-      "title": "The bot answers for you.",
-      "subtitle": "Customers get help. You get contacts.",
+      "title": "An AI assistant that knows your business.",
+      "subtitle": "Customers get instant help. You get organised leads and fewer missed opportunities.",
       "items": {
         "0": {
-          "title": "Answers",
-          "body": "Prices, services, and opening hours."
+          "title": "Answers from your content",
+          "body": "Prices, services, opening hours, locations, and FAQs — grounded in your website and documents, not made-up answers."
         },
         "1": {
           "title": "Knows your business",
-          "body": "Learns from your site and docs."
+          "body": "We crawl your site and add services, price lists, and policies so replies stay accurate and on-brand."
         },
         "2": {
-          "title": "Qualifies",
-          "body": "Asks short questions."
+          "title": "Qualifies visitors",
+          "body": "Asks short, useful questions so you know who is ready to buy — not just browsing."
         },
         "3": {
-          "title": "Saves leads",
-          "body": "Name, phone, email — in your dashboard."
+          "title": "Saves leads automatically",
+          "body": "Name, phone, email, and the full chat transcript land in your dashboard (and optional email alerts)."
         },
         "4": {
-          "title": "Hands off to you",
-          "body": "When a human is needed."
+          "title": "Hands off to a human",
+          "body": "When the conversation needs you, the bot can collect contacts and flag it for follow-up."
         },
         "5": {
-          "title": "Books",
-          "body": "When calendar is connected."
+          "title": "Books appointments",
+          "body": "With calendar connected, visitors can request a time without calling during work hours."
         }
       },
-      "footnote": "Works on your website — nothing new for customers to learn."
+      "footnote": "Works as a chat widget on your existing website — customers stay on your site."
     },
     "visuals": {
       "showcaseTitle": "What you get",
@@ -144,76 +145,90 @@
       "howTitle": "How it works",
       "howBody": "Three steps to the first chat.",
       "pricingTitle": "Pricing",
-      "pricingBody": "Start free.",
+      "pricingBody": "€290 setup (one-time) + monthly plan.",
       "linkLabel": "View"
     },
     "how": {
       "eyebrow": "How it works",
-      "title": "Three steps.",
+      "title": "From setup to live chats.",
       "steps": {
         "0": {
-          "title": "Add your website",
-          "body": "Enter the URL."
+          "title": "Tell us about your business",
+          "body": "Share your website URL, services, and how you want the assistant to sound."
         },
         "1": {
-          "title": "Paste the code",
-          "body": "One script on your site."
+          "title": "We set it up (€290 one-time)",
+          "body": "Crawl, knowledge base, widget styling, lead fields, and go-live checks — done for you."
         },
         "2": {
-          "title": "The bot starts",
-          "body": "Answers customers and saves leads."
+          "title": "Choose a monthly plan",
+          "body": "Starter, Business, or Pro based on conversation volume. Upgrade anytime as you grow."
         },
         "3": {
-          "title": "You get contacts",
-          "body": "Everything in your dashboard."
+          "title": "Paste one script (or we help)",
+          "body": "Add a single snippet to your site. The bot answers visitors and saves leads in your panel."
         }
       }
     },
     "industries": {
       "eyebrow": "Industries",
-      "title": "Built for service businesses.",
-      "subtitle": "Especially if customers ask about prices a lot.",
+      "title": "Built for service businesses that get the same questions every day.",
+      "subtitle": "If customers ask about prices, availability, or booking — the bot pays for itself quickly.",
       "items": {
-        "0": "Auto services",
-        "1": "Beauty salons",
-        "2": "Hair salons",
-        "3": "Construction",
-        "4": "Real estate",
-        "5": "Dentistry",
-        "6": "Restaurants",
-        "7": "Professional services"
+        "0": "Auto services & tyre centres",
+        "1": "Beauty & nail salons",
+        "2": "Hair salons & barbers",
+        "3": "Construction & trades",
+        "4": "Real estate & property",
+        "5": "Dental & medical clinics",
+        "6": "Restaurants & cafés",
+        "7": "Professional services & consultants"
       }
     },
     "pricing": {
       "eyebrow": "Pricing",
-      "title": "Start free.",
-      "subtitle": "Pay when chats grow.",
+      "title": "Setup once. Then a clear monthly plan.",
+      "subtitle": "€290 one-time setup for done-for-you onboarding — plus the monthly plan that matches your chat volume. Or start free and configure it yourself.",
       "perMonth": "/ month",
       "conversations": "{count} conversations / month",
       "recommended": "Recommended",
-      "cta": "Start",
+      "cta": "Get started",
+      "setupTitle": "Done-for-you setup",
+      "setupPrice": "€290",
+      "setupOnce": "one-time",
+      "setupBody": "We configure the chatbot for your business: website crawl, knowledge base, widget on your site, lead capture, and go-live. Paid once — not every month.",
+      "setupIncludes": {
+        "0": "Website crawl & knowledge setup",
+        "1": "Widget install guidance (or we assist)",
+        "2": "Lead fields & greeting tailored to you",
+        "3": "Go-live check and fine-tuning"
+      },
+      "setupNote": "Then add a monthly plan (Starter / Business / Pro). Free DIY stays available without the setup fee.",
+      "monthlyTitle": "Monthly plans",
       "features": {
         "FREE": {
-          "0": "Widget and assistant",
-          "1": "Website indexing",
-          "2": "Lead capture"
+          "0": "Widget + AI assistant",
+          "1": "Website indexing (basic)",
+          "2": "Lead capture",
+          "3": "Self-serve setup (no €290 fee)"
         },
         "STARTER": {
           "0": "Everything in Free",
-          "1": "More pages",
-          "2": "Email alerts"
+          "1": "Higher page / crawl limits",
+          "2": "Email lead alerts",
+          "3": "Ideal after paid setup"
         },
         "BUSINESS": {
           "0": "Everything in Starter",
-          "1": "Analytics",
-          "2": "Bookings",
+          "1": "Analytics dashboard",
+          "2": "Calendar bookings",
           "3": "Priority support"
         },
         "PRO": {
           "0": "Everything in Business",
-          "1": "High limits",
+          "1": "Highest conversation limits",
           "2": "Larger knowledge base",
-          "3": "For teams"
+          "3": "Built for busy teams"
         }
       }
     },
@@ -222,35 +237,51 @@
       "title": "Frequently asked questions",
       "items": {
         "0": {
-          "q": "Do I need to code?",
-          "a": "No. Paste one snippet and you’re ready."
+          "q": "What is the €290 setup fee?",
+          "a": "It is a one-time payment for us to set up the chatbot for you — crawl your site, build the knowledge base, configure the widget and lead capture, and help you go live. It is not a monthly charge."
         },
         "1": {
-          "q": "How fast does it start?",
-          "a": "Usually within minutes after you add your website."
+          "q": "Do I still pay monthly?",
+          "a": "Yes. After setup you choose a monthly plan (Starter, Business, or Pro) based on how many conversations you need. The monthly fee covers hosting, AI replies, and your dashboard."
         },
         "2": {
-          "q": "Does the bot invent answers?",
-          "a": "No — it uses your content. If unsure, it can hand off to you."
+          "q": "Can I skip the setup fee?",
+          "a": "Yes. The Free plan is self-serve: create an account, add your site, and install the widget yourself — no €290 fee. Paid setup is for businesses that want it done for them."
         },
         "3": {
-          "q": "Where do leads go?",
-          "a": "Your dashboard. Name, contact, and chat."
+          "q": "Do I need to code?",
+          "a": "No. With paid setup we guide the install. DIY only needs pasting one script snippet into your website."
         },
         "4": {
-          "q": "Latvian and English?",
-          "a": "Yes."
+          "q": "How fast does it go live?",
+          "a": "DIY: often within minutes after indexing. With done-for-you setup: typically within a few business days after we have your website and details."
         },
         "5": {
-          "q": "Can I cancel?",
-          "a": "Yes, anytime from the dashboard."
+          "q": "Does the bot invent answers?",
+          "a": "No. It answers from your website and the knowledge you provide. If it is unsure, it can ask for contact details and hand off to you."
+        },
+        "6": {
+          "q": "Where do leads go?",
+          "a": "Your TavsWebs Bot dashboard — name, contact details, and the chat transcript. You can also get email alerts on paid plans."
+        },
+        "7": {
+          "q": "Latvian and English?",
+          "a": "Yes. The product and assistant work in Latvian and English."
+        },
+        "8": {
+          "q": "Can I cancel the monthly plan?",
+          "a": "Yes, anytime from the dashboard. The one-time setup fee is non-recurring."
+        },
+        "9": {
+          "q": "What counts as a conversation?",
+          "a": "A visitor chat session with the assistant. Limits reset each billing month according to your plan."
         }
       }
     },
     "finalCta": {
       "eyebrow": "Start",
-      "title": "Try it free.",
-      "cta": "Start for free"
+      "title": "Ready for 24/7 answers and organised leads?",
+      "cta": "Start free or book setup"
     },
     "footer": {
       "tagline": "AI chat for your website — answers and leads 24/7.",
@@ -260,16 +291,47 @@
       "login": "Log in",
       "privacy": "Privacy",
       "cookies": "Cookies"
+    },
+    "details": {
+      "eyebrow": "What you get",
+      "title": "More than a chat bubble.",
+      "subtitle": "A complete assistant stack for local service businesses.",
+      "items": {
+        "0": {
+          "title": "Website widget",
+          "body": "Embed on any site. Matches your brand colours and greeting so it feels native."
+        },
+        "1": {
+          "title": "Knowledge from your site",
+          "body": "Crawl pages, FAQs, and PDFs so answers stay tied to what you actually offer."
+        },
+        "2": {
+          "title": "Lead inbox",
+          "body": "Every serious chat can become a contact with context — not a random phone number."
+        },
+        "3": {
+          "title": "Dashboard control",
+          "body": "Tune tone, suggested questions, lead fields, and review conversations in one place."
+        },
+        "4": {
+          "title": "Email alerts",
+          "body": "Get notified when a new lead arrives so you can call back the same day."
+        },
+        "5": {
+          "title": "Optional bookings",
+          "body": "Connect a calendar on higher plans so visitors can request a time without calling."
+        }
+      }
     }
   },
   "pricing": {
     "title": "Pricing",
-    "subtitle": "Start free. Pay when chats grow.",
+    "subtitle": "€290 one-time setup + monthly plan — or start free and DIY.",
     "perMonth": "/ month",
     "conversations": "{count} conversations / month",
     "cta": "Start",
     "recommended": "Recommended",
-    "note": "Upgrade anytime: Dashboard → Billing."
+    "note": "Setup fee is one-time for done-for-you onboarding. Monthly plans cover conversations and product features. Upgrade anytime: Dashboard → Billing."
   },
   "common": {
     "language": "Language",

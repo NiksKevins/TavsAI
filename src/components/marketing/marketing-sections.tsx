@@ -16,7 +16,7 @@ import {
   FeatureIndex,
 } from "@/components/marketing/marketing-visuals";
 import { Button } from "@/components/ui/button";
-import { PLANS } from "@/config/plans";
+import { PLANS, SETUP_FEE_EUR } from "@/config/plans";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
 
 const LiveDemoChat = dynamic(
@@ -113,7 +113,47 @@ export function MarketingSolutionSection({ dict }: { dict: MarketingDict }) {
   );
 }
 
-export function MarketingHowSection({ dict }: { dict: MarketingDict }) {
+export function MarketingDetailsSection({ dict }: { dict: MarketingDict }) {
+  return (
+    <>
+      <MarketingPageHero
+        eyebrow={dict.details.eyebrow}
+        title={dict.details.title}
+        subtitle={dict.details.subtitle}
+      />
+      <MarketingSection tone="plain" className="pt-0">
+        <MarketingContainer>
+          <ul>
+            {dict.details.items.map((item, index) => (
+              <li key={item.title}>
+                {index > 0 ? <EditorialDivider /> : null}
+                <article className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 py-5 sm:gap-x-5 sm:py-6">
+                  <FeatureIndex n={index + 1} />
+                  <div className="min-w-0">
+                    <h3 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-base leading-[1.7] text-ink-soft sm:text-lg sm:leading-[1.65]">
+                      {item.body}
+                    </p>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </MarketingContainer>
+      </MarketingSection>
+    </>
+  );
+}
+
+export function MarketingHowSection({
+  dict,
+  withFinalCta = true,
+}: {
+  dict: MarketingDict;
+  withFinalCta?: boolean;
+}) {
   return (
     <>
       <MarketingPageHero eyebrow={dict.how.eyebrow} title={dict.how.title} />
@@ -122,18 +162,26 @@ export function MarketingHowSection({ dict }: { dict: MarketingDict }) {
           <HowStepsEditorial steps={dict.how.steps} />
         </MarketingContainer>
       </MarketingSection>
-      <MarketingFinalCta
-        eyebrow={dict.finalCta.eyebrow}
-        title={dict.finalCta.title}
-        cta={dict.finalCta.cta}
-        secondaryHref="/demo"
-        secondaryLabel={dict.ctaSecondary}
-      />
+      {withFinalCta ? (
+        <MarketingFinalCta
+          eyebrow={dict.finalCta.eyebrow}
+          title={dict.finalCta.title}
+          cta={dict.finalCta.cta}
+          secondaryHref="/demo"
+          secondaryLabel={dict.ctaSecondary}
+        />
+      ) : null}
     </>
   );
 }
 
-export function MarketingIndustriesSection({ dict }: { dict: MarketingDict }) {
+export function MarketingIndustriesSection({
+  dict,
+  withFinalCta = true,
+}: {
+  dict: MarketingDict;
+  withFinalCta?: boolean;
+}) {
   return (
     <>
       <MarketingPageHero
@@ -155,13 +203,15 @@ export function MarketingIndustriesSection({ dict }: { dict: MarketingDict }) {
           </ul>
         </MarketingContainer>
       </MarketingSection>
-      <MarketingFinalCta
-        eyebrow={dict.finalCta.eyebrow}
-        title={dict.finalCta.title}
-        cta={dict.finalCta.cta}
-        secondaryHref="/demo"
-        secondaryLabel={dict.ctaSecondary}
-      />
+      {withFinalCta ? (
+        <MarketingFinalCta
+          eyebrow={dict.finalCta.eyebrow}
+          title={dict.finalCta.title}
+          cta={dict.finalCta.cta}
+          secondaryHref="/demo"
+          secondaryLabel={dict.ctaSecondary}
+        />
+      ) : null}
     </>
   );
 }
@@ -169,9 +219,11 @@ export function MarketingIndustriesSection({ dict }: { dict: MarketingDict }) {
 export function MarketingPricingSection({
   dict,
   note,
+  withFinalCta = true,
 }: {
   dict: MarketingDict;
   note?: string;
+  withFinalCta?: boolean;
 }) {
   const plans = Object.values(PLANS);
   const featured = plans.find((p) => p.id === "BUSINESS")!;
@@ -186,8 +238,15 @@ export function MarketingPricingSection({
       />
       <MarketingSection tone="plain" className="pt-0">
         <MarketingContainer wide>
-          {/* Featured plan — elevated center stage */}
-          <FeaturedPlanCard dict={dict} plan={featured} />
+          <SetupFeeCard dict={dict} />
+
+          <h3 className="mt-10 font-display text-xl font-semibold tracking-tight sm:text-2xl">
+            {dict.pricing.monthlyTitle}
+          </h3>
+
+          <div className="mt-5">
+            <FeaturedPlanCard dict={dict} plan={featured} />
+          </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
             {others.map((plan) => (
@@ -200,14 +259,54 @@ export function MarketingPricingSection({
           ) : null}
         </MarketingContainer>
       </MarketingSection>
-      <MarketingFinalCta
-        eyebrow={dict.finalCta.eyebrow}
-        title={dict.finalCta.title}
-        cta={dict.finalCta.cta}
-        secondaryHref="/demo"
-        secondaryLabel={dict.ctaSecondary}
-      />
+      {withFinalCta ? (
+        <MarketingFinalCta
+          eyebrow={dict.finalCta.eyebrow}
+          title={dict.finalCta.title}
+          cta={dict.finalCta.cta}
+          secondaryHref="/demo"
+          secondaryLabel={dict.ctaSecondary}
+        />
+      ) : null}
     </>
+  );
+}
+
+function SetupFeeCard({ dict }: { dict: MarketingDict }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-8">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-10">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+            {dict.pricing.setupOnce}
+          </p>
+          <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            {dict.pricing.setupTitle}
+          </h3>
+          <p className="mt-3 max-w-xl text-base leading-[1.7] text-ink-soft">
+            {dict.pricing.setupBody}
+          </p>
+          <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+            {dict.pricing.setupIncludes.map((item) => (
+              <li key={item} className="flex gap-2 text-sm text-ink-soft">
+                <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-sm text-muted-foreground">{dict.pricing.setupNote}</p>
+        </div>
+        <div className="flex flex-col items-start justify-center rounded-xl border border-primary/15 bg-primary/5 px-6 py-8 lg:items-center lg:text-center">
+          <p className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
+            €{SETUP_FEE_EUR}
+          </p>
+          <p className="mt-2 text-sm font-medium text-ink-soft">{dict.pricing.setupOnce}</p>
+          <Button asChild size="lg" className="mt-6 rounded-full px-8">
+            <Link href="/register">{dict.pricing.cta}</Link>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -250,12 +349,19 @@ function FeaturedPlanCard({
           </ul>
         </div>
         <div className="flex flex-col items-start gap-4 lg:items-end">
-          <p className="font-display text-5xl font-semibold tracking-tight">
-            €{plan.priceMonthlyEur}
-            <span className="text-base font-normal text-primary-foreground/70">
-              {dict.pricing.perMonth}
-            </span>
-          </p>
+          <div>
+            <p className="font-display text-5xl font-semibold tracking-tight">
+              €{plan.priceMonthlyEur}
+              <span className="text-base font-normal text-primary-foreground/70">
+                {dict.pricing.perMonth}
+              </span>
+            </p>
+            {plan.priceMonthlyEur > 0 ? (
+              <p className="mt-1 text-sm text-primary-foreground/70">
+                + {dict.pricing.setupPrice} {dict.pricing.setupOnce}
+              </p>
+            ) : null}
+          </div>
           <Button asChild size="lg" variant="secondary" className="rounded-full px-8">
             <Link href="/register">{dict.pricing.cta}</Link>
           </Button>
@@ -283,6 +389,11 @@ function PlanCard({
           {dict.pricing.perMonth}
         </span>
       </p>
+      {plan.priceMonthlyEur > 0 ? (
+        <p className="mt-1 text-xs text-muted-foreground">
+          + {dict.pricing.setupPrice} {dict.pricing.setupOnce}
+        </p>
+      ) : null}
       <p className="mt-1 text-sm text-ink-soft">
         {dict.pricing.conversations.replace(
           "{count}",
@@ -306,7 +417,13 @@ function PlanCard({
   );
 }
 
-export function MarketingFaqSection({ dict }: { dict: MarketingDict }) {
+export function MarketingFaqSection({
+  dict,
+  withFinalCta = true,
+}: {
+  dict: MarketingDict;
+  withFinalCta?: boolean;
+}) {
   const mid = Math.ceil(dict.faq.items.length / 2);
   const colA = dict.faq.items.slice(0, mid);
   const colB = dict.faq.items.slice(mid);
@@ -345,13 +462,15 @@ export function MarketingFaqSection({ dict }: { dict: MarketingDict }) {
           </div>
         </MarketingContainer>
       </MarketingSection>
-      <MarketingFinalCta
-        eyebrow={dict.finalCta.eyebrow}
-        title={dict.finalCta.title}
-        cta={dict.finalCta.cta}
-        secondaryHref="/register"
-        secondaryLabel={dict.ctaPrimary}
-      />
+      {withFinalCta ? (
+        <MarketingFinalCta
+          eyebrow={dict.finalCta.eyebrow}
+          title={dict.finalCta.title}
+          cta={dict.finalCta.cta}
+          secondaryHref="/register"
+          secondaryLabel={dict.ctaPrimary}
+        />
+      ) : null}
     </>
   );
 }

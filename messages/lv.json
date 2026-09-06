@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "TavsWebs Bot — AI čats tavai mājaslapai",
-    "description": "Atbild klientiem 24/7, saglabā kontaktus un palīdz pieteikties. Vienkārši pievieno savai mājaslapai.",
+    "description": "AI čatbots tavai mājaslapai — atbild 24/7, saglabā leadus un palīdz pieteikties. Vienreizēja uzstādīšana €290 + mēneša plāns. Latviešu un angļu valodā.",
     "ogTitle": "TavsWebs Bot — AI čats tavai mājaslapai",
-    "ogDescription": "Atbild klientiem 24/7 un saglabā leadus — bez sarežģītas uzstādīšanas.",
+    "ogDescription": "Atbildes 24/7 un leadi. €290 uzstādīšana (vienreiz) + mēneša plāns.",
     "keywords": "AI čats, mājaslapas asistents, leadi, latviešu AI, TavsWebs"
   },
   "nav": {
@@ -30,11 +30,11 @@
   "marketing": {
     "hero": {
       "headline": "AI čats tavai mājaslapai.",
-      "subhead": "Atbild klientiem 24/7 un saglabā kontaktus, kad tu neesi pieejams.",
+      "subhead": "Atbild klientiem dienu un nakti, saglabā leadus, kad tu neesi pieejams, un nodod nopietnas sarunas tev. Mēs uzstādām tavā vietā — vai sāc bez maksas pats.",
       "ctaPrimary": "Pamēģināt bez maksas",
       "ctaSecondary": "Noskatīties demo",
       "proof": "Izmēģini šeit",
-      "trust": "Bezmaksas · Bez kartes · LV un EN",
+      "trust": "LV un EN · €290 uzstādīšana (vienreiz) + mēneša plāns · Bezmaksas DIY",
       "tryHint": "Izvēlies nozari un uzdod jautājumu."
     },
     "demo": {
@@ -70,46 +70,47 @@
     },
     "problem": {
       "eyebrow": "Problēma",
-      "title": "Klienti jautā — jūs neatbildat.",
-      "hint": "Īpaši pēc darba laika.",
+      "title": "Klienti jautā — tu neatbildi laikā.",
+      "hint": "Īpaši vakaros, brīvdienās un sastrēguma stundās — kad bieži nāk labākie leadi.",
       "items": {
-        "0": "Tie paši jautājumi atkal un atkal.",
-        "1": "Apmeklētāji nāk, kad neviens neatbild.",
-        "2": "Leadi aiziet bez ziņas.",
-        "3": "Komanda tērē laiku uz vienkāršām atbildēm."
+        "0": "Tie paši jautājumi atkal un atkal: cenas, pieejamība, ko jūs darāt, kā pieteikties.",
+        "1": "Apmeklētāji ienāk, kad neviens nav online — un aiziet bez ziņas.",
+        "2": "Zvani un e-pasti krājas; lēna atbilde nozīmē, ka darbs aiziet pie tā, kurš atbild pirmais.",
+        "3": "Komanda tērē stundas uz vienkāršām atbildēm, nevis īsto darbu.",
+        "4": "Nav skaidras uzskaites, kas ko jautāja — leadi pazūd čatos un neatbildētos zvanos."
       }
     },
     "solution": {
       "eyebrow": "Risinājums",
-      "title": "Bots atbild tavā vietā.",
-      "subtitle": "Klienti saņem palīdzību. Tu saņem kontaktus.",
+      "title": "AI asistents, kas zina tavu biznesu.",
+      "subtitle": "Klienti saņem tūlītēju palīdzību. Tu saņem sakārtotus leadus un mazāk nokavētu iespēju.",
       "items": {
         "0": {
-          "title": "Atbild",
-          "body": "Uz cenām, pakalpojumiem un darba laiku."
+          "title": "Atbild no tava satura",
+          "body": "Cenas, pakalpojumi, darba laiks, atrašanās vietas un BUJ — balstīts tavā mājaslapā un dokumentos, neizdomātās atbildēs."
         },
         "1": {
           "title": "Zina tavu biznesu",
-          "body": "Mācās no mājaslapas un dokumentiem."
+          "body": "Mēs indeksējam vietni un pievienojam pakalpojumus, cenrāžus un noteikumus, lai atbildes būtu precīzas."
         },
         "2": {
-          "title": "Kvalificē",
-          "body": "Uzdod īsus jautājumus."
+          "title": "Kvalificē apmeklētājus",
+          "body": "Uzdod īsus, noderīgus jautājumus, lai tu zinātu, kurš ir gatavs pirkt."
         },
         "3": {
-          "title": "Saglabā leadus",
-          "body": "Vārds, tālrunis, e-pasts — tavā panelī."
+          "title": "Saglabā leadus automātiski",
+          "body": "Vārds, tālrunis, e-pasts un visa saruna — tavā panelī (un pēc izvēles e-pasta paziņojumos)."
         },
         "4": {
-          "title": "Nodod tev",
-          "body": "Kad vajag cilvēku."
+          "title": "Nodod cilvēkam",
+          "body": "Kad vajag tevi, bots var paņemt kontaktus un atzīmēt sekošanai."
         },
         "5": {
-          "title": "Pieraksta",
-          "body": "Ja kalendārs ir savienots."
+          "title": "Pieraksta vizītes",
+          "body": "Ar savienotu kalendāru apmeklētāji var lūgt laiku bez zvana darba laikā."
         }
       },
-      "footnote": "Strādā tavā mājaslapā — klientiem nekas jauns nav jāmācās."
+      "footnote": "Strādā kā čata logrīks tavā esošajā mājaslapā — klientiem nekas jauns nav jāmācās."
     },
     "visuals": {
       "showcaseTitle": "Ko tu saņem",
@@ -144,76 +145,90 @@
       "howTitle": "Kā tas strādā",
       "howBody": "Trīs soļi līdz pirmajai sarunai.",
       "pricingTitle": "Cenas",
-      "pricingBody": "Sāciet bez maksas.",
+      "pricingBody": "€290 uzstādīšana (vienreiz) + mēneša plāns.",
       "linkLabel": "Skatīt"
     },
     "how": {
       "eyebrow": "Kā tas strādā",
-      "title": "Trīs soļi.",
+      "title": "No uzstādīšanas līdz dzīvām sarunām.",
       "steps": {
         "0": {
-          "title": "Pievieno mājaslapu",
-          "body": "Ievadi URL."
+          "title": "Pastāsti par biznesu",
+          "body": "Mājaslapas URL, pakalpojumi un kā asistents runā."
         },
         "1": {
-          "title": "Ievieto kodu",
-          "body": "Viens skripts tavā vietnē."
+          "title": "Mēs uzstādām (€290 vienreiz)",
+          "body": "Indeksēšana, zināšanu bāze, logrīks, lead lauki un pārbaude pirms starta — tavā vietā."
         },
         "2": {
-          "title": "Bots sāk strādāt",
-          "body": "Atbild klientiem un saglabā leadus."
+          "title": "Izvēlies mēneša plānu",
+          "body": "Starter, Business vai Pro pēc sarunu apjoma. Vēlāk vari palielināt."
         },
         "3": {
-          "title": "Tu saņem kontaktus",
-          "body": "Viss redzams tavā panelī."
+          "title": "Ievieto skriptu (vai palīdzam)",
+          "body": "Viens kods vietnē. Bots atbild un saglabā leadus tavā panelī."
         }
       }
     },
     "industries": {
       "eyebrow": "Nozares",
-      "title": "Der Latvijas pakalpojumu biznesam.",
-      "subtitle": "Īpaši, ja klienti bieži jautā par cenām.",
+      "title": "Pakalpojumu biznesiem, kur ikdienā skan vieni un tie paši jautājumi.",
+      "subtitle": "Ja klienti jautā par cenām, pieejamību vai pierakstu — bots ātri atmaksājas.",
       "items": {
-        "0": "Autoservisi",
-        "1": "Skaistumkopšanas saloni",
+        "0": "Autoservisi un riepu centri",
+        "1": "Skaistumkopšanas un nagu saloni",
         "2": "Frizētavas",
-        "3": "Būvniecība",
-        "4": "Nekustamie īpašumi",
-        "5": "Zobārstniecība",
-        "6": "Restorāni",
+        "3": "Būvniecība un amati",
+        "4": "Nekustamais īpašums",
+        "5": "Zobārstniecība un klīnikas",
+        "6": "Restorāni un kafejnīcas",
         "7": "Profesionālie pakalpojumi"
       }
     },
     "pricing": {
       "eyebrow": "Cenas",
-      "title": "Sāciet bez maksas.",
-      "subtitle": "Maksā, kad sarunu kļūst vairāk.",
+      "title": "Uzstādīšana vienreiz. Tad skaidrs mēneša plāns.",
+      "subtitle": "€290 vienreizēja uzstādīšana (mēs izdarām tavā vietā) + mēneša plāns pēc sarunu apjoma. Vai sāc bez maksas un uzstādi pats.",
       "perMonth": "/ mēnesī",
       "conversations": "{count} sarunas / mēnesī",
-      "recommended": "Ieteicamais",
+      "recommended": "Ieteicams",
       "cta": "Sākt",
+      "setupTitle": "Uzstādīšana tavā vietā",
+      "setupPrice": "€290",
+      "setupOnce": "vienreiz",
+      "setupBody": "Mēs nokonfigurējam čatbotu tavam biznesam: vietnes indeksēšana, zināšanu bāze, logrīks, leadu savākšana un palaišana. Maksā vienreiz — ne katru mēnesi.",
+      "setupIncludes": {
+        "0": "Vietnes crawl un zināšanu bāze",
+        "1": "Logrīka instalācijas palīdzība",
+        "2": "Lead lauki un sveiciens pēc tevis",
+        "3": "Pārbaude pirms starta un pielāgošana"
+      },
+      "setupNote": "Pēc tam pievieno mēneša plānu (Starter / Business / Pro). Bezmaksas DIY ir pieejams bez €290 maksas.",
+      "monthlyTitle": "Mēneša plāni",
       "features": {
         "FREE": {
-          "0": "Widget un asistents",
-          "1": "Mājaslapas indeksācija",
-          "2": "Leadu ievākšana"
+          "0": "Logrīks + AI asistents",
+          "1": "Vietnes indeksēšana (pamata)",
+          "2": "Leadu savākšana",
+          "3": "Pašapkalpošanās (bez €290)"
         },
         "STARTER": {
-          "0": "Viss Free plānā",
-          "1": "Vairāk lapu",
-          "2": "E-pasta paziņojumi"
+          "0": "Viss no Free",
+          "1": "Lielāki crawl limiti",
+          "2": "E-pasta paziņojumi par leadiem",
+          "3": "Piemērots pēc maksas uzstādīšanas"
         },
         "BUSINESS": {
-          "0": "Viss Starter plānā",
+          "0": "Viss no Starter",
           "1": "Analītika",
-          "2": "Pieraksti",
+          "2": "Kalendāra pieraksti",
           "3": "Prioritārs atbalsts"
         },
         "PRO": {
-          "0": "Viss Business plānā",
-          "1": "Augsts limits",
+          "0": "Viss no Business",
+          "1": "Augstākie sarunu limiti",
           "2": "Lielāka zināšanu bāze",
-          "3": "Komandām"
+          "3": "Aizņemtām komandām"
         }
       }
     },
@@ -222,35 +237,51 @@
       "title": "Biežāk uzdotie jautājumi",
       "items": {
         "0": {
-          "q": "Vai man jāprot programmēt?",
-          "a": "Nē. Ievieto vienu kodu un esi gatavs."
+          "q": "Kas ir €290 uzstādīšanas maksa?",
+          "a": "Vienreizējs maksājums, lai mēs uzstādītu čatbotu tavā vietā — vietnes indeksēšana, zināšanu bāze, logrīks, leadu forma un palaišana. Tas nav ikmēneša maksājums."
         },
         "1": {
-          "q": "Cik ātri tas sāk strādāt?",
-          "a": "Parasti dažu minūšu laikā pēc mājaslapas pievienošanas."
+          "q": "Vai jāmaksā arī katru mēnesi?",
+          "a": "Jā. Pēc uzstādīšanas izvēlies mēneša plānu (Starter, Business vai Pro) pēc sarunu skaita. Mēneša maksa sedz hostingu, AI atbildes un paneli."
         },
         "2": {
-          "q": "Vai bots izdomā atbildes?",
-          "a": "Nē — tas balstās uz tavu saturu. Ja nezina, var nodot tev."
+          "q": "Vai varu bez €290?",
+          "a": "Jā. Bezmaksas plāns ir pašapkalpošanās: konts, vietne un logrīks pašam — bez €290. Maksas uzstādīšana ir tiem, kas grib, lai mēs izdarām."
         },
         "3": {
-          "q": "Kur nonāk leadi?",
-          "a": "Tavā panelī. Vārds, kontakts un saruna."
+          "q": "Vai vajag programmēt?",
+          "a": "Nē. Ar maksas uzstādīšanu palīdzam ievietot. DIY vajag tikai vienu skripta rindu mājaslapā."
         },
         "4": {
-          "q": "Vai var latviešu un angļu valodā?",
-          "a": "Jā."
+          "q": "Cik ātri sāk strādāt?",
+          "a": "DIY: bieži dažu minūšu laikā pēc indeksēšanas. Ar uzstādīšanu tavā vietā: parasti dažu darba dienu laikā pēc mājaslapas un detaļu saņemšanas."
         },
         "5": {
-          "q": "Vai varu pārtraukt abonementu?",
-          "a": "Jā, jebkurā brīdī no paneļa."
+          "q": "Vai bots izdomā atbildes?",
+          "a": "Nē. Atbild no tavas mājaslapas un zināšanām. Ja nav drošs — var lūgt kontaktus un nodot tev."
+        },
+        "6": {
+          "q": "Kur nonāk leadi?",
+          "a": "TavsWebs Bot panelī — vārds, kontakti un sarunas teksts. Maksas plānos iespējami arī e-pasta paziņojumi."
+        },
+        "7": {
+          "q": "Latviešu un angļu?",
+          "a": "Jā. Produkts un asistents strādā latviešu un angļu valodā."
+        },
+        "8": {
+          "q": "Vai varu atcelt mēneša plānu?",
+          "a": "Jā, jebkurā brīdī no paneļa. Uzstādīšanas maksa ir vienreizēja."
+        },
+        "9": {
+          "q": "Kas ir saruna?",
+          "a": "Apmeklētāja čata sesija ar asistentu. Limiti atjaunojas katru norēķinu mēnesi."
         }
       }
     },
     "finalCta": {
       "eyebrow": "Sākt",
-      "title": "Pamēģini bez maksas.",
-      "cta": "Sākt bez maksas"
+      "title": "Gatavs atbildēm 24/7 un sakārtotiem leadiem?",
+      "cta": "Sākt bez maksas vai pieteikt uzstādīšanu"
     },
     "footer": {
       "tagline": "AI čats tavai mājaslapai — atbildes un leadi 24/7.",
@@ -260,16 +291,47 @@
       "login": "Ieiet",
       "privacy": "Privātums",
       "cookies": "Sīkdatnes"
+    },
+    "details": {
+      "eyebrow": "Ko tu saņem",
+      "title": "Vairāk nekā čata burbulis.",
+      "subtitle": "Pilns asistenta komplekts vietējiem pakalpojumu biznesiem.",
+      "items": {
+        "0": {
+          "title": "Mājaslapas logrīks",
+          "body": "Ievieto jebkurā vietnē. Krāsas un sveiciens pielāgojami tavam zīmolam."
+        },
+        "1": {
+          "title": "Zināšanas no vietnes",
+          "body": "Lapas, BUJ un PDF — atbildes saistītas ar to, ko tu patiešām piedāvā."
+        },
+        "2": {
+          "title": "Leadu iesūtne",
+          "body": "Nopietna saruna kļūst par kontaktu ar kontekstu — nevis nejaušu numuru."
+        },
+        "3": {
+          "title": "Vadība panelī",
+          "body": "Toni, ieteiktos jautājumus, lead laukus un sarunu pārskatu vienuviet."
+        },
+        "4": {
+          "title": "E-pasta paziņojumi",
+          "body": "Uzzini par jaunu leadu un atzvani tajā pašā dienā."
+        },
+        "5": {
+          "title": "Pieraksti (pēc izvēles)",
+          "body": "Augstākos plānos savieno kalendāru, lai klients var lūgt laiku bez zvana."
+        }
+      }
     }
   },
   "pricing": {
     "title": "Cenas",
-    "subtitle": "Sāciet bez maksas. Maksājiet, kad sarunu kļūst vairāk.",
+    "subtitle": "€290 uzstādīšana (vienreiz) + mēneša plāns — vai sāc bez maksas pats.",
     "perMonth": "/ mēnesī",
     "conversations": "{count} sarunas / mēnesī",
     "cta": "Sākt",
     "recommended": "Ieteicamais",
-    "note": "Jauniniet jebkurā brīdī: Panelis → Norēķini."
+    "note": "Uzstādīšanas maksa ir vienreizēja (mēs izdarām tavā vietā). Mēneša plāni sedz sarunas un funkcijas. Maini plānu: Panelis → Norēķini."
   },
   "common": {
     "language": "Valoda",

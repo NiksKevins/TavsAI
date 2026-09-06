@@ -4,6 +4,9 @@
  */
 import type { SubscriptionPlan } from "@prisma/client";
 
+/** One-time fee for done-for-you chatbot setup (crawl, widget, training, go-live). */
+export const SETUP_FEE_EUR = 290;
+
 export const PLANS = {
   FREE: {
     id: "FREE" as const,

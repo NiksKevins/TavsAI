@@ -2,6 +2,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 export type MarketingDict = Awaited<ReturnType<typeof getMarketingDict>>;
 
+function numbered(t: Awaited<ReturnType<typeof getTranslations>>, prefix: string, count: number) {
+  return Array.from({ length: count }, (_, i) => t(`${prefix}.${i}`));
+}
+
 export async function getMarketingDict() {
   const t = await getTranslations("marketing");
   const demo = await getTranslations("marketing.demo");
@@ -61,12 +65,7 @@ export async function getMarketingDict() {
     problem: {
       eyebrow: t("problem.eyebrow"),
       title: t("problem.title"),
-      items: [
-        t("problem.items.0"),
-        t("problem.items.1"),
-        t("problem.items.2"),
-        t("problem.items.3"),
-      ],
+      items: numbered(t, "problem.items", 5),
       hint: t("problem.hint"),
     },
     solution: {
@@ -80,6 +79,19 @@ export async function getMarketingDict() {
         { title: t("solution.items.3.title"), body: t("solution.items.3.body") },
         { title: t("solution.items.4.title"), body: t("solution.items.4.body") },
         { title: t("solution.items.5.title"), body: t("solution.items.5.body") },
+      ],
+    },
+    details: {
+      eyebrow: t("details.eyebrow"),
+      title: t("details.title"),
+      subtitle: t("details.subtitle"),
+      items: [
+        { title: t("details.items.0.title"), body: t("details.items.0.body") },
+        { title: t("details.items.1.title"), body: t("details.items.1.body") },
+        { title: t("details.items.2.title"), body: t("details.items.2.body") },
+        { title: t("details.items.3.title"), body: t("details.items.3.body") },
+        { title: t("details.items.4.title"), body: t("details.items.4.body") },
+        { title: t("details.items.5.title"), body: t("details.items.5.body") },
       ],
     },
     how: {
@@ -96,61 +108,37 @@ export async function getMarketingDict() {
       eyebrow: t("industries.eyebrow"),
       title: t("industries.title"),
       subtitle: t("industries.subtitle"),
-      items: [
-        t("industries.items.0"),
-        t("industries.items.1"),
-        t("industries.items.2"),
-        t("industries.items.3"),
-        t("industries.items.4"),
-        t("industries.items.5"),
-        t("industries.items.6"),
-        t("industries.items.7"),
-      ],
+      items: numbered(t, "industries.items", 8),
     },
     pricing: {
       eyebrow: t("pricing.eyebrow"),
       title: t("pricing.title"),
       subtitle: t("pricing.subtitle"),
       perMonth: t("pricing.perMonth"),
-      conversations: t.raw("pricing.conversations"),
+      conversations: t.raw("pricing.conversations") as string,
       recommended: t("pricing.recommended"),
       cta: t("pricing.cta"),
+      setupTitle: t("pricing.setupTitle"),
+      setupPrice: t("pricing.setupPrice"),
+      setupOnce: t("pricing.setupOnce"),
+      setupBody: t("pricing.setupBody"),
+      setupIncludes: numbered(t, "pricing.setupIncludes", 4),
+      setupNote: t("pricing.setupNote"),
+      monthlyTitle: t("pricing.monthlyTitle"),
       features: {
-        FREE: [
-          t("pricing.features.FREE.0"),
-          t("pricing.features.FREE.1"),
-          t("pricing.features.FREE.2"),
-        ],
-        STARTER: [
-          t("pricing.features.STARTER.0"),
-          t("pricing.features.STARTER.1"),
-          t("pricing.features.STARTER.2"),
-        ],
-        BUSINESS: [
-          t("pricing.features.BUSINESS.0"),
-          t("pricing.features.BUSINESS.1"),
-          t("pricing.features.BUSINESS.2"),
-          t("pricing.features.BUSINESS.3"),
-        ],
-        PRO: [
-          t("pricing.features.PRO.0"),
-          t("pricing.features.PRO.1"),
-          t("pricing.features.PRO.2"),
-          t("pricing.features.PRO.3"),
-        ],
+        FREE: numbered(t, "pricing.features.FREE", 4),
+        STARTER: numbered(t, "pricing.features.STARTER", 4),
+        BUSINESS: numbered(t, "pricing.features.BUSINESS", 4),
+        PRO: numbered(t, "pricing.features.PRO", 4),
       },
     },
     faq: {
       eyebrow: t("faq.eyebrow"),
       title: t("faq.title"),
-      items: [
-        { q: t("faq.items.0.q"), a: t("faq.items.0.a") },
-        { q: t("faq.items.1.q"), a: t("faq.items.1.a") },
-        { q: t("faq.items.2.q"), a: t("faq.items.2.a") },
-        { q: t("faq.items.3.q"), a: t("faq.items.3.a") },
-        { q: t("faq.items.4.q"), a: t("faq.items.4.a") },
-        { q: t("faq.items.5.q"), a: t("faq.items.5.a") },
-      ],
+      items: Array.from({ length: 10 }, (_, i) => ({
+        q: t(`faq.items.${i}.q`),
+        a: t(`faq.items.${i}.a`),
+      })),
     },
     finalCta: {
       title: t("finalCta.title"),

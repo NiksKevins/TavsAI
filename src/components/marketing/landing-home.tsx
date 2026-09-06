@@ -1,17 +1,25 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 import {
   MarketingContainer,
   MarketingDemoStage,
   MarketingEyebrow,
-  MarketingFinalCta,
   MarketingSection,
 } from "@/components/marketing/marketing-ui";
-import { HowStepsEditorial } from "@/components/marketing/how-steps";
+import {
+  MarketingDetailsSection,
+  MarketingFaqSection,
+  MarketingFinalCtaSection,
+  MarketingHowSection,
+  MarketingIndustriesSection,
+  MarketingProblemSection,
+  MarketingSolutionSection,
+} from "@/components/marketing/marketing-sections";
 import { HeroProductVisual } from "@/components/marketing/product-visuals";
 import { Button } from "@/components/ui/button";
+import { SETUP_FEE_EUR } from "@/config/plans";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
 
 const LiveDemoChat = dynamic(
@@ -29,14 +37,14 @@ export function LandingHome({ dict }: { dict: MarketingDict }) {
     <div>
       <HomeHero dict={dict} />
       <HomeDemoStage dict={dict} />
-      <HomeHow dict={dict} />
-      <MarketingFinalCta
-        eyebrow={dict.finalCta.eyebrow}
-        title={dict.finalCta.title}
-        cta={dict.finalCta.cta}
-        secondaryHref="/register"
-        secondaryLabel={dict.ctaPrimary}
-      />
+      <MarketingProblemSection dict={dict} />
+      <MarketingSolutionSection dict={dict} />
+      <MarketingDetailsSection dict={dict} />
+      <MarketingHowSection dict={dict} withFinalCta={false} />
+      <MarketingIndustriesSection dict={dict} withFinalCta={false} />
+      <HomePricingTeaser dict={dict} />
+      <MarketingFaqSection dict={dict} withFinalCta={false} />
+      <MarketingFinalCtaSection dict={dict} />
     </div>
   );
 }
@@ -94,18 +102,30 @@ function HomeDemoStage({ dict }: { dict: MarketingDict }) {
   );
 }
 
-function HomeHow({ dict }: { dict: MarketingDict }) {
+function HomePricingTeaser({ dict }: { dict: MarketingDict }) {
   return (
     <MarketingSection tone="plain" className="border-y border-border/50">
-      <MarketingContainer wide>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] lg:gap-12">
-          <div className="lg:self-start">
-            <MarketingEyebrow>{dict.how.eyebrow}</MarketingEyebrow>
+      <MarketingContainer>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-xl">
+            <MarketingEyebrow>{dict.pricing.eyebrow}</MarketingEyebrow>
             <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
-              {dict.how.title}
+              {dict.bridge.pricingTitle}
             </h2>
+            <p className="mt-3 text-base leading-[1.65] text-ink-soft">
+              {dict.bridge.pricingBody}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {dict.pricing.setupPrice} {dict.pricing.setupOnce} (€{SETUP_FEE_EUR}) ·{" "}
+              {dict.pricing.monthlyTitle.toLowerCase()}
+            </p>
           </div>
-          <HowStepsEditorial steps={dict.how.steps} />
+          <Button asChild size="lg" className="rounded-full px-6">
+            <Link href="/pricing" className="inline-flex items-center gap-2">
+              {dict.bridge.linkLabel}
+              <ArrowRight className="size-4 opacity-70" aria-hidden />
+            </Link>
+          </Button>
         </div>
       </MarketingContainer>
     </MarketingSection>
