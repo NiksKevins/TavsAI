@@ -19,7 +19,7 @@ import {
 } from "@/components/marketing/marketing-sections";
 import { HeroProductVisual } from "@/components/marketing/product-visuals";
 import { Button } from "@/components/ui/button";
-import { SETUP_FEE_EUR } from "@/config/plans";
+import { PLANS, SETUP_FEE_EUR } from "@/config/plans";
 import type { MarketingDict } from "@/lib/marketing/get-marketing-dict";
 
 const LiveDemoChat = dynamic(
@@ -116,38 +116,48 @@ function HomeDemoStage({ dict }: { dict: MarketingDict }) {
 }
 
 function HomePricingTeaser({ dict }: { dict: MarketingDict }) {
+  const fromLabel = dict.locale === "lv" ? "no" : "from";
+  const monthlyFrom = PLANS.STARTER.priceMonthlyEur;
+
   return (
     <MarketingSection tone="cream" className="border-y border-border/40">
       <MarketingContainer>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-end">
-          <div className="max-w-xl">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
             <MarketingEyebrow>{dict.pricing.eyebrow}</MarketingEyebrow>
             <h2 className="mt-3 font-display text-[1.85rem] font-semibold leading-[1.1] tracking-[-0.04em] sm:text-3xl">
-              {dict.bridge.pricingTitle}
+              {dict.pricing.title}
             </h2>
-            <p className="mt-4 text-base leading-[1.7] text-ink-soft">
-              {dict.bridge.pricingBody}
+            <p className="mt-4 max-w-xl text-base leading-[1.7] text-ink-soft">
+              {dict.pricing.subtitle}
             </p>
           </div>
+          <Button asChild size="lg" className="shrink-0 rounded-md px-7">
+            <Link href="/pricing" className="inline-flex items-center gap-2">
+              {dict.bridge.linkLabel}
+              <ArrowRight className="size-4 opacity-70" aria-hidden />
+            </Link>
+          </Button>
+        </div>
 
-          <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-7">
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <p className="font-display text-4xl font-semibold tracking-tight">
-                €{SETUP_FEE_EUR}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {dict.pricing.setupOnce}
-              </p>
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              {dict.pricing.setupTitle} · {dict.pricing.monthlyTitle.toLowerCase()}
+        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border/80 bg-border/70 sm:grid-cols-2">
+          <div className="bg-card px-6 py-7 sm:px-8 sm:py-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+              {dict.pricing.setupTitle}
             </p>
-            <Button asChild size="lg" className="mt-5 w-full rounded-md sm:w-auto">
-              <Link href="/pricing" className="inline-flex items-center gap-2">
-                {dict.bridge.linkLabel}
-                <ArrowRight className="size-4 opacity-70" aria-hidden />
-              </Link>
-            </Button>
+            <p className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+              €{SETUP_FEE_EUR}
+            </p>
+            <p className="mt-2 text-sm text-ink-soft">{dict.pricing.setupOnce}</p>
+          </div>
+          <div className="bg-card px-6 py-7 sm:px-8 sm:py-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+              {dict.pricing.monthlyTitle}
+            </p>
+            <p className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+              {fromLabel} €{monthlyFrom}
+            </p>
+            <p className="mt-2 text-sm text-ink-soft">{dict.pricing.perMonth.trim()}</p>
           </div>
         </div>
       </MarketingContainer>
