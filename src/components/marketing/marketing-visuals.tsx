@@ -1,6 +1,39 @@
 import { cn } from "@/lib/utils";
 
-/** Decorative SVG + layout helpers for marketing pages. */
+/** Shared decorative helpers — keep list indexes identical site-wide. */
+
+export function EditorialDivider({ label }: { label?: string }) {
+  return (
+    <div className="marketing-rule relative my-0">
+      {label ? (
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+          {label}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+/** Single index style for every marketing list (problem / features / how / FAQ). */
+export function FeatureIndex({
+  n,
+  className,
+}: {
+  n: number;
+  className?: string;
+}) {
+  return (
+    <span
+      className={cn(
+        "mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border bg-background font-display text-[12px] font-semibold tabular-nums tracking-tight text-primary",
+        className,
+      )}
+      aria-hidden
+    >
+      {String(n).padStart(2, "0")}
+    </span>
+  );
+}
 
 export function HeroOrb({ className }: { className?: string }) {
   return (
@@ -20,46 +53,15 @@ export function HeroOrb({ className }: { className?: string }) {
 
 export function TrustPills({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+    <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
       {items.map((item) => (
         <li
           key={item}
-          className="rounded-full border border-border/70 bg-white/60 px-3.5 py-1.5 text-[12px] font-medium tracking-wide text-muted-foreground backdrop-blur-sm sm:text-[13px]"
+          className="text-[13px] font-medium tracking-wide text-muted-foreground"
         >
           {item}
         </li>
       ))}
     </ul>
-  );
-}
-
-export function EditorialDivider({ label }: { label?: string }) {
-  return (
-    <div className="marketing-rule relative my-0">
-      {label ? (
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-          {label}
-        </span>
-      ) : null}
-    </div>
-  );
-}
-
-export function FeatureIndex({
-  n,
-  className,
-}: {
-  n: number;
-  className?: string;
-}) {
-  return (
-    <span
-      className={cn(
-        "inline-block w-12 shrink-0 text-right font-display text-[2.75rem] font-semibold leading-none tracking-tighter text-primary/[0.12] sm:w-16 sm:text-[3.25rem] lg:text-[3.75rem]",
-        className,
-      )}
-    >
-      {String(n).padStart(2, "0")}
-    </span>
   );
 }

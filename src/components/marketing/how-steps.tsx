@@ -28,10 +28,10 @@ export function HowStepsEditorial({
           <article className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 py-5 sm:gap-x-5 sm:py-6">
             <FeatureIndex n={index + 1} />
             <div className="min-w-0">
-              <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                 {step.title}
               </h3>
-              <p className="mt-2.5 text-sm leading-[1.75] text-ink-soft sm:text-base sm:leading-[1.7]">
+              <p className="mt-3 text-base leading-[1.7] text-ink-soft sm:text-lg sm:leading-[1.65]">
                 {step.body}
               </p>
               {index === steps.length - 1 && linkHref && linkLabel ? (
